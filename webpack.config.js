@@ -2,6 +2,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -11,7 +12,18 @@ const distPath = path.resolve(__dirname, 'dist');
 const cssDev = ['style-loader', 'css-loader', 'sass-loader'];
 const cssProd = ExtractTextPlugin.extract({
     fallback: 'style-loader',
-    use: ['css-loader', 'sass-loader'],
+    use: [
+        'css-loader',
+        {
+            loader: 'postcss-loader',
+            options: {
+                config: {
+                    path: 'postcss.config.js'
+                }
+            }
+        },
+        'sass-loader'
+    ],
     publicPath: '/dist'
 });
 
@@ -27,6 +39,7 @@ const config = {
     },
     module: {
         rules: [
+            // js
             {
                 test: /\.js$/,
                 include: srcPath,
@@ -40,6 +53,7 @@ const config = {
                     }
                 }]
             },
+            // scss
             Object.assign(
                 {
                     test: /\.scss$/,
@@ -47,6 +61,7 @@ const config = {
                 },
                 cssConfig
             ),
+            // Fonts
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 use: [{
@@ -64,7 +79,12 @@ const config = {
         new ExtractTextPlugin({
             filename: 'public/css/main.css'
         }),
-        new webpack.NamedModulesPlugin()
+        new webpack.NamedModulesPlugin(),
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: [ autoprefixer ]
+            }
+        })
     ]
 };
 
