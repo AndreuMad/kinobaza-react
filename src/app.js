@@ -4,13 +4,12 @@ if(module.hot) {
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import Hello from './components/Hello';
+import Router from './routes';
 
 import './public/scss/main.scss';
 
 ReactDOM.render(
-    <Hello />,
+    Router,
     document.getElementById('app')
 );
 

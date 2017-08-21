@@ -1,0 +1,19 @@
+.main-header {
+
+  .header-navigation {
+    display: flex;
+    
+    &-link {
+      margin: 0 .4rem;
+      padding: 0 1.2rem;
+      color: $base-text;
+      font-size: 1.8rem;
+      font-weight: 500;
+      line-height: 6rem;
+
+      &.current {
+        background: $grey-background;
+      }
+    }
+  }
+}

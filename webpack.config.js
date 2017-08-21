@@ -31,7 +31,7 @@ const cssConfig = isProd ? { use: cssProd } : { loader: cssDev };
 
 const config = {
     context: srcPath,
-    entry: './app.js',
+    entry: './App.js',
     output: {
         path: distPath,
         publicPath: '/dist',
