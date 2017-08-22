@@ -1,10 +1,2 @@
-.posts-page {
-  
-  &-title {
-    margin: 0 0 8rem;
-    font-size: 3.2rem;
-    font-weight: 400;
-    font-style: italic;
-    text-align: center;
-  }
-}
+@import 'posts/posts-page';
+@import 'posts/card-big';

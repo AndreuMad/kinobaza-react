@@ -1,0 +1,50 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router';
+
+const CardBig = ({ id, image, title, date, text, shared }) => {
+    return (
+        <article className="card-big">
+            <div className="row">
+                <div className="col xs-1">
+                    <div className="col-inner">
+
+                    </div>
+                </div>
+                <div className="col xs-5">
+                    <div className="col-inner">
+                        <figure className="card-big-figure">
+                            <img
+                                className="card-big-image"
+                                src={image.src}
+                                alt={image.description}
+                                title={image.description} />
+                        </figure>
+                    </div>
+                </div>
+                <div className="col xs-6">
+                    <div className="col-inner">
+                        <h2 className="card-big-title">{title}</h2>
+                        <p className="card-big-date">{date}</p>
+                        <p className="card-big-text">{text}</p>
+                        <div className="btn-group align-right">
+                            <Link to={`/posts/${id}`}
+                                className="card-big-link">Читати</Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    );
+};
+
+CardBig.propTypes = {
+    id: PropTypes.number.isRequired,
+    image: PropTypes.object,
+    title: PropTypes.string.isRequired,
+    date: PropTypes.string,
+    text: PropTypes.string.isRequired,
+    shared: PropTypes.object
+};
+
+export default CardBig;
