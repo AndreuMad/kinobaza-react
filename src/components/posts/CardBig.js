@@ -16,15 +16,17 @@ const CardBig = ({ id, image, title, date, text, shared }) => {
                         <figure className="card-big-figure">
                             <img
                                 className="card-big-image"
-                                src={image.src}
-                                alt={image.description}
-                                title={image.description} />
+                                src={image.url}
+                                alt={title}
+                                title={title} />
                         </figure>
                     </div>
                 </div>
                 <div className="col xs-6">
                     <div className="col-inner">
-                        <h2 className="card-big-title">{title}</h2>
+                        <Link to={`/posts/${id}`}>
+                            <h2 className="card-big-title">{title}</h2>
+                        </Link>
                         <p className="card-big-date">{date}</p>
                         <p className="card-big-text">{text}</p>
                         <div className="btn-group align-right">
@@ -39,7 +41,7 @@ const CardBig = ({ id, image, title, date, text, shared }) => {
 };
 
 CardBig.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     image: PropTypes.object,
     title: PropTypes.string.isRequired,
     date: PropTypes.string,

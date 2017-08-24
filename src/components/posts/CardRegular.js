@@ -13,13 +13,24 @@ const CardRegular = ({ id, shared, image, date, title }) => {
                 </div>
                 <div className="col xs-10">
                     <div className="col-inner">
-                        <figure className="card-regular-figure">
-                            <img src={image.src}
-                                 alt={image.description}
-                                 title={image.description}
-                                 className="card-regular-image"/>
-                        </figure>
-                        <h3 className="card-regular-title">{title}</h3>
+                        <Link
+                            className="card-regular-link"
+                            to={`/posts/${id}`}
+                        >
+                            <figure className="card-regular-figure">
+                                <img src={image.url}
+                                     alt={image.description}
+                                     title={image.description}
+                                     className="card-regular-image"/>
+                            </figure>
+                        </Link>
+                        <p className="card-regular-date">{date}</p>
+                        <Link
+                            className="card-regular-link"
+                            to={`/posts/${id}`}
+                        >
+                            <h3 className="card-regular-title">{title}</h3>
+                        </Link>
                     </div>
                 </div>
             </div>
