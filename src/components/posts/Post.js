@@ -18,20 +18,45 @@ class Post extends Component {
         return (
             this.props.post ?
                 <article className="post-page">
-                    <section className="introduction">
-                        <figure className="introduction-illustration">
-                            <img
-                                className="introduction-image"
-                                src={this.props.post.image.url}
-                                alt={this.props.post.title}
-                                title={this.props.post.title}
-                            />
-                        </figure>
-                        <h1 className="introduction-title">{this.props.post.title}</h1>
-                        <p className="introduction-date">{this.props.post.date}</p>
+                    <section
+                        className="introduction"
+                        style={Object.assign(
+                            {},
+                            this.props.post.backgroundColor ? { background: `#${this.props.post.backgroundColor}` } : null
+                        )}
+                    >
+                        <div className="container">
+                            <div className="row">
+                                <div className="col m-10 m-offset-1">
+                                    <div className="col-inner">
+                                        <figure
+                                            className="introduction-illustration"
+                                            style={{
+                                                backgroundImage: `url('${this.props.post.image.url}'`
+                                            }}
+                                        >
+                                        </figure>
+                                        <h1 className="introduction-title">{this.props.post.title}</h1>
+                                        <p className="introduction-date">{this.props.post.date}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </section>
                     <section className="post-body">
-                        <p className="post-body-text">{this.props.post.text}</p>
+                        <div className="container">
+                            <div className="row">
+                                <div className="col m-10 m-offset-1">
+                                    <div className="col-inner">
+                                        <div className="col s-10 m-11">
+                                            <div className="col-inner">
+                                                <p className="post-body-text">{this.props.post.text}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </section>
                 </article> : null
 

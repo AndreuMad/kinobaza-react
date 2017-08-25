@@ -17,14 +17,14 @@ class PostsPage extends Component {
     }
 
     getBigPost() {
-        this.props.fetchPost(this.props.posts.postsList[0].id);
+        this.props.fetchBigPost(this.props.posts[0].id);
     }
 
     render() {
 
-        const bigPost = this.props.posts.post;
+        const bigPost = this.props.bigPost;
 
-        if(!this.props.posts.post && this.props.posts.postsList) {
+        if(!this.props.bigPost && this.props.posts) {
             this.getBigPost();
         }
 
@@ -45,8 +45,8 @@ class PostsPage extends Component {
                                 }
                             </div>
                         </div>
-                        {this.props.posts.postsList ?
-                            this.props.posts.postsList.map((post, index) => {
+                        {this.props.posts ?
+                            this.props.posts.map((post, index) => {
                                 if(index !== 0 && index < 8) {
                                     return (
                                         <div key={post.id} className="col m-4">
@@ -71,14 +71,14 @@ class PostsPage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        post: state.post,
-        posts: state.posts
+        posts: state.posts.posts,
+        bigPost: state.posts.bigPost
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchPost: (id) => dispatch(postsActions.fetchPost(id)),
+        fetchBigPost: (id) => dispatch(postsActions.fetchBigPost(id)),
         fetchPosts: () => dispatch(postsActions.fetchPosts())
     };
 };
