@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import sliceString from '../../utilites/sliceString';
 
 const CardBig = ({ id, image, title, date, text, shared }) => {
     return (
@@ -28,7 +29,7 @@ const CardBig = ({ id, image, title, date, text, shared }) => {
                             <h2 className="card-big-title">{title}</h2>
                         </Link>
                         <p className="card-big-date">{date}</p>
-                        <p className="card-big-text">{text}</p>
+                        <p className="card-big-text">{sliceString(text, 256)}</p>
                         <div className="btn-group align-right">
                             <Link to={`/posts/${id}`}
                                 className="card-big-link">Читати</Link>

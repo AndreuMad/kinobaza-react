@@ -48,9 +48,11 @@ class Post extends Component {
                             <div className="row">
                                 <div className="col m-10 m-offset-1">
                                     <div className="col-inner">
-                                        <div className="col s-10 m-11">
-                                            <div className="col-inner">
-                                                <p className="post-body-text">{this.props.post.text}</p>
+                                        <div className="row">
+                                            <div className="col s-10 m-11">
+                                                <div className="col-inner">
+                                                    <p className="post-body-text">{this.props.post.text}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

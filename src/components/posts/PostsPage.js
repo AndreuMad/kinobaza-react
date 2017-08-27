@@ -10,6 +10,7 @@ import CardRegular from './CardRegular';
 class PostsPage extends Component {
     constructor(props) {
         super(props);
+        this.cardBigClick = this.cardBigClick.bind(this);
     }
 
     componentDidMount() {
