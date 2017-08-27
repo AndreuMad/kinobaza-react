@@ -2,6 +2,7 @@ import Axios from 'axios';
 
 import {
     FETCH_POSTS_SUCCESS,
+    FETCH_BIG_POST_SUCCESS,
     FETCH_POST_SUCCESS
 } from '../constants/actions';
 
@@ -45,5 +46,26 @@ export const fetchPostSuccess = (post) => {
     return {
         type: FETCH_POST_SUCCESS,
         post
+    }
+};
+
+export const fetchBigPost = (id) => {
+    return (dispatch) => {
+
+        return Axios.get(`${apiUrl}/post/${id}`)
+            .then(response => {
+                dispatch(fetchBigPostSuccess(response.data));
+            })
+            .catch(error => {
+                throw(error);
+            })
+    }
+};
+
+export const fetchBigPostSuccess = (bigPost) => {
+
+    return {
+        type: FETCH_BIG_POST_SUCCESS,
+        bigPost
     }
 };
