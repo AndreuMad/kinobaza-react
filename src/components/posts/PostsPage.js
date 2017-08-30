@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import * as postsActions from '../../actions/posts-actions';
+import { fetchPosts, fetchBigPost } from '../../actions/posts-actions';
 
 import CardBig from './CardBig';
 import CardRegular from './CardRegular';
 
 class PostsPage extends Component {
-    constructor(props) {
-        super(props);
-        this.cardBigClick = this.cardBigClick.bind(this);
-    }
-
     componentDidMount() {
         this.props.fetchPosts();
     }
@@ -79,8 +74,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchBigPost: (id) => dispatch(postsActions.fetchBigPost(id)),
-        fetchPosts: () => dispatch(postsActions.fetchPosts())
+        fetchBigPost: (id) => dispatch(fetchBigPost(id)),
+        fetchPosts: () => dispatch(fetchPosts())
     };
 };
 

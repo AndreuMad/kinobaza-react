@@ -12,7 +12,7 @@ const Header = () => {
                         activeClassName="current"
                     >публікації</Link>
                     <Link
-                        to='/movies'
+                        to='/titles'
                         className="header-navigation-link"
                         activeClassName="current"
                     >стрічки</Link>
