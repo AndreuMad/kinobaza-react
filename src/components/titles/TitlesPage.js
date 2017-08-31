@@ -21,6 +21,19 @@ class TitlesPage extends Component {
         return true;
     }
 
+    filterByGenre(titleGenres) {
+        if(this.props.titlesFilter && this.props.titlesFilter.genres && this.props.titlesFilter.genres.length) {
+
+            for(let i = 0; i < titleGenres.length; i++) {
+                if(this.props.titlesFilter.genres.indexOf(titleGenres[i]) !== -1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
+    }
+
     filterByYear(year) {
         if(this.props.titlesFilter && this.props.titlesFilter.year) {
 
@@ -41,7 +54,8 @@ class TitlesPage extends Component {
                                     this.props.titlesList
                                         .filter((title) => { return this.filterByName(title.titleEn) })
                                         .filter((title) => { return this.filterByYear(title.year) })
-                                        .map((title, index) => {
+                                        .filter((title) => { return this.filterByGenre(title.genre) })
+                                        .map((title) => {
                                         const {
                                             id,
                                             titleEn,

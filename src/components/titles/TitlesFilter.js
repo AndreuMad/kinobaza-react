@@ -14,16 +14,57 @@ const renderInputRange = ({ input, minValue, maxValue }) => {
     );
 };
 
+const renderCheckboxGroup = ({ input, options }) => (
+    <div>
+        {options.map((option, index) => {
+            return (
+                <div className="checkbox" key={`checkbox${index}`}>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name={`${input.name}[${index}]`}
+                            value={option.name}
+                            checked={input.value.indexOf(option.name) !== -1}
+                            onChange={(event) => {
+                                const value = [...input.value];
+                                if(event.target.checked) {
+                                    value.push(option.name);
+                                } else {
+                                    value.splice(value.indexOf(option.name), 1);
+                                }
+                                return input.onChange(value);
+                            }}
+                        />
+                        <span>{option.name}</span>
+                    </label>
+                </div>
+            );
+        })}
+    </div>
+);
+
 const TitlesFilter = () => {
     return (
         <div className="titles-filter-wrap">
             <Field name="name" component="input" type="text" value="in" />
             <Field
+                name="genres"
+                component={renderCheckboxGroup}
+                options={[
+                    { name: 'action' },
+                    { name: 'criminal' },
+                    { name: 'drama' },
+                    { name: 'adventures' },
+                    { name: 'sci-fi' }
+                ]}
+            /><br/>
+            <Field
                 name="year"
-                maxValue={2017}
                 minValue={1878}
+                maxValue={2017}
                 component={renderInputRange}
             />
+
         </div>
     );
 };
