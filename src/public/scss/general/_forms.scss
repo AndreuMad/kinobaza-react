@@ -13,14 +13,14 @@ textarea,
 select {
   box-sizing: border-box;
   width: 100%;
-  padding: .6rem 1rem;
+  padding: 0 2.4rem;
   border: {
-    width: .1rem;
-    style: solid;
-    color: $base-border;
-    radius: .3rem;
+    width: 0;
+    radius: .4rem;
   };
+  outline: 0;
   font-weight: 400;
+  line-height: 4.8rem;
 }
 
 textarea {
@@ -28,5 +28,6 @@ textarea {
 }
 
 label {
+  display: inline-block;
   font-weight: 400;
 }

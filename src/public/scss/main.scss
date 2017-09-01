@@ -18,8 +18,8 @@
 
 // General
 @import 'general/general';
-// @import 'general/forms'; // uncomment if needed to use(not default template)
-// @import 'general/button'; // uncomment if needed to use(not default template)
+@import 'general/forms'; // uncomment if needed to use(not default template)
+@import 'general/button'; // uncomment if needed to use(not default template)
 // @import 'general/popup'; // uncomment if needed to use(not default template)
 // @import 'general/table'; // uncomment if needed to use(not default template)
 
@@ -30,12 +30,7 @@
 
 // Posts & Post
 @import 'modules/posts';
+@import 'modules/titles';
 
 // State
 @import 'state/state';
-
-
-.LOL {
-  display: flex;
-  color: green;
-}

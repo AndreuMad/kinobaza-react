@@ -10,7 +10,7 @@ const Title = ({
                             imdbScore,
                             text }) => {
     return (
-        <article key={`title${id}`}>
+        <article className="title-item" key={`title${id}`}>
             <div className="row">
                 <div className="col m-5">
                     <div className="col-inner">
@@ -21,22 +21,22 @@ const Title = ({
                 </div>
                 <div className="col m-7">
                     <div className="col-inner">
-                        <div>
-                            <h3>{titleUkr}</h3>
-                            <span>{year}</span>
+                        <div className="title-item-head">
+                            <h3 className="title-name">{titleUkr}</h3>
+                            <p className="title-year">{year}</p>
                         </div>
-                        <h3>{titleEn}</h3>
-                        <div>
-                            <div>
-                                <span>{averageScore}</span>
-                                <span>Середня</span>
+                        <h3 className="title-name-en">{titleEn}</h3>
+                        <div className="title-score">
+                            <div className="title-score-item">
+                                <span className="score-number average">{averageScore}</span>
+                                <span className="score-description">Середня</span>
                             </div>
-                            <div>
-                                <span>{imdbScore}</span>
-                                <span>iMDb</span>
+                            <div className="title-score-item">
+                                <span className="score-number imdb">{imdbScore}</span>
+                                <span className="score-description">iMDb</span>
                             </div>
                         </div>
-                        <p>{text}</p>
+                        <p className="title-text">{text}</p>
                     </div>
                 </div>
             </div>

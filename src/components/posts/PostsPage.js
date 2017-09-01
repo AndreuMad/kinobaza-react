@@ -27,7 +27,7 @@ class PostsPage extends Component {
         return (
             <article className="posts-page">
                 <div className="container">
-                    <h1 className="posts-page-title">Публікації</h1>
+                    <h1 className="section-heading">Публікації</h1>
                     <div className="row">
                         <div className="col m-8">
                             <div className="col-inner">

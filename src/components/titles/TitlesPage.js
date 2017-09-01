@@ -12,10 +12,12 @@ class TitlesPage extends Component {
         this.props.fetchTitles();
     }
 
-    filterByName(name) {
+    filterByName(names) {
 
         if(this.props.titlesFilter && this.props.titlesFilter.name) {
-            return name.toLowerCase().includes(this.props.titlesFilter.name);
+            return names.some((name) => {
+                return name.toLowerCase().includes(this.props.titlesFilter.name);
+            })
         }
 
         return true;
@@ -36,8 +38,17 @@ class TitlesPage extends Component {
 
     filterByYear(year) {
         if(this.props.titlesFilter && this.props.titlesFilter.year) {
+            const yearFilter = this.props.titlesFilter.year;
 
-            return year >= this.props.titlesFilter.year.min && year <= this.props.titlesFilter.year.max;
+            return year >= yearFilter.min && year <= yearFilter.max;
+        }
+    }
+
+    filterByRating(rating) {
+        if(this.props.titlesFilter && this.props.titlesFilter.rating) {
+            const ratingFilter = this.props.titlesFilter.rating;
+
+            return rating >= ratingFilter.min && rating <= ratingFilter.max;
         }
     }
 
@@ -46,15 +57,16 @@ class TitlesPage extends Component {
         return (
             <article className="titles-page">
                 <div className="container">
-                    <h1>Стрічки</h1>
+                    <h1 className="section-heading">Стрічки</h1>
                     <div className="row">
                         <div className="col m-8">
                             <div className="col-inner">
                                 {this.props.titlesList ?
                                     this.props.titlesList
-                                        .filter((title) => { return this.filterByName(title.titleEn) })
+                                        .filter((title) => { return this.filterByName([title.titleEn, title.titleUkr]) })
                                         .filter((title) => { return this.filterByYear(title.year) })
                                         .filter((title) => { return this.filterByGenre(title.genre) })
+                                        .filter((title) => { return this.filterByRating(title.imdbScore) })
                                         .map((title) => {
                                         const {
                                             id,
