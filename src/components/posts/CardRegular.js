@@ -8,13 +8,13 @@ const CardRegular = ({ id, shared, image, date, title }) => {
             <div className="flex-row">
                 <div className="col xs-1 card-regular-share">
                     <div className="col-inner flex-column justify-start">
-                        <a href="#" className="card-share">
+                        <a href="#" className="share-block">
                             <p className="share-number facebook">500</p>
                         </a>
-                        <a href="#" className="card-share">
+                        <a href="#" className="share-block">
                             <p className="share-number twitter">234</p>
                         </a>
-                        <a href="#" className="card-share">
+                        <a href="#" className="share-block">
                             <p className="share-number youtube">120</p>
                         </a>
                     </div>

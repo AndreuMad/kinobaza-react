@@ -9,13 +9,13 @@ const CardBig = ({ id, image, title, date, text, shared }) => {
             <div className="row">
                 <div className="col xs-1">
                     <div className="col-inner flex-column justify-end">
-                        <a href="#" className="card-share">
+                        <a href="#" className="share-block">
                             <p className="share-number facebook">500</p>
                         </a>
-                        <a href="#" className="card-share">
+                        <a href="#" className="share-block">
                             <p className="share-number twitter">234</p>
                         </a>
-                        <a href="#" className="card-share">
+                        <a href="#" className="share-block">
                             <p className="share-number youtube">120</p>
                         </a>
                     </div>

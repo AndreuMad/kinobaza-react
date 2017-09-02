@@ -1,8 +1,7 @@
 .post-page {
 
   .introduction {
-    padding: 8.8rem 0 4.8rem;
-    background: rgba(0, 0, 0, .1);
+    padding: 7.6rem 0 6.4rem;
 
     &-illustration {
       width: 100%;
@@ -17,7 +16,6 @@
 
     &-title {
       margin: 0;
-      color: #fff;
       font-size: 2.8rem;
       font-style: italic;
     }
@@ -25,6 +23,107 @@
     &-date {
       margin: 2.4rem 0 0;
       font-size: 1.8rem;
+    }
+
+    &-info {
+      display: flex;
+      align-items: center;
+      margin: 2.4rem 0 0;
+    }
+
+    .info-block {
+      display: flex;
+      align-items: center;
+
+      + .info-block {
+        margin-left: 3.2rem;
+      }
+
+      &.views {
+
+        &::before {
+          content: '\f06e';
+        }
+      }
+
+      &.likes {
+
+        &::before {
+          content: '\f08a';
+        }
+      }
+
+      &.comments {
+
+        &::before {
+          content: '\f0e5';
+        }
+      }
+
+      &::before {
+        @extend %faIcon;
+        margin-right: 1.2rem;
+      }
+
+      &-number {
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  .post-body {
+    padding: 0 0 10.8rem;
+
+    &-text {
+      margin: 0;
+      font-size: 1.8rem;
+      line-height: 2.7rem;
+
+      + .post-body-text {
+        margin-top: 2.4rem;
+      }
+    }
+  }
+
+  .post-comments {
+    padding: 5.6rem 0 6.4rem;
+    background: #f2f2f2;
+
+    &-title {
+      margin: 0 0 3.2rem;
+    }
+  }
+
+  .comment-item {
+
+    + .comment-item {
+      margin-top: 4.2rem;
+    }
+
+    .comment-item {
+      margin-top: 1.8rem;
+    }
+
+    &-body {
+      padding: 2.4rem 4.8rem;
+      border-radius: .6rem;
+      background: #fff;
+    }
+
+    &-author {
+      margin: 0 0 .4rem;
+      font-size: 1.8rem;
+    }
+
+    &-date {
+      margin: 0 0 1.6rem;
+      color: rgba($base-text, .75);
+      font-size: 1.4rem;
+    }
+
+    &-text {
+      margin: 0;
+      font-size: 1.6rem;
     }
   }
 }

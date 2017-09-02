@@ -10,3 +10,82 @@
   font-style: italic;
   text-align: center;
 }
+
+.share-block {
+
+  &.l {
+
+    + .share-block {
+      margin-top: 2.4rem;
+    }
+
+    .share-number {
+      font-size: 1.6rem;
+
+      &::before {
+        font-size: 2.2rem;
+        line-height: 2.7rem;
+      }
+    }
+  }
+
+  + .share-block {
+    margin-top: 2rem;
+  }
+
+  .share-number {
+    margin: 0;
+    color: rgba(#333, .5);
+    font-size: 1.4rem;
+    text-align: center;
+
+    &::before {
+      @extend %faIcon;
+      display: block;
+      font-size: 1.8rem;
+      line-height: 2.3rem;
+    }
+
+    &.facebook {
+
+      &:hover {
+
+        &::before {
+          color: map_get($social-colors, facebook);
+        }
+      }
+
+      &::before {
+        content: '\f09a';
+      }
+    }
+
+    &.twitter {
+
+      &:hover {
+
+        &::before {
+          color: map_get($social-colors, twitter);
+        }
+      }
+
+      &::before {
+        content: '\f099';
+      }
+    }
+
+    &.youtube {
+
+      &:hover {
+
+        &::before {
+          color: map_get($social-colors, youtube);
+        }
+      }
+
+      &::before {
+        content: '\f16a';
+      }
+    }
+  }
+}
