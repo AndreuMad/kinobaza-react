@@ -22,7 +22,7 @@ $btn-orange : color('state', 'orange');
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, .15);
   outline: none 0;
   background-color: transparent;
-  font-family: $base-font-family;
+  font-family: $title-font-family;
   font-size: 1.6rem;
   line-height: 3.6rem;
   text-align: center;
@@ -32,6 +32,7 @@ $btn-orange : color('state', 'orange');
   vertical-align: middle;
   transition: all 100ms ease-in-out 0s;
   user-select: none;
+  letter-spacing: .1rem;
 
   &:hover {
     border-radius: .4rem;

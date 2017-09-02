@@ -15,7 +15,9 @@ select {
   width: 100%;
   padding: 0 2.4rem;
   border: {
-    width: 0;
+    width: .1rem;
+    style: solid;
+    color: #ccc;
     radius: .4rem;
   };
   outline: 0;

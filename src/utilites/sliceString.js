@@ -1,6 +1,13 @@
 const sliceString = (string, number) => {
-
-    return string.length > number ? `${string.substring(0, number)}...` : string;
+    if(string.length > number) {
+        while(number < string.length) {
+            if(string[number] === ' ') {
+                return `${string.substring(0, number)}...`;
+            }
+            number++;
+        }
+    }
+    return string;
 };
 
 export default sliceString;

@@ -7,13 +7,9 @@
   z-index: 50;
 
   &.sticky {
-    height: 10rem;
+    height: 8.4rem;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .1);
     transition: box-shadow .15s ease-in .15s;
-
-    .header-control-item {
-      height: 10rem;
-    }
 
     .login-btn,
     .header-search {
@@ -24,17 +20,18 @@
     .header-logo {
       opacity: 0;
       pointer-events: none;
+      transition: opacity 0s;
     }
 
     .header-navigation {
-      transform: translateY(-8rem);
+      transform: translateY(-6.8rem);
     }
   }
 
   .header-control {
 
     &-item {
-      height: 14rem;
+      height: 8.4rem;
       display: flex;
       align-items: center;
     }
@@ -43,12 +40,13 @@
   .header-logo {
     display: flex;
     align-items: center;
+    transition: opacity .15s ease-in .15s;
 
     &-text {
       margin-left: 1rem;
       color: rgb(110, 107, 108);
       font-family: $title-font-family;
-      font-size: 2.8rem;
+      font-size: 2.4rem;
     }
   }
 
@@ -106,12 +104,12 @@
     
     &-link {
       margin: 0 .4rem;
-      padding: 0 2.4rem;
+      padding: 0 1.6rem;
       border-bottom: .2rem solid transparent;
       color: $base-text;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 500;
-      line-height: 5.6rem;
+      line-height: 4.8rem;
 
       &:hover {
         border-bottom-color: rgba($base-text, .25);

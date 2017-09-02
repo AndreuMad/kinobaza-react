@@ -1,0 +1,34 @@
+.posts-page {
+
+  .card-big {
+    padding: 3.2rem;
+    background: linear-gradient(90deg, #fff 20%, #e6e6e6 0);
+
+    &-title {
+      margin: 0 0 1.8rem;
+      color: $base-text;
+      font-size: 2rem;
+    }
+
+    &-date {
+      margin: 1.8rem 0;
+      font-size: 1.4rem;
+    }
+
+    &-text {
+      margin: 1.8rem 0 0;
+      font-size: 1.6rem;
+      line-height: 2.7rem;
+    }
+
+    .btn-group {
+      margin-top: 2.4rem;
+    }
+
+    &-link {
+      border: .1rem solid $base-text;
+      box-shadow: none;
+      color: $base-text;
+    }
+  }
+}
