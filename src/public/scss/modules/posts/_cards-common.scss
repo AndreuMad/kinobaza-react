@@ -1,0 +1,16 @@
+.posts-page {
+
+  .card-regular,
+  .card-big {
+    margin-bottom: 6.4rem;
+
+    &-figure {
+      width: 100%;
+      background: {
+        size: cover;
+        position: center center;
+        repeat: no-repeat;
+      };
+    }
+  }
+}

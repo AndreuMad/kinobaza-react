@@ -7,6 +7,7 @@ import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 import Main from './components/Main';
 import PostsPage from './components/posts/PostsPage';
 import Post from './components/posts/Post';
+import TitlesPage from './components/titles/TitlesPage';
 
 const store = configureStore();
 
@@ -16,6 +17,7 @@ const Routes = (
             <Route path='/' component={Main}>
                 <Route path='/posts' component={PostsPage} />
                 <Route path='/posts/:id' component={Post} />
+                <Route path='/titles' component={TitlesPage} />
             </Route>
         </Router>
     </Provider>

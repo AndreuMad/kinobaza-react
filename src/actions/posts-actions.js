@@ -6,7 +6,7 @@ import {
     FETCH_POST_SUCCESS
 } from '../constants/actions';
 
-const apiUrl = 'http://599c72fa3a19ba0011949cf1.mockapi.io';
+import { apiUrl } from '../constants/urls';
 
 export const fetchPosts = () => {
     return (dispatch) => {

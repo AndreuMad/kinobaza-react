@@ -1,18 +1,123 @@
 .main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: $white;
+  z-index: 50;
+
+  &.sticky {
+    height: 8.4rem;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .1);
+    transition: box-shadow .15s ease-in .15s;
+
+    .login-btn,
+    .header-search {
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-logo {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0s;
+    }
+
+    .header-navigation {
+      transform: translateY(-6.8rem);
+    }
+  }
+
+  .header-control {
+
+    &-item {
+      height: 8.4rem;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .header-logo {
+    display: flex;
+    align-items: center;
+    transition: opacity .15s ease-in .15s;
+
+    &-text {
+      margin-left: 1rem;
+      color: rgb(110, 107, 108);
+      font-family: $title-font-family;
+      font-size: 2.4rem;
+    }
+  }
+
+  .header-search {
+    position: relative;
+
+    &::before {
+      @extend %faIcon;
+      position: absolute;
+      content: '\f002';
+      top: 0;
+      right: 1.2rem;
+      color: rgb(110, 107, 108);
+      font-size: 2rem;
+      line-height: 3.6rem;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    &-field {
+      position: relative;
+      width: 24rem;
+    }
+
+    &-input {
+      padding: 0 3.6rem 0 0;
+      border: 0;
+
+      &:focus {
+
+        + .header-search-indicator {
+          transform: scaleX(1);
+        }
+      }
+    }
+
+    &-indicator {
+      position: absolute;
+      display: inline-block;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: .2rem;
+      background: #7760cb;
+      transition: transform .15s ease-out;
+      transform: scaleX(0);
+      transform-origin: right center;
+    }
+  }
 
   .header-navigation {
     display: flex;
+    justify-content: center;
+    transition: transform .15s ease-in;
     
     &-link {
       margin: 0 .4rem;
-      padding: 0 1.2rem;
+      padding: 0 1.6rem;
+      border-bottom: .2rem solid transparent;
       color: $base-text;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 500;
-      line-height: 6rem;
+      line-height: 4.8rem;
+
+      &:hover {
+        border-bottom-color: rgba($base-text, .25);
+      }
 
       &.current {
-        background: $grey-background;
+        border-bottom-color: $base-text;
+        pointer-events: none;
       }
     }
   }

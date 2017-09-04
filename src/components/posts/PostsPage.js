@@ -2,16 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import * as postsActions from '../../actions/posts-actions';
+import { fetchPosts, fetchBigPost } from '../../actions/posts-actions';
 
 import CardBig from './CardBig';
 import CardRegular from './CardRegular';
 
 class PostsPage extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         this.props.fetchPosts();
     }
@@ -31,7 +27,7 @@ class PostsPage extends Component {
         return (
             <article className="posts-page">
                 <div className="container">
-                    <h1 className="posts-page-title">Публікації</h1>
+                    <h1 className="section-heading">Публікації</h1>
                     <div className="row">
                         <div className="col m-8">
                             <div className="col-inner">
@@ -78,8 +74,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchBigPost: (id) => dispatch(postsActions.fetchBigPost(id)),
-        fetchPosts: () => dispatch(postsActions.fetchPosts())
+        fetchBigPost: (id) => dispatch(fetchBigPost(id)),
+        fetchPosts: () => dispatch(fetchPosts())
     };
 };
 

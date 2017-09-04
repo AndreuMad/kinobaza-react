@@ -5,26 +5,35 @@ import { Link } from 'react-router';
 const CardRegular = ({ id, shared, image, date, title }) => {
     return (
         <article className="card-regular">
-            <div className="row">
-                <div className="col xs-2">
-                    <div className="col-inner">
-
+            <div className="flex-row">
+                <div className="col xs-1 card-regular-share">
+                    <div className="col-inner flex-column justify-start">
+                        <a href="#" className="share-block">
+                            <p className="share-number facebook">500</p>
+                        </a>
+                        <a href="#" className="share-block">
+                            <p className="share-number twitter">234</p>
+                        </a>
+                        <a href="#" className="share-block">
+                            <p className="share-number youtube">120</p>
+                        </a>
                     </div>
                 </div>
-                <div className="col xs-10">
-                    <div className="col-inner">
+                <div className="col xs-11">
+                    <div className="col-inner card-regular-content">
                         <Link
                             className="card-regular-link"
                             to={`/posts/${id}`}
                         >
-                            <figure className="card-regular-figure">
-                                <img src={image.url}
-                                     alt={image.description}
-                                     title={image.description}
-                                     className="card-regular-image"/>
+                            <figure
+                                className="card-regular-figure"
+                                style={{
+                                    backgroundImage: `url('${image.url}')`
+                                }}
+                            >
                             </figure>
                         </Link>
-                        <p className="card-regular-date">{date}</p>
+                        <p className="card-regular-date">03.08.2017</p>
                         <Link
                             className="card-regular-link"
                             to={`/posts/${id}`}
