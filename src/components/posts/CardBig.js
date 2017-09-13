@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import sliceString from '../../utilites/sliceString';
 
-const CardBig = ({ id, image, title, date, text, shared }) => {
+const CardBig = ({ id, image, title, text }) => {
     return (
         <article className="card-big">
             <div className="row">

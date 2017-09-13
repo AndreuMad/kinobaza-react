@@ -53,6 +53,7 @@ class TitlesPage extends Component {
     }
 
     render() {
+        console.log(this.props.titlesList);
 
         return (
             <article className="titles-page">
@@ -63,31 +64,29 @@ class TitlesPage extends Component {
                             <div className="col-inner">
                                 {this.props.titlesList ?
                                     this.props.titlesList
-                                        .filter((title) => { return this.filterByName([title.titleEn, title.titleUkr]) })
+                                        .filter((title) => { return this.filterByName([title.name.en, title.name.ukr]) })
                                         .filter((title) => { return this.filterByYear(title.year) })
                                         .filter((title) => { return this.filterByGenre(title.genre) })
-                                        .filter((title) => { return this.filterByRating(title.imdbScore) })
+                                        .filter((title) => { return this.filterByRating(title.score.imdb) })
                                         .map((title) => {
                                         const {
-                                            id,
-                                            titleEn,
-                                            titleUkr,
-                                            imageUrl,
+                                            _id,
+                                            name,
+                                            image,
                                             year,
-                                            averageScore,
-                                            imdbScore,
+                                            score,
                                             text
                                         } = title;
 
                                         return (
                                             <Title
-                                                key={`title${id}`}
-                                                titleEn={titleEn}
-                                                titleUkr={titleUkr}
-                                                imageUrl={imageUrl}
+                                                key={`title${_id}`}
+                                                titleEn={name.en}
+                                                titleUkr={name.ukr}
+                                                imageUrl={image.url}
                                                 year={year}
-                                                averageScore={averageScore}
-                                                imdbScore={imdbScore}
+                                                averageScore={score.average}
+                                                imdbScore={score.imdb}
                                                 text={text}
                                             />
                                         );

@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
-const CardRegular = ({ id, shared, image, date, title }) => {
+const CardRegular = ({ id, image, title }) => {
+
     return (
         <article className="card-regular">
             <div className="flex-row">
