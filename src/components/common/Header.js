@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 class Header extends Component {
@@ -46,18 +46,18 @@ class Header extends Component {
                         <div className="row">
                             <div className="col m-4">
                                 <div className="col-inner header-control-item justify-start">
-                                    <Link
+                                    <NavLink
                                         to="/login"
                                         className="btn gradient-purple login-btn"
-                                    >увійти</Link>
+                                    >увійти</NavLink>
                                 </div>
                             </div>
                             <div className="col m-4">
                                 <div className="col-inner header-control-item justify-center">
-                                    <Link to='/' className="header-logo">
+                                    <NavLink to='/' className="header-logo">
                                         <img src="./dist/public/img/icons/logo-film.png" alt="Kinobaza"/>
                                         <span className="header-logo-text">КіноБаза</span>
-                                    </Link>
+                                    </NavLink>
                                 </div>
                             </div>
                             <div className="col m-4">
@@ -73,46 +73,46 @@ class Header extends Component {
                         </div>
                     </div>
                     <nav className="header-navigation">
-                        <Link
+                        <NavLink
                             to='/posts'
                             className="header-navigation-link"
                             activeClassName="current"
-                        >публікації</Link>
-                        <Link
+                        >публікації</NavLink>
+                        <NavLink
                             to='/titles'
                             className="header-navigation-link"
                             activeClassName="current"
-                        >стрічки</Link>
-                        <Link
+                        >стрічки</NavLink>
+                        <NavLink
                             to='/trailers'
                             className="header-navigation-link"
                             activeClassName="current"
-                        >трейлери</Link>
-                        <Link
+                        >трейлери</NavLink>
+                        <NavLink
                             to='/reviews'
                             className="header-navigation-link"
                             activeClassName="current"
-                        >рецензії</Link>
-                        <Link
+                        >рецензії</NavLink>
+                        <NavLink
                             to='/persons'
                             className="header-navigation-link"
                             activeClassName="current"
-                        >персони</Link>
-                        <Link
+                        >персони</NavLink>
+                        <NavLink
                             to='/lists'
                             className="header-navigation-link"
                             activeClassName="current"
-                        >списки</Link>
-                        <Link
+                        >списки</NavLink>
+                        <NavLink
                             to='/blogs'
                             className="header-navigation-link"
                             activeClassName="current"
-                        >блоги</Link>
-                        <Link
+                        >блоги</NavLink>
+                        <NavLink
                             to='/forum'
                             className="header-navigation-link"
                             activeClassName="current"
-                        >форум</Link>
+                        >форум</NavLink>
                     </nav>
                 </div>
             </header>

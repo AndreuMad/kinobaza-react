@@ -12,7 +12,7 @@ class Post extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchPost(this.props.params.id);
+        this.props.fetchPost(this.props.match.params.id);
     }
 
     render() {

@@ -53,7 +53,6 @@ class TitlesPage extends Component {
     }
 
     render() {
-        console.log(this.props.titlesList);
 
         return (
             <article className="titles-page">
