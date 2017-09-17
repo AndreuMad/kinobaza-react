@@ -6,7 +6,7 @@ import PostsPage from './posts/PostsPage';
 import Post from './posts/Post';
 import TitlesPage from './titles/TitlesPage';
 
-const Main = () => {
+const Routes = () => {
     return (
         <div>
             <Header />
@@ -22,4 +22,4 @@ const Main = () => {
     )
 };
 
-export default Main;
+export default Routes;
