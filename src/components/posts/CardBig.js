@@ -8,7 +8,7 @@ const CardBig = ({ id, image, title, text }) => {
         <article className="card-big">
             <div className="row">
                 <div className="col xs-1">
-                    <div className="col-inner flex-column justify-end">
+                    <div className="col-inner flex-column end-xs">
                         <a href="#" className="share-block">
                             <p className="share-number facebook">500</p>
                         </a>

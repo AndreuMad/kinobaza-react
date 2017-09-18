@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 import classNames from 'classnames';
+
+import { signoutUser } from '../../actions/auth-actions';
 
 class Header extends Component {
     constructor(props) {
@@ -15,9 +18,26 @@ class Header extends Component {
         window.addEventListener('scroll', this.handleScroll);
     }
 
-    handleScroll() {
+    renderUserBlock() {
+        if(this.props.authenticated) {
+            return ([
+                <span className="username">{this.props.userName}</span>,
+                <button
+                    className="btn"
+                    onClick={this.props.signoutUser}
+                >Sign out</button>
+            ])
+        } else {
+            return (
+                <Link
+                    to="/login"
+                    className="btn gradient-purple login-btn"
+                >увійти</Link>
+            );
+        }
+    }
 
-        console.log('scroll');
+    handleScroll() {
 
         if(window.pageYOffset > 0) {
 
@@ -47,15 +67,12 @@ class Header extends Component {
                     <div className="header-control">
                         <div className="row">
                             <div className="col m-4">
-                                <div className="col-inner header-control-item justify-start">
-                                    <NavLink
-                                        to="/login"
-                                        className="btn gradient-purple login-btn"
-                                    >увійти</NavLink>
+                                <div className="col-inner header-control-item">
+                                    {this.renderUserBlock()}
                                 </div>
                             </div>
                             <div className="col m-4">
-                                <div className="col-inner header-control-item justify-center">
+                                <div className="col-inner header-control-item center-xs">
                                     <NavLink to='/' className="header-logo">
                                         <img src="./dist/public/img/icons/logo-film.png" alt="Kinobaza"/>
                                         <span className="header-logo-text">КіноБаза</span>
@@ -63,7 +80,7 @@ class Header extends Component {
                                 </div>
                             </div>
                             <div className="col m-4">
-                                <div className="col-inner header-control-item justify-end">
+                                <div className="col-inner header-control-item end-xs">
                                     <form className="header-search">
                                         <label className="header-search-field">
                                             <input type="text" className="header-search-input" />
@@ -122,4 +139,15 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const mapStateToProps = (state) => (
+    {
+        authenticated: state.auth.authenticated,
+        userName: state.auth.name
+    }
+);
+
+const mapDispatchToProps = (dispatch) => ({
+    signoutUser: () => dispatch(signoutUser())
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

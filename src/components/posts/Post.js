@@ -68,7 +68,7 @@ class Post extends Component {
                                                 </div>
                                             </div>
                                             <div className="col m-1">
-                                                <div className="col-inner flex-column justify-start">
+                                                <div className="col-inner flex-column">
                                                     <a href="#" className="share-block l">
                                                         <p className="share-number facebook">500</p>
                                                     </a>
