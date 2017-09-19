@@ -3,8 +3,7 @@ import axios from 'axios';
 import {
     AUTH_USER,
     UNAUTH_USER,
-    AUTH_ERROR,
-    FETCH_MESSAGE
+    AUTH_ERROR
 } from '../constants/actions';
 
 import { apiUrl } from '../constants/urls';
@@ -31,6 +30,27 @@ export const signinUser = ({ email, password }, history) => {
                 // If request is bad...
                 // - Show an error to the user
                 dispatch(authError('Bad Login Info'));
+            });
+    }
+};
+
+export const signWithToken = (token) => {
+    return (dispatch) => {
+        console.log('sign in');
+        axios.get(`${apiUrl}/signin`, {
+            headers: {
+                Authorization: token
+            }
+        })
+            .then(response => {
+                console.log(response);
+                dispatch({
+                    type: AUTH_USER,
+                    name: response.data.name
+                });
+            })
+            .catch(error => {
+                throw(error);
             });
     }
 };
@@ -67,20 +87,3 @@ export const signoutUser = () => {
 
     return { type: UNAUTH_USER };
 };
-
-export const fetchMessage = () => {
-    return (dispatch) => {
-        axios.get(apiUrl, {
-            headers: {
-                authorization: localStorage.getItem('token')
-            }
-        })
-            .then(response => {
-                dispatch({
-                    type: FETCH_MESSAGE,
-                    payload: response.data.message
-                });
-            });
-    }
-};
-

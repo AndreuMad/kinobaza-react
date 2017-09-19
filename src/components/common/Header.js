@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { signoutUser } from '../../actions/auth-actions';
+import { signWithToken, signoutUser } from '../../actions/auth-actions';
 
 class Header extends Component {
     constructor(props) {
@@ -16,6 +16,15 @@ class Header extends Component {
 
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
+        this.singWithToken();
+    }
+
+    singWithToken() {
+        const token = localStorage.getItem('token');
+
+        if(token) {
+            this.props.signWithToken(token);
+        }
     }
 
     renderUserBlock() {
@@ -147,6 +156,7 @@ const mapStateToProps = (state) => (
 );
 
 const mapDispatchToProps = (dispatch) => ({
+    signWithToken: (token) => dispatch(signWithToken(token)),
     signoutUser: () => dispatch(signoutUser())
 });
 

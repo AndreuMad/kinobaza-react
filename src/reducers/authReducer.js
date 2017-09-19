@@ -1,8 +1,7 @@
 import {
     AUTH_USER,
     UNAUTH_USER,
-    AUTH_ERROR,
-    FETCH_MESSAGE
+    AUTH_ERROR
 } from '../constants/actions';
 
 export const authReducer = (state = {}, action) => {
@@ -25,11 +24,6 @@ export const authReducer = (state = {}, action) => {
                 ...state,
                 error: action.payload
             };
-        case FETCH_MESSAGE:
-            return {
-                ...state,
-                message: action.payload
-            }
     }
     return state;
 };

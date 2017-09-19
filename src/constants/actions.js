@@ -1,7 +1,6 @@
 export const AUTH_USER = 'auth_user';
 export const UNAUTH_USER = 'unauth_user';
 export const AUTH_ERROR = 'auth_error';
-export const FETCH_MESSAGE = 'fetch_message';
 
 export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS';
 export const FETCH_BIG_POST_SUCCESS = 'FETCH_BIG_POST_SUCCESS';
