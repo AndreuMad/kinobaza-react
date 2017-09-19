@@ -8,10 +8,14 @@ import {
 
 import { apiUrl } from '../constants/urls';
 
-export const fetchPosts = () => {
+export const fetchPosts = ({ limit }) => {
     return (dispatch) => {
 
-        return Axios.get(`${apiUrl}/posts`)
+        return Axios.get(`${apiUrl}/posts`, {
+            params: {
+                limit
+            }
+        })
             .then(response => {
                 dispatch(fetchPostsSuccess(response.data));
             })
@@ -31,7 +35,7 @@ export const fetchPostsSuccess = (postsList) => {
 export const fetchPost = (id) => {
     return (dispatch) => {
 
-        return Axios.get(`${apiUrl}/post/${id}`)
+        return Axios.get(`${apiUrl}/posts/${id}`)
             .then(response => {
                 dispatch(fetchPostSuccess(response.data));
             })
@@ -52,7 +56,7 @@ export const fetchPostSuccess = (post) => {
 export const fetchBigPost = (id) => {
     return (dispatch) => {
 
-        return Axios.get(`${apiUrl}/post/${id}`)
+        return Axios.get(`${apiUrl}/posts/${id}`)
             .then(response => {
                 dispatch(fetchBigPostSuccess(response.data));
             })

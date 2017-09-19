@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
-const CardRegular = ({ id, shared, image, date, title }) => {
+const CardRegular = ({ id, image, title }) => {
+
     return (
         <article className="card-regular">
             <div className="flex-row">
                 <div className="col xs-1 card-regular-share">
-                    <div className="col-inner flex-column justify-start">
+                    <div className="col-inner flex-column">
                         <a href="#" className="share-block">
                             <p className="share-number facebook">500</p>
                         </a>

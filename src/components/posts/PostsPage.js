@@ -9,11 +9,11 @@ import CardRegular from './CardRegular';
 
 class PostsPage extends Component {
     componentDidMount() {
-        this.props.fetchPosts();
+        this.props.fetchPosts({ limit: 8 });
     }
 
-    getBigPost() {
-        this.props.fetchBigPost(this.props.posts[0].id);
+    getBigPost(id) {
+        this.props.fetchBigPost(id);
     }
 
     render() {
@@ -21,7 +21,7 @@ class PostsPage extends Component {
         const bigPost = this.props.bigPost;
 
         if(!this.props.bigPost && this.props.posts) {
-            this.getBigPost();
+            this.getBigPost(this.props.posts[0]._id);
         }
 
         return (
@@ -33,7 +33,7 @@ class PostsPage extends Component {
                             <div className="col-inner">
                                 {bigPost ?
                                     <CardBig
-                                        id={bigPost.id}
+                                        id={bigPost._id}
                                         image={bigPost.image}
                                         title={bigPost.title}
                                         text={bigPost.text}
@@ -43,12 +43,12 @@ class PostsPage extends Component {
                         </div>
                         {this.props.posts ?
                             this.props.posts.map((post, index) => {
-                                if(index !== 0 && index < 8) {
+                                if(index !== 0) {
                                     return (
-                                        <div key={post.id} className="col m-4">
+                                        <div key={post._id} className="col m-4">
                                             <div className="col-inner">
                                                 <CardRegular
-                                                    id={post.id}
+                                                    id={post._id}
                                                     image={post.image}
                                                     title={post.title}
                                                     date={post.date}
@@ -75,7 +75,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchBigPost: (id) => dispatch(fetchBigPost(id)),
-        fetchPosts: () => dispatch(fetchPosts())
+        fetchPosts: (props) => dispatch(fetchPosts(props))
     };
 };
 

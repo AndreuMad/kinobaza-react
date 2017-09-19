@@ -1,15 +1,20 @@
-if(module.hot) {
-    module.hot.accept();
-}
-
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Router from './routes';
+import { Provider } from 'react-redux';
+import configureStore from './store/configureStore';
 
-import './public/scss/main.scss';
+import { BrowserRouter } from 'react-router-dom';
 
-ReactDOM.render(
-    Router,
-    document.getElementById('app')
+import Routes from './components/Routes';
+
+
+const store = configureStore();
+
+const App = (
+    <Provider store={store}>
+        <BrowserRouter>
+            <Routes />
+        </BrowserRouter>
+    </Provider>
 );
 
+export default App;
