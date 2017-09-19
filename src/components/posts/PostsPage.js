@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Pagination from 'react-js-pagination';
 
-import { fetchPosts, fetchBigPost } from '../../actions/posts-actions';
+import { fetchPosts } from '../../actions/posts-actions';
 
 import CardBig from './components/CardBig';
 import CardRegular from './components/CardRegular';
@@ -20,9 +20,6 @@ class PostsPage extends Component {
         this.handlePagination = this.handlePagination.bind(this);
     }
 
-    componentDidMount() {
-        this.fetchPosts();
-    }
 
     fetchPosts() {
         this.props.fetchPosts({
@@ -31,8 +28,64 @@ class PostsPage extends Component {
         });
     }
 
+    renderPosts() {
+        const posts = this.props.posts;
+
+        if(posts) {
+            return (
+                posts.map((post, index) => {
+                    if(index !== 0) {
+                        return (
+                            <div key={post._id} className="col m-4">
+                                <div className="col-inner">
+                                    <CardRegular
+                                        id={post._id}
+                                        image={post.image}
+                                        title={post.title}
+                                        date={post.date}
+                                    />
+                                </div>
+                            </div>
+                        )
+                    }
+                })
+            )
+        } else {
+            this.fetchPosts();
+        }
+    }
+
+    renderBigPost() {
+        const bigPost = this.props.bigPost;
+
+        if(bigPost) {
+            return (
+                <CardBig
+                    id={bigPost._id}
+                    image={bigPost.image}
+                    title={bigPost.title}
+                    text={bigPost.text}
+                />
+            );
+        }
+    }
+
+    renderPagination() {
+        if(this.props.posts) {
+            return (
+                <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={this.props.posts.length}
+                    totalItemsCount={10}
+                    pageRangeDisplayed={2}
+                    onChange={this.handlePagination}
+                />
+            )
+        }
+        return null;
+    }
+
     handlePagination(pageToRender) {
-        console.log(`The active page is ${pageToRender}`);
         this.setState({
             activePage: pageToRender
         });
@@ -40,17 +93,7 @@ class PostsPage extends Component {
         this.fetchPosts();
     }
 
-    getBigPost(id) {
-        this.props.fetchBigPost(id);
-    }
-
     render() {
-
-        const bigPost = this.props.bigPost;
-
-        if(!this.props.bigPost && this.props.posts) {
-            this.getBigPost(this.props.posts[0]._id);
-        }
 
         return (
             <article className="posts-page">
@@ -59,45 +102,12 @@ class PostsPage extends Component {
                     <div className="row">
                         <div className="col m-8">
                             <div className="col-inner">
-                                {bigPost ?
-                                    <CardBig
-                                        id={bigPost._id}
-                                        image={bigPost.image}
-                                        title={bigPost.title}
-                                        text={bigPost.text}
-                                    /> : null
-                                }
+                                {this.renderBigPost()}
                             </div>
                         </div>
-                        {this.props.posts ?
-                            this.props.posts.map((post, index) => {
-                                if(index !== 0) {
-                                    return (
-                                        <div key={post._id} className="col m-4">
-                                            <div className="col-inner">
-                                                <CardRegular
-                                                    id={post._id}
-                                                    image={post.image}
-                                                    title={post.title}
-                                                    date={post.date}
-                                                />
-                                            </div>
-                                        </div>
-                                    )
-                                }
-                            }): null}
+                        {this.renderPosts()}
                     </div>
-                    <div className="pagination">
-                        {
-                            this.props.posts ? <Pagination
-                                activePage={this.state.activePage}
-                                itemsCountPerPage={this.props.posts.length}
-                                totalItemsCount={10}
-                                pageRangeDisplayed={2}
-                                onChange={this.handlePagination}
-                            /> : null
-                        }
-                    </div>
+                    <div className="pagination">{this.renderPagination()}</div>
                 </div>
             </article>
         );
@@ -113,7 +123,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchBigPost: (id) => dispatch(fetchBigPost(id)),
         fetchPosts: (props) => dispatch(fetchPosts(props))
     };
 };

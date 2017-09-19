@@ -11,12 +11,14 @@ import { apiUrl } from '../constants/urls';
 export const fetchPosts = (params) => {
     return (dispatch) => {
 
+        dispatch(fetchPostsSuccess(null));
         return Axios.get(`${apiUrl}/posts`, {
             params: {
                 ...params
             }
         })
             .then(response => {
+                dispatch(fetchBigPost(response.data[0]._id));
                 dispatch(fetchPostsSuccess(response.data));
             })
             .catch(error => {
