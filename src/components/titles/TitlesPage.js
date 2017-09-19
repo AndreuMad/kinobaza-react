@@ -53,7 +53,6 @@ class TitlesPage extends Component {
     }
 
     render() {
-        console.log(this.props.titlesFilter);
 
         return (
             <article className="titles-page">

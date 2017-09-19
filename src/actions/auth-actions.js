@@ -43,7 +43,6 @@ export const signWithToken = (token) => {
             }
         })
             .then(response => {
-                console.log(response);
                 dispatch({
                     type: AUTH_USER,
                     name: response.data.name

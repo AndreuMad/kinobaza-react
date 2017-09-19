@@ -8,12 +8,12 @@ import {
 
 import { apiUrl } from '../constants/urls';
 
-export const fetchPosts = ({ limit }) => {
+export const fetchPosts = (params) => {
     return (dispatch) => {
 
         return Axios.get(`${apiUrl}/posts`, {
             params: {
-                limit
+                ...params
             }
         })
             .then(response => {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { fetchPost } from '../../actions/posts-actions';
 
-import PostComments from './PostComments';
+import PostComments from './components/PostComments';
 
 class Post extends Component {
     constructor(props) {
