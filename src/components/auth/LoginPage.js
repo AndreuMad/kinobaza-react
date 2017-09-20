@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
@@ -22,21 +23,21 @@ class LoginPage extends Component {
             <div className="login-page">
                 <div className="container">
                     <nav className="login-switcher">
-                    <span
+                    <Link
+                        to="/login/sign-in"
                         className="login-switcher-item"
-                        onClick={() => this.switchForm('signIn')}
                     >
                         Sign In
-                    </span>
-                        <span
+                    </Link>
+                        <Link
+                            to="/login/sign-up"
                             className="login-switcher-item"
-                            onClick={() => this.switchForm('signUp')}
                         >
                         Sign Up
-                    </span>
+                    </Link>
                     </nav>
                     <div>
-                        {this.state.formToShow === 'signUp' ?
+                        {this.props.match.params.sign === 'sign-up' ?
                             <SignUpForm
                                 history={this.props.history}
                             /> :

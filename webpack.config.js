@@ -76,6 +76,9 @@ const config = {
             }
         ]
     },
+    devServer: {
+        historyApiFallback: true,
+    },
     plugins: [
         new ExtractTextPlugin({
             filename: 'public/css/main.css'

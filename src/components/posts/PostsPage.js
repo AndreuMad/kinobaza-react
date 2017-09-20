@@ -36,7 +36,7 @@ class PostsPage extends Component {
                 posts.map((post, index) => {
                     if(index !== 0) {
                         return (
-                            <div key={post._id} className="col m-4">
+                            <div key={`post_${post._id}`} className="col m-4">
                                 <div className="col-inner">
                                     <CardRegular
                                         id={post._id}
@@ -61,6 +61,7 @@ class PostsPage extends Component {
         if(bigPost) {
             return (
                 <CardBig
+                    key={`bigPost${bigPost._id}`}
                     id={bigPost._id}
                     image={bigPost.image}
                     title={bigPost.title}

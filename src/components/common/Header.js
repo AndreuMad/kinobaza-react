@@ -30,8 +30,12 @@ class Header extends Component {
     renderUserBlock() {
         if(this.props.authenticated) {
             return ([
-                <span className="username">{this.props.userName}</span>,
+                <span
+                    key="headerUsername"
+                    className="username"
+                >{this.props.userName}</span>,
                 <button
+                    key="headerSignoutUser"
                     className="btn"
                     onClick={this.props.signoutUser}
                 >Sign out</button>
@@ -39,7 +43,8 @@ class Header extends Component {
         } else {
             return (
                 <Link
-                    to="/login"
+                    key="headerLoginBtn"
+                    to="/login/sign-in"
                     className="btn gradient-purple login-btn"
                 >увійти</Link>
             );
@@ -84,7 +89,10 @@ class Header extends Component {
                                 <div className="col-inner header-control-item center-xs">
                                     <NavLink to='/' className="header-logo">
                                         <img src="./dist/public/img/icons/logo-film.png" alt="Kinobaza"/>
-                                        <span className="header-logo-text">КіноБаза</span>
+                                        <span
+                                            key="headerLogo"
+                                            className="header-logo-text"
+                                        >КіноБаза</span>
                                     </NavLink>
                                 </div>
                             </div>
@@ -93,7 +101,9 @@ class Header extends Component {
                                     <form className="header-search">
                                         <label className="header-search-field">
                                             <input type="text" className="header-search-input" />
-                                            <span className="header-search-indicator"></span>
+                                            <span
+                                                key="headerSearchIndicator"
+                                                className="header-search-indicator" />
                                         </label>
                                     </form>
                                 </div>
@@ -102,41 +112,49 @@ class Header extends Component {
                     </div>
                     <nav className="header-navigation">
                         <NavLink
+                            key="headerLinkToPosts"
                             to='/posts'
                             className="header-navigation-link"
                             activeClassName="current"
                         >публікації</NavLink>
                         <NavLink
+                            key="headerLinkToTitles"
                             to='/titles'
                             className="header-navigation-link"
                             activeClassName="current"
                         >стрічки</NavLink>
                         <NavLink
+                            key="headerLinkToTrailers"
                             to='/trailers'
                             className="header-navigation-link"
                             activeClassName="current"
                         >трейлери</NavLink>
                         <NavLink
+                            key="headerLinkToReviews"
                             to='/reviews'
                             className="header-navigation-link"
                             activeClassName="current"
                         >рецензії</NavLink>
                         <NavLink
+                            key="headerLinkToPersons"
                             to='/persons'
                             className="header-navigation-link"
                             activeClassName="current"
                         >персони</NavLink>
                         <NavLink
+                            key="headerLinkToLists"
                             to='/lists'
                             className="header-navigation-link"
                             activeClassName="current"
                         >списки</NavLink>
                         <NavLink
+                            key="headerLinkToBlogs"
                             to='/blogs'
                             className="header-navigation-link"
                             activeClassName="current"
                         >блоги</NavLink>
                         <NavLink
+                            key="headerLinkToForum"
                             to='/forum'
                             className="header-navigation-link"
                             activeClassName="current"
