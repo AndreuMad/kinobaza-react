@@ -7,10 +7,14 @@ import {
 
 import { apiUrl } from '../constants/urls';
 
-export const fetchTitles = () => {
+export const fetchTitles = (params) => {
     return (dispatch) => {
 
-        return Axios.get(`${apiUrl}/titles`)
+        return Axios.get(`${apiUrl}/titles`, {
+            params: {
+                ...params
+            }
+        })
             .then(response => {
                 dispatch(fetchTitlesSuccess(response.data));
             })

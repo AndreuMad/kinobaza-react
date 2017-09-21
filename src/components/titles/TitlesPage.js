@@ -8,9 +8,6 @@ import TitlesFilter from './TitlesFilter';
 import { fetchTitles } from '../../actions/titles-actions';
 
 class TitlesPage extends Component {
-    componentDidMount() {
-        this.props.fetchTitles();
-    }
 
     filterByName(names) {
 
@@ -63,10 +60,10 @@ class TitlesPage extends Component {
                             <div className="col-inner">
                                 {this.props.titlesList ?
                                     this.props.titlesList
-                                        .filter((title) => { return this.filterByName([title.name.en, title.name.ukr]) })
+                                        /* .filter((title) => { return this.filterByName([title.name.en, title.name.ukr]) })
                                         .filter((title) => { return this.filterByYear(title.year) })
                                         .filter((title) => { return this.filterByGenre(title.genre) })
-                                        .filter((title) => { return this.filterByRating(title.score.imdb) })
+                                        .filter((title) => { return this.filterByRating(title.score.imdb) }) */
                                         .map((title) => {
                                         const {
                                             _id,
@@ -112,10 +109,10 @@ const mapStateToProps = (state) => {
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchTitles: () => dispatch(fetchTitles())
-    }
-};
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         fetchTitles: () => dispatch(fetchTitles())
+//     }
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TitlesPage);
+export default connect(mapStateToProps, null)(TitlesPage);

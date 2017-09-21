@@ -12,12 +12,6 @@ class LoginPage extends Component {
         };
     }
 
-    switchForm(formName) {
-        this.setState({
-            formToShow: formName
-        });
-    }
-
     render() {
         return (
             <div className="login-page">
