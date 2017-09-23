@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 
 class InputField extends Component {
-    handleChange(event) {
-        let value = {};
-        value[event.target.name] = event.target.value.toLowerCase();
+    constructor(props) {
+        super(props);
 
-        return value;
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.props.onFieldChange(this.props.name, event.target.value);
     }
 
     render() {
-        const { type, name, placeholder, onFieldChange } = this.props;
+        const { type, name, placeholder } = this.props;
 
         return (
             <input
                 type={type}
                 name={name}
                 placeholder={placeholder}
-                onChange={(event) => onFieldChange(event, this.handleChange)}
+                onChange={this.handleChange}
             />
         );
     }

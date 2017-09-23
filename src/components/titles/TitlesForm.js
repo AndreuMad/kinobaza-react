@@ -28,14 +28,14 @@ class TitlesForm extends Component {
         this.props.fetchTitles(this.state.values);
     }
 
-    handleFormChange(data, handler) {
-        let value = handler(data);
-        console.log(value);
+    handleFormChange(name, payload) {
+        let data = {};
+        data[name] = payload;
 
         this.setState({
             values: {
                 ...this.state.values,
-                ...value
+                ...data
             }
         });
     }

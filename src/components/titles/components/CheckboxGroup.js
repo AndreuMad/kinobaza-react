@@ -9,19 +9,16 @@ class CheckboxGroupWrap extends Component {
     }
 
     handleChange(values) {
-        let value = {};
-        value[this.props.name] = values;
-
-        return value;
+        this.props.onFieldChange(this.props.name, values);
     }
 
     render() {
-        const { name, options, onFieldChange } = this.props;
+        const { name, options } = this.props;
 
         return (
             <CheckboxGroup
                 name={name}
-                onChange={(newData) => onFieldChange(newData, this.handleChange)}
+                onChange={this.handleChange}
             >
                 {options.map((option, index) => (
                 <div className="checkbox-item" key={`checkbox${index}`}>

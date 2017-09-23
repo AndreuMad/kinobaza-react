@@ -12,17 +12,13 @@ class InputRangeWrap extends Component {
         };
     }
 
-    handleChange(data) {
-        let value = {};
-
-        this.setState(data);
-        value[this.props.name] = data;
-
-        return value;
+    handleChange(value) {
+        this.setState({ value });
+        this.props.onFieldChange(this.props.name, value);
     }
 
     render() {
-        const { name, minValue, maxValue, onFieldChange } = this.props;
+        const { name, minValue, maxValue } = this.props;
 
         return (
             <InputRange
@@ -30,7 +26,7 @@ class InputRangeWrap extends Component {
                 minValue={minValue}
                 maxValue={maxValue}
                 value={this.state.value}
-                onChange={value => onFieldChange(value, this.handleChange)}
+                onChange={(value) => this.handleChange(value)}
             />
         );
     }
