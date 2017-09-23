@@ -19,6 +19,10 @@ class Header extends Component {
         this.singWithToken();
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
     singWithToken() {
         const token = localStorage.getItem('token');
 

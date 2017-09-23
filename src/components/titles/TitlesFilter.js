@@ -10,10 +10,10 @@ const renderInputRange = ({ input, minValue, maxValue }) => {
 
     return (
         <InputRange
-            onChange={(values) => input.onChange(values)}
             value={input.value}
             minValue={minValue}
             maxValue={maxValue}
+            onChange={(values) => input.onChange(values)}
         />
     );
 };
@@ -55,7 +55,6 @@ class TitlesFilter extends Component {
     }
 
     handleFormChange(values) {
-        console.log('change');
         this.props.fetchTitles(values);
     }
 
@@ -64,7 +63,10 @@ class TitlesFilter extends Component {
 
         return (
             <div className="titles-filter-wrap">
-                <form onChange={() => setTimeout(handleSubmit(values => this.handleFormChange(values)))}>
+                <form
+                    onClick={() => setTimeout(handleSubmit(values => this.handleFormChange(values)))}
+                    onKeyUp={() => setTimeout(handleSubmit(values => this.handleFormChange(values)))}
+                >
                     <div className="filter-item">
                         <Field
                             name="name"
@@ -80,7 +82,7 @@ class TitlesFilter extends Component {
                                 height: '16rem'
                             }}>
                                 <Field
-                                    name="genres"
+                                    name="genre"
                                     component={renderCheckboxGroup}
                                     options={[
                                         { name: 'action', nameUkr: 'екшн' },
