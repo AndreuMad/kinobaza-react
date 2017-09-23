@@ -49,7 +49,9 @@ const CardBig = ({ id, image, title, text }) => {
 
 CardBig.propTypes = {
     id: PropTypes.string.isRequired,
-    image: PropTypes.object,
+    image: PropTypes.shape({
+        url: PropTypes.string.isRequired
+    }),
     title: PropTypes.string.isRequired,
     date: PropTypes.string,
     text: PropTypes.string.isRequired,

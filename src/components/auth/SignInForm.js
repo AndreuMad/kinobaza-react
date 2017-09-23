@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 
@@ -60,6 +61,12 @@ class SignIn extends Component {
         );
     }
 }
+
+SignIn.propTypes = {
+    errorMessage: PropTypes.string,
+    signinUser: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
+};
 
 const mapStateToProps = (state) => ({
     errorMessage: state.auth.error

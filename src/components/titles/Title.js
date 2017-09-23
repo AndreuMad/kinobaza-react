@@ -1,14 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const Title = ({
-                            id,
-                            titleEn,
-                            titleUkr,
-                            imageUrl,
-                            year,
-                            averageScore,
-                            imdbScore,
-                            text }) => {
+const Title = ({ id, titleEn, titleUkr, imageUrl, year, averageScore, imdbScore, text }) => {
     return (
         <article className="title-item" key={`title${id}`}>
             <div className="row">
@@ -42,6 +35,17 @@ const Title = ({
             </div>
         </article>
     );
+};
+
+Title.propTypes = {
+    id: PropTypes.string.isRequired,
+    titleEn: PropTypes.string,
+    titleUkr: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string,
+    year: PropTypes.number,
+    averageScore: PropTypes.number,
+    imdbScore: PropTypes.number,
+    text: PropTypes.string.isRequired
 };
 
 export default Title;

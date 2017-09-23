@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import InputRange from 'react-input-range';
 
-class InputRangeWrap extends Component {
+class RenderInputRange extends Component {
     constructor(props) {
         super(props);
 
@@ -32,4 +33,11 @@ class InputRangeWrap extends Component {
     }
 }
 
-export default InputRangeWrap;
+RenderInputRange.propTypes = {
+    name: PropTypes.string.isRequired,
+    minValue: PropTypes.number.isRequired,
+    maxValue: PropTypes.number.isRequired,
+    onFieldChange: PropTypes.func.isRequired
+};
+
+export default RenderInputRange;

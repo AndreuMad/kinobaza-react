@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { signupUser } from '../../actions/auth-actions';
@@ -89,6 +90,12 @@ const validate = (values) => {
     }
 
     return errors;
+};
+
+SignUp.propTypes = {
+    errorMessage: PropTypes.string,
+    signupUser: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Checkbox, CheckboxGroup } from 'react-checkbox-group';
 
-class CheckboxGroupWrap extends Component {
+class RenderCheckboxGroup extends Component {
     constructor(props) {
         super(props);
 
@@ -37,4 +38,13 @@ class CheckboxGroupWrap extends Component {
     }
 }
 
-export default CheckboxGroupWrap;
+RenderCheckboxGroup.propTypes = {
+    name: PropTypes.string.isRequired,
+    options: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired
+    })),
+    onFieldChange: PropTypes.func.isRequired
+};
+
+export default RenderCheckboxGroup;

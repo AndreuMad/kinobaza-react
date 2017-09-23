@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Title from './Title';
@@ -27,6 +28,7 @@ const TitlesPage = ({ titlesList }) => (
                                 return (
                                     <Title
                                         key={`title${_id}`}
+                                        id={_id}
                                         titleEn={name.en}
                                         titleUkr={name.ukr}
                                         imageUrl={image.url}
@@ -49,6 +51,10 @@ const TitlesPage = ({ titlesList }) => (
         </div>
     </article>
 );
+
+TitlesPage.propTypes = {
+    titlesList: PropTypes.arrayOf(PropTypes.object)
+};
 
 const mapStateToProps = (state) => {
     return {

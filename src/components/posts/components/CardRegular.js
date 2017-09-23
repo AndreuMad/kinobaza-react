@@ -51,8 +51,10 @@ const CardRegular = ({ id, image, title }) => {
 CardRegular.propTypes = {
     id: PropTypes.string.isRequired,
     shared: PropTypes.object,
-    //image: PropTypes.object.isRequired,
-    //date: PropTypes.string,
+    image: PropTypes.shape({
+        url: PropTypes.string.isRequired
+    }),
+    date: PropTypes.string,
     title: PropTypes.string.isRequired
 };
 

@@ -115,6 +115,12 @@ class PostsPage extends Component {
     }
 }
 
+PostsPage.propTypes = {
+    posts: PropTypes.array,
+    bigPost: PropTypes.object,
+    fetchPosts: PropTypes.func.isRequired
+};
+
 const mapStateToProps = (state) => {
     return {
         posts: state.posts.posts,

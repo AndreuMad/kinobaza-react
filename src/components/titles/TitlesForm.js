@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import InputField from './components/InputField';
-import CheckboxGroupWrap from './components/CheckboxGroup';
-import InputRangeWrap from './components/InputRange';
+import RenderInputField from './components/InputField';
+import RenderCheckboxGroup from './components/CheckboxGroup';
+import RenderInputRange from './components/InputRange';
 
 import { fetchTitles } from '../../actions/titles-actions';
 
@@ -46,7 +47,7 @@ class TitlesForm extends Component {
             <div className="titles-filter-wrap">
                 <form>
                     <div className="filter-item">
-                        <InputField
+                        <RenderInputField
                             type="text"
                             name="name"
                             placeholder="назва"
@@ -58,7 +59,7 @@ class TitlesForm extends Component {
                             <Scrollbars style={{
                                 height: '16rem'
                             }}>
-                                <CheckboxGroupWrap
+                                <RenderCheckboxGroup
                                     name="genre"
                                     options={[
                                         { name: 'action', label: 'екшн' },
@@ -77,7 +78,7 @@ class TitlesForm extends Component {
                     </div>
                     <div className="filter-item">
                         <p className="filter-item-title">Рік</p>
-                        <InputRangeWrap
+                        <RenderInputRange
                             name="year"
                             minValue={1878}
                             maxValue={2017}
@@ -86,12 +87,22 @@ class TitlesForm extends Component {
                     </div>
                     <div className="filter-item">
                         <p className="filter-item-title">Рейтинг IMDb</p>
+                        <RenderInputRange
+                            name="score"
+                            minValue={1}
+                            maxValue={10}
+                            onFieldChange={this.handleFormChange}
+                        />
                     </div>
                 </form>
             </div>
         );
     }
 }
+
+TitlesForm.propTypes = {
+    fetchTitles: PropTypes.func.isRequired
+};
 
 const mapDispatchToProps = (dispatch) => ({
     fetchTitles: (props) => dispatch(fetchTitles(props))

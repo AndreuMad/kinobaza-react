@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-class InputField extends Component {
+class RenderInputField extends Component {
     constructor(props) {
         super(props);
 
@@ -25,4 +26,11 @@ class InputField extends Component {
     }
 }
 
-export default InputField;
+RenderInputField.propTypes = {
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    onFieldChange: PropTypes.func.isRequired
+};
+
+export default RenderInputField;

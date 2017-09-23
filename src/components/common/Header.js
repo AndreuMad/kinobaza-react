@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import classNames from 'classnames';
@@ -169,6 +170,13 @@ class Header extends Component {
         );
     }
 }
+
+Header.propTypes = {
+    authenticated: PropTypes.bool,
+    userName: PropTypes.string,
+    signWithToken: PropTypes.func.isRequired,
+    signoutUser: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => (
     {
