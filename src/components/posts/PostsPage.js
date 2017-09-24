@@ -10,34 +10,14 @@ import CardRegular from './components/CardRegular';
 class PostsPage extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            posts: [],
-            bigPost: null
-        };
-
-        this.fetchPosts = this.fetchPosts.bind(this);
     }
 
     componentDidMount() {
         this.fetchPosts({ skip: 0, limit: 8 });
+
         setTimeout(() => {
             this.fetchPosts({ skip: 8, limit: 3 });
         }, 3000);
-    }
-
-    componentWillReceiveProps(newProps) {
-        // Regular Posts
-        const newPosts = newProps.posts;
-        if(newPosts.length) {
-            this.handlePosts(newPosts);
-        }
-
-        // Big Post
-        const bigPost = newProps.bigPost;
-        if(bigPost) {
-            this.handleBigPost(bigPost);
-        }
     }
 
     fetchPosts({ skip, limit }) {
@@ -52,26 +32,8 @@ class PostsPage extends Component {
         this.props.fetchPosts(query);
     }
 
-    handlePosts(newPosts) {
-        const oldPosts = this.state.posts;
-
-        if(!oldPosts.length) {
-            const bigPost = newPosts.filter(post => post.important)[0];
-            this.props.fetchBigPost(bigPost._id);
-        }
-
-        if(!oldPosts.length || oldPosts[1]._id !== newPosts[1]._id) {
-            this.setState({
-                posts: [
-                    ...oldPosts,
-                    ...newPosts
-                ]
-            })
-        }
-    }
-
     renderPosts() {
-        const posts = this.state.posts;
+        const posts = this.props.posts;
 
         if(posts) {
             return (
@@ -92,33 +54,23 @@ class PostsPage extends Component {
         }
     }
 
-    handleBigPost(newBigPost) {
-        const posts = this.state.posts;
-
-        if(!this.state.bigPost) {
-
-            console.log(posts);
-
-            this.setState({
-                bigPost: newBigPost,
-                posts: posts.filter(post => post._id !== newBigPost._id)
-            });
-        }
-    }
-
     renderBigPost() {
-        const bigPost = this.state.bigPost;
+        const bigPost = this.props.bigPost;
 
         if(bigPost) {
 
             return (
-                <CardBig
-                    key={`bigPost${bigPost._id}`}
-                    id={bigPost._id}
-                    image={bigPost.image}
-                    title={bigPost.title}
-                    text={bigPost.text}
-                />
+                <div className="col m-8">
+                    <div className="col-inner">
+                        <CardBig
+                            key={`bigPost${bigPost._id}`}
+                            id={bigPost._id}
+                            image={bigPost.image}
+                            title={bigPost.title}
+                            text={bigPost.text}
+                        />
+                    </div>
+                </div>
             );
         }
     }
@@ -130,11 +82,7 @@ class PostsPage extends Component {
                 <div className="container">
                     <h1 className="section-heading">Публікації</h1>
                     <div className="row">
-                        <div className="col m-8">
-                            <div className="col-inner">
-                                {this.renderBigPost()}
-                            </div>
-                        </div>
+                        {this.renderBigPost()}
                         {this.renderPosts()}
                     </div>
                 </div>
