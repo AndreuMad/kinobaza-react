@@ -6,7 +6,7 @@ import {
 
 const defaultPostsState = {
     post: null,
-    posts: null
+    posts: []
 };
 
 export const postsReducer = (state = defaultPostsState, action) => {
@@ -16,7 +16,10 @@ export const postsReducer = (state = defaultPostsState, action) => {
         case FETCH_POSTS_SUCCESS:
             return {
                 ...state,
-                posts: action.postsList
+                posts: [
+                    ...state.posts,
+                    ...action.posts
+                ]
             };
 
         case FETCH_BIG_POST_SUCCESS:

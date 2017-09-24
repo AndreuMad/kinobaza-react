@@ -25,10 +25,10 @@ export const fetchPosts = (params) => {
     }
 };
 
-export const fetchPostsSuccess = (postsList) => {
+export const fetchPostsSuccess = (posts) => {
     return {
         type: FETCH_POSTS_SUCCESS,
-        postsList
+        posts
     }
 };
 
