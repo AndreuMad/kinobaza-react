@@ -55,7 +55,8 @@ CardRegular.propTypes = {
         url: PropTypes.string.isRequired
     }),
     date: PropTypes.string,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    important: PropTypes.bool
 };
 
 export default CardRegular;

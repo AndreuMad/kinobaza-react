@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Pagination from 'react-js-pagination';
 
-import { fetchPosts } from '../../actions/posts-actions';
+import { fetchPosts, fetchBigPost } from '../../actions/posts-actions';
 
 import CardBig from './components/CardBig';
 import CardRegular from './components/CardRegular';
@@ -13,52 +12,105 @@ class PostsPage extends Component {
         super(props);
 
         this.state = {
-            activePage: 1,
-            postsPerPage: 8
+            posts: [],
+            bigPost: null
         };
 
-        this.handlePagination = this.handlePagination.bind(this);
+        this.fetchPosts = this.fetchPosts.bind(this);
     }
 
+    componentDidMount() {
+        this.fetchPosts({ skip: 0, limit: 8 });
+        setTimeout(() => {
+            this.fetchPosts({ skip: 8, limit: 3 });
+        }, 3000);
+    }
 
-    fetchPosts() {
-        this.props.fetchPosts({
-            skip: (this.state.activePage - 1) * this.state.postsPerPage,
-            limit: 8
-        });
+    componentWillReceiveProps(newProps) {
+        // Regular Posts
+        const newPosts = newProps.posts;
+        if(newPosts.length) {
+            this.handlePosts(newPosts);
+        }
+
+        // Big Post
+        const bigPost = newProps.bigPost;
+        if(bigPost) {
+            this.handleBigPost(bigPost);
+        }
+    }
+
+    fetchPosts({ skip, limit }) {
+        let query = {};
+        if(skip) {
+            query.skip = skip;
+        }
+        if(limit) {
+            query.limit = limit;
+        }
+
+        this.props.fetchPosts(query);
+    }
+
+    handlePosts(newPosts) {
+        const oldPosts = this.state.posts;
+
+        if(!oldPosts.length) {
+            const bigPost = newPosts.filter(post => post.important)[0];
+            this.props.fetchBigPost(bigPost._id);
+        }
+
+        if(!oldPosts.length || oldPosts[1]._id !== newPosts[1]._id) {
+            this.setState({
+                posts: [
+                    ...oldPosts,
+                    ...newPosts
+                ]
+            })
+        }
     }
 
     renderPosts() {
-        const posts = this.props.posts;
+        const posts = this.state.posts;
 
         if(posts) {
             return (
-                posts.map((post, index) => {
-                    if(index !== 0) {
-                        return (
-                            <div key={`post_${post._id}`} className="col m-4">
-                                <div className="col-inner">
-                                    <CardRegular
-                                        id={post._id}
-                                        image={post.image}
-                                        title={post.title}
-                                        date={post.date}
-                                    />
-                                </div>
+                posts.map((post, index) => (
+                        <div key={`post_${post._id}${Math.random()}`} className="col m-4">
+                            <div className="col-inner">
+                                <CardRegular
+                                    id={`defaultPost${post._id}`}
+                                    image={post.image}
+                                    title={post.title}
+                                    date={post.date}
+                                />
                             </div>
-                        )
-                    }
-                })
+                        </div>
+                    )
+                )
             )
-        } else {
-            this.fetchPosts();
+        }
+    }
+
+    handleBigPost(newBigPost) {
+        const posts = this.state.posts;
+
+        if(!this.state.bigPost) {
+
+            console.log(posts);
+
+            this.setState({
+                bigPost: newBigPost,
+                posts: posts.filter(post => post._id !== newBigPost._id)
+            });
         }
     }
 
     renderBigPost() {
-        const bigPost = this.props.bigPost;
+        const bigPost = this.state.bigPost;
 
         if(bigPost) {
+
             return (
                 <CardBig
                     key={`bigPost${bigPost._id}`}
@@ -69,29 +121,6 @@ class PostsPage extends Component {
                 />
             );
         }
-    }
-
-    renderPagination() {
-        if(this.props.posts) {
-            return (
-                <Pagination
-                    activePage={this.state.activePage}
-                    itemsCountPerPage={this.props.posts.length}
-                    totalItemsCount={10}
-                    pageRangeDisplayed={2}
-                    onChange={this.handlePagination}
-                />
-            )
-        }
-        return null;
-    }
-
-    handlePagination(pageToRender) {
-        this.setState({
-            activePage: pageToRender
-        });
-
-        this.fetchPosts();
     }
 
     render() {
@@ -108,7 +137,6 @@ class PostsPage extends Component {
                         </div>
                         {this.renderPosts()}
                     </div>
-                    <div className="pagination">{this.renderPagination()}</div>
                 </div>
             </article>
         );
@@ -130,7 +158,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchPosts: (props) => dispatch(fetchPosts(props))
+        fetchPosts: (props) => dispatch(fetchPosts(props)),
+        fetchBigPost: (id) => dispatch(fetchBigPost(id))
     };
 };
 
