@@ -19,7 +19,7 @@ class PostsPage extends Component {
 
         this.state = {
             posts: [],
-            postsNumber: 0
+            postsNumber: 8
         };
     }
 
@@ -27,20 +27,6 @@ class PostsPage extends Component {
         this.fetchPosts({ skip: 0, limit: 8 }, true);
 
         window.addEventListener('scroll', _.debounce(this.handleScroll), 200);
-    }
-
-    componentWillReceiveProps(newProps) {
-        const oldPosts = this.props.posts;
-        const newPosts = newProps.posts;
-
-        console.log(oldPosts);
-        console.log(newPosts);
-
-        if(!oldPosts.length || oldPosts[oldPosts.length - 1] !== newPosts[newPosts.length - 1]) {
-            this.setState({
-                posts: newPosts
-            });
-        }
     }
 
     componentWillUnmount() {
@@ -64,9 +50,12 @@ class PostsPage extends Component {
         // if(this.pageNode.getBoundingClientRect().bottom - window.innerHeight < 200) {
         //     this.fetchPosts({ skip: 8, limit: 3 });
         // }
-        const skip = this.state.posts.length;
 
-        return this.fetchPosts({ skip, limit: 3 });
+        this.fetchPosts({ skip: this.state.postsNumber, limit: 3 });
+
+        this.setState((prevState) => ({
+            postsNumber: prevState.postsNumber + 3
+        }));
     }
 
     renderPosts() {
