@@ -35,7 +35,8 @@ export const postsReducer = (state = defaultPostsState, action) => {
         case CLEAR_POSTS:
             return {
                 ...state,
-                posts: []
+                posts: [],
+                articlePost: null
             };
 
         case FETCH_ARTICLE_POST_SUCCESS:

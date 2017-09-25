@@ -15,22 +15,28 @@ class PostsPage extends Component {
     constructor(props) {
         super(props);
 
-        this.handleScroll = this.handleScroll.bind(this);
+        this.handlePostsLoad = this.handlePostsLoad.bind(this);
+        this.handleLoadButton = this.handleLoadButton.bind(this);
 
         this.state = {
-            posts: [],
-            postsNumber: 8
+            numberOfPosts: 8,
+            shouldLoadPosts: false
         };
     }
 
     componentDidMount() {
         this.fetchPosts({ skip: 0, limit: 8 }, true);
 
-        window.addEventListener('scroll', _.debounce(this.handleScroll, 200));
+        window.addEventListener('scroll', this.handlePostsLoad);
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return !(this.props.posts.length === nextProps.posts.length && this.props.articlePost);
     }
 
     componentWillUnmount() {
         this.props.clearPosts();
+        window.removeEventListener('scroll', this.handlePostsLoad);
     }
 
     fetchPosts({ skip, limit }, shouldFetchArticle) {
@@ -46,23 +52,36 @@ class PostsPage extends Component {
         this.props.fetchPosts(query, shouldFetchArticle);
     }
 
-    handleScroll() {
-        // if(this.pageNode.getBoundingClientRect().bottom - window.innerHeight < 200) {
-        //     this.fetchPosts({ skip: 8, limit: 3 });
-        // }
+    handleLoadButton() {
+        this.setState({
+            shouldLoadPosts: true
+        });
+        setTimeout(this.handlePostsLoad);
+    }
 
-        if(this.props.fetchPostsStatus) {
-            this.fetchPosts({ skip: this.state.postsNumber, limit: 3 });
+    handlePostsLoad() {
 
-            this.setState((prevState) => ({
-                postsNumber: prevState.postsNumber + 3
-            }));
+        console.log('fire');
+        if(this.state.shouldLoadPosts && this.pageNode.getBoundingClientRect().bottom - window.innerHeight < 200) {
+
+            if(this.props.fetchPostsStatus) {
+
+                this.fetchPosts({ skip: this.state.numberOfPosts, limit: 3 });
+
+                this.setState((prevState) => ({
+                    numberOfPosts: prevState.numberOfPosts + 3
+                }));
+            }
         }
     }
 
+    renderLoadSection() {
+        return !this.state.shouldLoadPosts ? <button className="btn blue" onClick={this.handleLoadButton}>Load more</button> : null;
+    }
+
     renderPosts() {
-        console.log(this.props.posts);
         const posts = this.props.posts;
+        console.log(posts);
 
         if(posts) {
 
@@ -117,6 +136,11 @@ class PostsPage extends Component {
                     <div className="row">
                         {this.renderArticlePost()}
                         {this.renderPosts()}
+                    </div>
+                    <div className="load-more-section">
+                        <div className="btn-group align-center" style={{marginBottom: '3.6rem'}}>
+                            {this.renderLoadSection()}
+                        </div>
                     </div>
                 </div>
             </article>
