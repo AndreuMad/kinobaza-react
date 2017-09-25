@@ -1,6 +1,7 @@
 import Axios from 'axios';
 
 import {
+    FETCH_POSTS_STATUS,
     FETCH_POSTS_SUCCESS,
     CLEAR_POSTS,
     FETCH_ARTICLE_POST_SUCCESS,
@@ -11,6 +12,8 @@ import { apiUrl } from '../constants/urls';
 
 export const fetchPosts = (params, shouldFetchArticle) => {
     return (dispatch) => {
+
+        dispatch(fetchPostsStatus(false));
 
         return Axios.get(`${apiUrl}/posts`, {
             params: {
@@ -27,11 +30,21 @@ export const fetchPosts = (params, shouldFetchArticle) => {
                     data = data.filter(item => item._id !== articleItemId);
                 }
 
-                dispatch(fetchPostsSuccess(data));
+                if(data.length) {
+                    dispatch(fetchPostsSuccess(data));
+                }
+                dispatch(fetchPostsStatus(true));
             })
             .catch(error => {
                 throw(error);
             });
+    }
+};
+
+export const fetchPostsStatus = (status) => {
+    return {
+        type: FETCH_POSTS_STATUS,
+        status
     }
 };
 

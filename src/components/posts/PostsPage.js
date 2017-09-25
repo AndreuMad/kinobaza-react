@@ -26,7 +26,7 @@ class PostsPage extends Component {
     componentDidMount() {
         this.fetchPosts({ skip: 0, limit: 8 }, true);
 
-        window.addEventListener('scroll', _.debounce(this.handleScroll), 200);
+        window.addEventListener('scroll', _.debounce(this.handleScroll, 200));
     }
 
     componentWillUnmount() {
@@ -51,15 +51,18 @@ class PostsPage extends Component {
         //     this.fetchPosts({ skip: 8, limit: 3 });
         // }
 
-        this.fetchPosts({ skip: this.state.postsNumber, limit: 3 });
+        if(this.props.fetchPostsStatus) {
+            this.fetchPosts({ skip: this.state.postsNumber, limit: 3 });
 
-        this.setState((prevState) => ({
-            postsNumber: prevState.postsNumber + 3
-        }));
+            this.setState((prevState) => ({
+                postsNumber: prevState.postsNumber + 3
+            }));
+        }
     }
 
     renderPosts() {
-        const posts = this.state.posts;
+        console.log(this.props.posts);
+        const posts = this.props.posts;
 
         if(posts) {
 
@@ -124,13 +127,15 @@ class PostsPage extends Component {
 PostsPage.propTypes = {
     posts: PropTypes.array,
     articlePost: PropTypes.object,
-    fetchPosts: PropTypes.func.isRequired
+    fetchPosts: PropTypes.func.isRequired,
+    fetchPostsStatus: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
         posts: state.posts.posts,
-        articlePost: state.posts.articlePost
+        articlePost: state.posts.articlePost,
+        fetchPostsStatus: state.posts.fetchPostsStatus
     };
 };
 

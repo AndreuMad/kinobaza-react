@@ -1,4 +1,5 @@
 import {
+    FETCH_POSTS_STATUS,
     FETCH_POSTS_SUCCESS,
     CLEAR_POSTS,
     FETCH_ARTICLE_POST_SUCCESS,
@@ -6,13 +7,21 @@ import {
 } from '../constants/actions';
 
 const defaultPostsState = {
+    posts: [],
+    articlePost: null,
+    fetchPostsStatus: true,
     post: null,
-    posts: []
 };
 
 export const postsReducer = (state = defaultPostsState, action) => {
 
     switch(action.type) {
+
+        case FETCH_POSTS_STATUS:
+            return {
+                ...state,
+                fetchPostsStatus: action.status
+            };
 
         case FETCH_POSTS_SUCCESS:
             return {
