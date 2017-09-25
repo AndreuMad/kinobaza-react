@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import sliceString from '../../../utilites/sliceString';
 
-const CardBig = ({ id, image, title, text }) => {
+const CardArticle = ({ id, image, title, text }) => {
     return (
         <article className="card-big">
             <div className="row">
@@ -47,7 +47,7 @@ const CardBig = ({ id, image, title, text }) => {
     );
 };
 
-CardBig.propTypes = {
+CardArticle.propTypes = {
     id: PropTypes.string.isRequired,
     image: PropTypes.shape({
         url: PropTypes.string.isRequired
@@ -58,4 +58,4 @@ CardBig.propTypes = {
     shared: PropTypes.object
 };
 
-export default CardBig;
+export default CardArticle;

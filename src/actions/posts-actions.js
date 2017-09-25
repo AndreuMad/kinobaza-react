@@ -2,13 +2,14 @@ import Axios from 'axios';
 
 import {
     FETCH_POSTS_SUCCESS,
-    FETCH_BIG_POST_SUCCESS,
+    CLEAR_POSTS,
+    FETCH_ARTICLE_POST_SUCCESS,
     FETCH_POST_SUCCESS
 } from '../constants/actions';
 
 import { apiUrl } from '../constants/urls';
 
-export const fetchPosts = (params) => {
+export const fetchPosts = (params, shouldFetchArticle) => {
     return (dispatch) => {
 
         return Axios.get(`${apiUrl}/posts`, {
@@ -17,7 +18,16 @@ export const fetchPosts = (params) => {
             }
         })
             .then(response => {
-                dispatch(fetchPostsSuccess(response.data));
+                let { data } = response;
+
+                if(shouldFetchArticle) {
+                    const articleItem = data.filter(item => item.important);
+                    const articleItemId = articleItem.length ? articleItem[0]._id : data[0]._id;
+                    dispatch(fetchArticlePost(articleItemId));
+                    data = data.filter(item => item._id !== articleItemId);
+                }
+
+                dispatch(fetchPostsSuccess(data));
             })
             .catch(error => {
                 throw(error);
@@ -29,6 +39,12 @@ export const fetchPostsSuccess = (posts) => {
     return {
         type: FETCH_POSTS_SUCCESS,
         posts
+    }
+};
+
+export const clearPosts = () => {
+    return {
+        type: CLEAR_POSTS
     }
 };
 
@@ -53,12 +69,12 @@ export const fetchPostSuccess = (post) => {
     }
 };
 
-export const fetchBigPost = (id) => {
+export const fetchArticlePost = (id) => {
     return (dispatch) => {
 
         return Axios.get(`${apiUrl}/posts/${id}`)
             .then(response => {
-                dispatch(fetchBigPostSuccess(response.data));
+                dispatch(fetchArticlePostSuccess(response.data));
             })
             .catch(error => {
                 throw(error);
@@ -66,10 +82,10 @@ export const fetchBigPost = (id) => {
     }
 };
 
-export const fetchBigPostSuccess = (bigPost) => {
+export const fetchArticlePostSuccess = (articlePost) => {
 
     return {
-        type: FETCH_BIG_POST_SUCCESS,
-        bigPost
+        type: FETCH_ARTICLE_POST_SUCCESS,
+        articlePost
     }
 };

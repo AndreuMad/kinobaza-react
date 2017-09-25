@@ -1,27 +1,55 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
-import { fetchPosts, fetchBigPost } from '../../actions/posts-actions';
+import {
+    fetchPosts,
+    clearPosts
+} from '../../actions/posts-actions';
 
-import CardBig from './components/CardBig';
 import CardRegular from './components/CardRegular';
+import CardArticle from './components/CardArticle';
 
 class PostsPage extends Component {
     constructor(props) {
         super(props);
+
+        this.handleScroll = this.handleScroll.bind(this);
+
+        this.state = {
+            posts: [],
+            postsNumber: 0
+        };
     }
 
     componentDidMount() {
-        this.fetchPosts({ skip: 0, limit: 8 });
+        this.fetchPosts({ skip: 0, limit: 8 }, true);
 
-        setTimeout(() => {
-            this.fetchPosts({ skip: 8, limit: 3 });
-        }, 3000);
+        window.addEventListener('scroll', _.debounce(this.handleScroll), 200);
     }
 
-    fetchPosts({ skip, limit }) {
+    componentWillReceiveProps(newProps) {
+        const oldPosts = this.props.posts;
+        const newPosts = newProps.posts;
+
+        console.log(oldPosts);
+        console.log(newPosts);
+
+        if(!oldPosts.length || oldPosts[oldPosts.length - 1] !== newPosts[newPosts.length - 1]) {
+            this.setState({
+                posts: newPosts
+            });
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.clearPosts();
+    }
+
+    fetchPosts({ skip, limit }, shouldFetchArticle) {
         let query = {};
+
         if(skip) {
             query.skip = skip;
         }
@@ -29,19 +57,29 @@ class PostsPage extends Component {
             query.limit = limit;
         }
 
-        this.props.fetchPosts(query);
+        this.props.fetchPosts(query, shouldFetchArticle);
+    }
+
+    handleScroll() {
+        // if(this.pageNode.getBoundingClientRect().bottom - window.innerHeight < 200) {
+        //     this.fetchPosts({ skip: 8, limit: 3 });
+        // }
+        const skip = this.state.posts.length;
+
+        return this.fetchPosts({ skip, limit: 3 });
     }
 
     renderPosts() {
-        const posts = this.props.posts;
+        const posts = this.state.posts;
 
         if(posts) {
+
             return (
                 posts.map((post, index) => (
-                        <div key={`post_${post._id}${Math.random()}`} className="col m-4">
+                        <div key={`post_${post._id}`} className="col m-4">
                             <div className="col-inner">
                                 <CardRegular
-                                    id={`defaultPost${post._id}`}
+                                    id={`${post._id}`}
                                     image={post.image}
                                     title={post.title}
                                     date={post.date}
@@ -54,20 +92,20 @@ class PostsPage extends Component {
         }
     }
 
-    renderBigPost() {
-        const bigPost = this.props.bigPost;
+    renderArticlePost() {
+        const articlePost = this.props.articlePost;
 
-        if(bigPost) {
+        if(articlePost) {
 
             return (
                 <div className="col m-8">
                     <div className="col-inner">
-                        <CardBig
-                            key={`bigPost${bigPost._id}`}
-                            id={bigPost._id}
-                            image={bigPost.image}
-                            title={bigPost.title}
-                            text={bigPost.text}
+                        <CardArticle
+                            key={`articlePost${articlePost._id}`}
+                            id={articlePost._id}
+                            image={articlePost.image}
+                            title={articlePost.title}
+                            text={articlePost.text}
                         />
                     </div>
                 </div>
@@ -78,11 +116,14 @@ class PostsPage extends Component {
     render() {
 
         return (
-            <article className="posts-page">
+            <article
+                className="posts-page"
+                ref={node => this.pageNode = node}
+            >
                 <div className="container">
                     <h1 className="section-heading">Публікації</h1>
                     <div className="row">
-                        {this.renderBigPost()}
+                        {this.renderArticlePost()}
                         {this.renderPosts()}
                     </div>
                 </div>
@@ -93,21 +134,21 @@ class PostsPage extends Component {
 
 PostsPage.propTypes = {
     posts: PropTypes.array,
-    bigPost: PropTypes.object,
+    articlePost: PropTypes.object,
     fetchPosts: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
         posts: state.posts.posts,
-        bigPost: state.posts.bigPost
+        articlePost: state.posts.articlePost
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchPosts: (props) => dispatch(fetchPosts(props)),
-        fetchBigPost: (id) => dispatch(fetchBigPost(id))
+        fetchPosts: (props, fetchArticlePost) => dispatch(fetchPosts(props, fetchArticlePost)),
+        clearPosts: () => dispatch(clearPosts())
     };
 };
 

@@ -1,6 +1,7 @@
 import {
     FETCH_POSTS_SUCCESS,
-    FETCH_BIG_POST_SUCCESS,
+    CLEAR_POSTS,
+    FETCH_ARTICLE_POST_SUCCESS,
     FETCH_POST_SUCCESS
 } from '../constants/actions';
 
@@ -22,10 +23,16 @@ export const postsReducer = (state = defaultPostsState, action) => {
                 ]
             };
 
-        case FETCH_BIG_POST_SUCCESS:
+        case CLEAR_POSTS:
             return {
                 ...state,
-                bigPost: action.bigPost
+                posts: []
+            };
+
+        case FETCH_ARTICLE_POST_SUCCESS:
+            return {
+                ...state,
+                articlePost: action.articlePost
             };
 
         case FETCH_POST_SUCCESS:

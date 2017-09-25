@@ -13,12 +13,14 @@ export const authReducer = (state = {}, action) => {
                 name: action.name,
                 error: null
             };
+            break;
         case UNAUTH_USER:
             return {
                 ...state,
                 authenticated: false,
                 error: null
             };
+            break;
         case AUTH_ERROR:
             return {
                 ...state,
