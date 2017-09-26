@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, NavLink, withRouter } from 'react-router-dom';
+import _ from 'lodash';
 import classNames from 'classnames';
 
 import { signWithToken, signoutUser } from '../../actions/auth-actions';
@@ -9,7 +10,7 @@ import { signWithToken, signoutUser } from '../../actions/auth-actions';
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.handleScroll = this.handleScroll.bind(this);
+        this.handleScroll = _.debounce(this.handleScroll.bind(this), 15);
         this.state = {
             sticky: false
         }
