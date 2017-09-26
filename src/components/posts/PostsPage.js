@@ -15,11 +15,11 @@ class PostsPage extends Component {
     constructor(props) {
         super(props);
 
-        this.handlePostsLoad = this.handlePostsLoad.bind(this);
+        this.handlePostsLoad = _.debounce(this.handlePostsLoad.bind(this), 200);
         this.handleLoadButton = this.handleLoadButton.bind(this);
 
         this.state = {
-            numberOfPosts: 8,
+            currentPostsCount: 0,
             shouldLoadPosts: false
         };
     }
@@ -28,6 +28,17 @@ class PostsPage extends Component {
         this.fetchPosts({ skip: 0, limit: 8 }, true);
 
         window.addEventListener('scroll', this.handlePostsLoad);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const previousPostsCount = this.state.currentPostsCount;
+        const currentPostsCount = nextProps.posts.length + 1;
+
+        if(previousPostsCount < currentPostsCount) {
+            this.setState({
+                currentPostsCount: currentPostsCount
+            });
+        }
     }
 
     shouldComponentUpdate(nextProps) {
@@ -55,22 +66,26 @@ class PostsPage extends Component {
     handleLoadButton() {
         this.setState({
             shouldLoadPosts: true
+        }, () => {
+            this.handlePostsLoad();
         });
-        setTimeout(this.handlePostsLoad);
     }
 
     handlePostsLoad() {
+        const { currentPostsCount } = this.state;
+        const { totalPostsCount } = this.props;
 
-        console.log('fire');
-        if(this.state.shouldLoadPosts && this.pageNode.getBoundingClientRect().bottom - window.innerHeight < 200) {
+        if(currentPostsCount === totalPostsCount) {
+            this.setState({
+                shouldLoadPosts: false
+            });
+        }
 
-            if(this.props.fetchPostsStatus) {
+        if(this.state.shouldLoadPosts && this.props.fetchPostsStatus) {
 
-                this.fetchPosts({ skip: this.state.numberOfPosts, limit: 3 });
+            if(this.pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
 
-                this.setState((prevState) => ({
-                    numberOfPosts: prevState.numberOfPosts + 3
-                }));
+                this.fetchPosts({ skip: this.state.currentPostsCount, limit: 3 });
             }
         }
     }
@@ -81,7 +96,6 @@ class PostsPage extends Component {
 
     renderPosts() {
         const posts = this.props.posts;
-        console.log(posts);
 
         if(posts) {
 
@@ -150,14 +164,17 @@ class PostsPage extends Component {
 
 PostsPage.propTypes = {
     posts: PropTypes.array,
+    totalPostsCount: PropTypes.number,
     articlePost: PropTypes.object,
+    fetchPostsStatus: PropTypes.bool.isRequired,
     fetchPosts: PropTypes.func.isRequired,
-    fetchPostsStatus: PropTypes.bool.isRequired
+    clearPosts: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
         posts: state.posts.posts,
+        totalPostsCount: state.posts.totalPostsCount,
         articlePost: state.posts.articlePost,
         fetchPostsStatus: state.posts.fetchPostsStatus
     };

@@ -8,6 +8,7 @@ import {
 
 const defaultPostsState = {
     posts: [],
+    postsTotalCount: 0,
     articlePost: null,
     fetchPostsStatus: true,
     post: null,
@@ -24,12 +25,14 @@ export const postsReducer = (state = defaultPostsState, action) => {
             };
 
         case FETCH_POSTS_SUCCESS:
+
             return {
                 ...state,
                 posts: [
                     ...state.posts,
-                    ...action.posts
-                ]
+                    ...action.postsData.posts
+                ],
+                totalPostsCount: action.postsData.count
             };
 
         case CLEAR_POSTS:

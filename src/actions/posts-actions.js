@@ -22,16 +22,17 @@ export const fetchPosts = (params, shouldFetchArticle) => {
         })
             .then(response => {
                 let { data } = response;
+                let { posts, count } = data;
 
                 if(shouldFetchArticle) {
-                    const articleItem = data.filter(item => item.important);
-                    const articleItemId = articleItem.length ? articleItem[0]._id : data[0]._id;
+                    const articleItem = posts.filter(item => item.important);
+                    const articleItemId = articleItem.length ? articleItem[0]._id : posts[0]._id;
                     dispatch(fetchArticlePost(articleItemId));
-                    data = data.filter(item => item._id !== articleItemId);
+                    posts = posts.filter(item => item._id !== articleItemId);
                 }
 
-                if(data.length) {
-                    dispatch(fetchPostsSuccess(data));
+                if(posts.length) {
+                    dispatch(fetchPostsSuccess({ posts, count }));
                 }
                 dispatch(fetchPostsStatus(true));
             })
@@ -48,10 +49,13 @@ export const fetchPostsStatus = (status) => {
     }
 };
 
-export const fetchPostsSuccess = (posts) => {
+export const fetchPostsSuccess = ({ posts, count }) => {
     return {
         type: FETCH_POSTS_SUCCESS,
-        posts
+        postsData: {
+            posts,
+            count
+        }
     }
 };
 
