@@ -1,6 +1,11 @@
 import { FETCH_TITLES_SUCCESS } from '../constants/actions';
 
-const defaultTitlesState = [];
+const defaultTitlesState = {
+    titles: [],
+    titlesTotalCount: null,
+    titlesParams: null,
+    fetchTitlesStatus: true
+};
 
 export const titlesReducer = (state = defaultTitlesState, action) => {
 
@@ -8,7 +13,8 @@ export const titlesReducer = (state = defaultTitlesState, action) => {
 
         case FETCH_TITLES_SUCCESS:
             return {
-                titlesList: action.titles
+                ...state,
+                titles: action.titles
             };
 
         default:
