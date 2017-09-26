@@ -1,4 +1,7 @@
-import { FETCH_TITLES_SUCCESS } from '../constants/actions';
+import {
+    FETCH_TITLES_SUCCESS,
+    CHANGE_TITLES_PARAMS
+} from '../constants/actions';
 
 const defaultTitlesState = {
     titles: [],
@@ -15,6 +18,15 @@ export const titlesReducer = (state = defaultTitlesState, action) => {
             return {
                 ...state,
                 titles: action.titles
+            };
+
+        case CHANGE_TITLES_PARAMS:
+            return {
+                ...state,
+                titlesParams: {
+                    ...state.titlesParams,
+                    ...action.params
+                }
             };
 
         default:

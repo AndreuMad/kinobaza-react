@@ -2,7 +2,8 @@ import Axios from 'axios';
 
 import {
     FETCH_TITLE_SUCCESS,
-    FETCH_TITLES_SUCCESS
+    FETCH_TITLES_SUCCESS,
+    CHANGE_TITLES_PARAMS
 } from '../constants/actions'
 
 import { apiUrl } from '../constants/urls';
@@ -30,3 +31,11 @@ export const fetchTitlesSuccess = (titles) => {
         titles
     }
 };
+
+export const changeTitlesParams = (params) => {
+    return {
+        type: CHANGE_TITLES_PARAMS,
+        params
+    }
+};
+

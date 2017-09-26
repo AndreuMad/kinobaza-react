@@ -8,7 +8,10 @@ import RenderInputField from './components/InputField';
 import RenderCheckboxGroup from './components/CheckboxGroup';
 import RenderInputRange from './components/InputRange';
 
-import { fetchTitles } from '../../actions/titles-actions';
+import {
+    fetchTitles,
+    changeTitlesParams
+} from '../../actions/titles-actions';
 
 class TitlesForm extends Component {
     constructor(props) {
@@ -32,6 +35,8 @@ class TitlesForm extends Component {
     handleFormChange(name, payload) {
         let data = {};
         data[name] = payload;
+
+        this.props.changeTitlesParams(data);
 
         this.setState({
             values: {
@@ -101,11 +106,18 @@ class TitlesForm extends Component {
 }
 
 TitlesForm.propTypes = {
-    fetchTitles: PropTypes.func.isRequired
+    titlesParams: PropTypes.object,
+    fetchTitles: PropTypes.func.isRequired,
+    changeTitlesParams: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    fetchTitles: (props) => dispatch(fetchTitles(props))
+const mapStateToProps = (state) => ({
+    titlesParams: state.titles.titlesParams
 });
 
-export default connect(null, mapDispatchToProps)(TitlesForm);
+const mapDispatchToProps = (dispatch) => ({
+    fetchTitles: (props) => dispatch(fetchTitles(props)),
+    changeTitlesParams: (params) => dispatch(changeTitlesParams(params))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TitlesForm);
