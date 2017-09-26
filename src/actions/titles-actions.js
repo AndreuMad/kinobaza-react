@@ -1,15 +1,26 @@
 import Axios from 'axios';
 
 import {
-    FETCH_TITLE_SUCCESS,
+    FETCH_TITLES_STATUS,
     FETCH_TITLES_SUCCESS,
-    CHANGE_TITLES_PARAMS
+    CLEAR_TITLES,
+    CHANGE_TITLES_PARAMS,
+    FETCH_TITLE_SUCCESS
 } from '../constants/actions'
 
 import { apiUrl } from '../constants/urls';
 
+export const fetchTitlesStatus = (status) => {
+    return {
+        type: FETCH_TITLES_STATUS,
+        status
+    }
+};
+
 export const fetchTitles = (params) => {
     return (dispatch) => {
+
+        dispatch(fetchTitlesStatus(false));
 
         return Axios.get(`${apiUrl}/titles`, {
             params: {
@@ -17,7 +28,11 @@ export const fetchTitles = (params) => {
             }
         })
             .then(response => {
-                dispatch(fetchTitlesSuccess(response.data));
+                const { titles, count } = response.data;
+                if(titles.length) {
+                    dispatch(fetchTitlesSuccess({ titles, count }));
+                }
+                dispatch(fetchTitlesStatus(true));
             })
             .catch(error => {
                 throw(error);
@@ -25,10 +40,19 @@ export const fetchTitles = (params) => {
     }
 };
 
-export const fetchTitlesSuccess = (titles) => {
+export const fetchTitlesSuccess = ({ titles, count }) => {
     return {
         type: FETCH_TITLES_SUCCESS,
-        titles
+        titlesData: {
+            titles,
+            count
+        }
+    }
+};
+
+export const clearTitles = () => {
+    return {
+        type: CLEAR_TITLES
     }
 };
 

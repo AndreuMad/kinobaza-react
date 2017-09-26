@@ -10,6 +10,14 @@ import {
 
 import { apiUrl } from '../constants/urls';
 
+
+export const fetchPostsStatus = (status) => {
+    return {
+        type: FETCH_POSTS_STATUS,
+        status
+    }
+};
+
 export const fetchPosts = (params, shouldFetchArticle) => {
     return (dispatch) => {
 
@@ -39,13 +47,6 @@ export const fetchPosts = (params, shouldFetchArticle) => {
             .catch(error => {
                 throw(error);
             });
-    }
-};
-
-export const fetchPostsStatus = (status) => {
-    return {
-        type: FETCH_POSTS_STATUS,
-        status
     }
 };
 

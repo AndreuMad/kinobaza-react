@@ -5,7 +5,51 @@ import { connect } from 'react-redux';
 import Title from './Title';
 import TitlesForm from './TitlesForm';
 
+import {
+    fetchTitles,
+    clearTitles,
+    changeTitlesParams
+} from '../../actions/titles-actions';
+
 class TitlesPage extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            currentTitlesCount: 0
+        }
+    }
+
+    componentDidMount() {
+        this.fetchTitles();
+    }
+
+    componentWillUnmount() {
+        this.props.clearTitles();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const prevParams = this.props.titlesParams;
+        const nextParams = nextProps.titlesParams;
+
+        if(this.props.fetchTitlesStatus) {
+            if(this.shouldFetchData(prevParams, nextParams)) {
+                this.fetchTitles(nextParams);
+            }
+        }
+    }
+
+    shouldFetchData(prevParams, nextParams) {
+
+        return (prevParams.name !== nextParams.name) ||
+            (prevParams.genre.length !== nextParams.genre.length) ||
+            (prevParams.year.min !== nextParams.year.min || prevParams.year.max !== nextParams.year.max) ||
+            (prevParams.score.min !== nextParams.score.min || prevParams.score.max !== nextParams.score.max);
+    }
+
+    fetchTitles(titlesParams) {
+        this.props.fetchTitles(titlesParams);
+    }
 
     render() {
         const { titles } = this.props;
@@ -59,14 +103,27 @@ class TitlesPage extends Component {
 }
 
 TitlesPage.propTypes = {
-    titles: PropTypes.arrayOf(PropTypes.object)
+    titles: PropTypes.arrayOf(PropTypes.object),
+    titlesParams: PropTypes.object,
+    fetchTitles: PropTypes.func.isRequired,
+    clearTitles: PropTypes.func.isRequired,
+    changeTitlesParams: PropTypes.func.isRequired,
+    fetchTitlesStatus: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
-        titles: state.titles.titles
+        titles: state.titles.titles,
+        titlesParams: state.titles.titlesParams,
+        fetchTitlesStatus: state.titles.fetchTitlesStatus
     }
 };
 
+const mapDispatchToProps = (dispatch) => ({
+    fetchTitles: (props) => dispatch(fetchTitles(props)),
+    clearTitles: () => dispatch(clearTitles()),
+    changeTitlesParams: (params) => dispatch(changeTitlesParams(params))
+});
 
-export default connect(mapStateToProps)(TitlesPage);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TitlesPage);

@@ -39,6 +39,7 @@ export const postsReducer = (state = defaultPostsState, action) => {
             return {
                 ...state,
                 posts: [],
+                postsTotalCount: 0,
                 articlePost: null
             };
 
