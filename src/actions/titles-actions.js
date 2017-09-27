@@ -3,6 +3,7 @@ import Axios from 'axios';
 import {
     FETCH_TITLES_STATUS,
     FETCH_TITLES_SUCCESS,
+    FETCH_UP_TITLES_SUCCESS,
     CLEAR_TITLES,
     CHANGE_TITLES_PARAMS,
     FETCH_TITLE_SUCCESS
@@ -17,7 +18,7 @@ export const fetchTitlesStatus = (status) => {
     }
 };
 
-export const fetchTitles = (params) => {
+export const fetchTitles = (params, appendTitles) => {
     return (dispatch) => {
 
         dispatch(fetchTitlesStatus(false));
@@ -30,7 +31,11 @@ export const fetchTitles = (params) => {
             .then(response => {
                 const { titles, count } = response.data;
                 if(titles.length) {
-                    dispatch(fetchTitlesSuccess({ titles, count }));
+                    if(appendTitles) {
+                        dispatch(fetchUpTitlesSuccess(titles));
+                    } else {
+                        dispatch(fetchTitlesSuccess({ titles, count }));
+                    }
                 }
                 dispatch(fetchTitlesStatus(true));
             })
@@ -46,6 +51,15 @@ export const fetchTitlesSuccess = ({ titles, count }) => {
         titlesData: {
             titles,
             count
+        }
+    }
+};
+
+export const fetchUpTitlesSuccess = (titles) => {
+    return {
+        type: FETCH_UP_TITLES_SUCCESS,
+        titlesData: {
+            titles
         }
     }
 };

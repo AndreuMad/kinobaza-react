@@ -32,7 +32,7 @@ export const postsReducer = (state = defaultPostsState, action) => {
                     ...state.posts,
                     ...action.postsData.posts
                 ],
-                totalPostsCount: action.postsData.count
+                postsTotalCount: action.postsData.count
             };
 
         case CLEAR_POSTS:

@@ -19,7 +19,7 @@ class PostsPage extends Component {
         this.handleLoadButton = this.handleLoadButton.bind(this);
 
         this.state = {
-            currentPostsCount: 0,
+            postsCurrentCount: 0,
             shouldLoadPosts: false
         };
     }
@@ -31,14 +31,10 @@ class PostsPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const previousPostsCount = this.state.currentPostsCount;
-        const currentPostsCount = nextProps.posts.length + 1;
 
-        if(previousPostsCount < currentPostsCount) {
-            this.setState({
-                currentPostsCount: currentPostsCount
-            });
-        }
+        this.setState({
+            postsCurrentCount: nextProps.posts.length + 1
+        });
     }
 
     shouldComponentUpdate(nextProps) {
@@ -46,8 +42,8 @@ class PostsPage extends Component {
     }
 
     componentWillUnmount() {
-        this.props.clearPosts();
         window.removeEventListener('scroll', this.handlePostsLoad);
+        this.props.clearPosts();
     }
 
     fetchPosts({ skip, limit }, shouldFetchArticle) {
@@ -72,10 +68,10 @@ class PostsPage extends Component {
     }
 
     handlePostsLoad() {
-        const { currentPostsCount } = this.state;
-        const { totalPostsCount } = this.props;
+        const { postsCurrentCount } = this.state;
+        const { postsTotalCount } = this.props;
 
-        if(currentPostsCount === totalPostsCount) {
+        if(postsCurrentCount === postsTotalCount) {
             this.setState({
                 shouldLoadPosts: false
             });
@@ -85,7 +81,7 @@ class PostsPage extends Component {
 
             if(this.pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
 
-                this.fetchPosts({ skip: this.state.currentPostsCount, limit: 3 });
+                this.fetchPosts({ skip: this.state.postsCurrentCount, limit: 3 });
             }
         }
     }
@@ -164,7 +160,7 @@ class PostsPage extends Component {
 
 PostsPage.propTypes = {
     posts: PropTypes.array,
-    totalPostsCount: PropTypes.number,
+    postsTotalCount: PropTypes.number,
     articlePost: PropTypes.object,
     fetchPostsStatus: PropTypes.bool.isRequired,
     fetchPosts: PropTypes.func.isRequired,
@@ -174,7 +170,7 @@ PostsPage.propTypes = {
 const mapStateToProps = (state) => {
     return {
         posts: state.posts.posts,
-        totalPostsCount: state.posts.totalPostsCount,
+        postsTotalCount: state.posts.postsTotalCount,
         articlePost: state.posts.articlePost,
         fetchPostsStatus: state.posts.fetchPostsStatus
     };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
@@ -9,6 +10,7 @@ import RenderCheckboxGroup from './components/CheckboxGroup';
 import RenderInputRange from './components/InputRange';
 
 import {
+    fetchTitles,
     changeTitlesParams
 } from '../../actions/titles-actions';
 
@@ -17,13 +19,42 @@ class TitlesForm extends Component {
         super(props);
 
         this.handleFormChange = this.handleFormChange.bind(this);
+
+        this.state = {
+            titlesParams: {
+                name: '',
+                genre: [],
+                year: {
+                    min: 1878,
+                    max: 2017
+                },
+                score: {
+                    min: 1,
+                    max: 10
+                }
+            }
+        }
+    }
+
+    componentDidMount() {
+        this.props.fetchTitles();
     }
 
     handleFormChange(name, payload) {
         let data = {};
         data[name] = payload;
 
-        this.props.changeTitlesParams(data);
+        this.setState({
+            titlesParams: {
+                ...this.state.titlesParams,
+                ...data
+            }
+        }, () => {
+            const { titlesParams } = this.state;
+
+            this.props.changeTitlesParams(titlesParams);
+            this.props.fetchTitles(titlesParams);
+        });
     }
 
     render() {
@@ -86,10 +117,12 @@ class TitlesForm extends Component {
 }
 
 TitlesForm.propTypes = {
+    fetchTitles: PropTypes.func.isRequired,
     changeTitlesParams: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
+    fetchTitles: (params) => dispatch(fetchTitles(params)),
     changeTitlesParams: (params) => dispatch(changeTitlesParams(params))
 });
 

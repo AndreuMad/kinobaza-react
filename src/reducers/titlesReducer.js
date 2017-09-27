@@ -1,13 +1,14 @@
 import {
     FETCH_TITLES_STATUS,
     FETCH_TITLES_SUCCESS,
+    FETCH_UP_TITLES_SUCCESS,
     CLEAR_TITLES,
     CHANGE_TITLES_PARAMS
 } from '../constants/actions';
 
 const defaultTitlesState = {
     titles: [],
-    titlesTotalCount: null,
+    titlesTotalCount: 0,
     titlesParams: {
         name: '',
         genre: [],
@@ -38,6 +39,15 @@ export const titlesReducer = (state = defaultTitlesState, action) => {
                 ...state,
                 titles: action.titlesData.titles,
                 titlesTotalCount: action.titlesData.count
+            };
+
+        case FETCH_UP_TITLES_SUCCESS:
+            return {
+                ...state,
+                titles: [
+                    ...state.titles,
+                    ...action.titlesData.titles
+                ]
             };
 
         case CLEAR_TITLES:
