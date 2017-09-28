@@ -28,8 +28,14 @@ class TitlesPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        const titlesCurrentCount = nextProps.titles.length;
+        const { titlesTotalCount } = this.props;
+
+        const titlesLoadStatus = titlesCurrentCount !== titlesTotalCount;
+
         this.setState({
-            titlesCurrentCount: nextProps.titles.length
+            titlesCurrentCount,
+            shouldLoadTitles: titlesLoadStatus
         });
     }
 
@@ -47,14 +53,6 @@ class TitlesPage extends Component {
     }
 
     handleTitlesLoad() {
-        const { titlesCurrentCount } = this.state;
-        const { titlesTotalCount } = this.props;
-
-        if(titlesCurrentCount === titlesTotalCount) {
-            this.setState({
-                shouldLoadTitles: false
-            });
-        }
 
         if(this.state.shouldLoadTitles && this.props.fetchTitlesStatus) {
 

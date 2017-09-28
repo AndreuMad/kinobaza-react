@@ -64,7 +64,7 @@ class Post extends Component {
                                         <div className="row">
                                             <div className="col s-10 m-11">
                                                 <div className="col-inner">
-                                                    <p className="post-body-text">{this.props.post.text}</p>
+                                                    <p className="post-body-text" dangerouslySetInnerHTML={{__html: this.props.post.textArticle}} />
                                                 </div>
                                             </div>
                                             <div className="col m-1">
