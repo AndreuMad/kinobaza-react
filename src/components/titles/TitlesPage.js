@@ -76,7 +76,7 @@ class TitlesPage extends Component {
                     <div className="row">
                         <div className="col m-8">
                             <div className="col-inner">
-                                {titles ?
+                                {titles.length ?
                                     titles
                                         .map((title) => {
                                             const {
@@ -102,7 +102,7 @@ class TitlesPage extends Component {
                                                 />
                                             );
 
-                                        }) : null}
+                                        }) : <span>Нічого не знайдено</span>}
                             </div>
                         </div>
                         <div className="col m-4">

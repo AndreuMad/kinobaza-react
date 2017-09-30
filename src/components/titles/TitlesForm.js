@@ -41,20 +41,20 @@ class TitlesForm extends Component {
     }
 
     handleFormChange(name, payload) {
-        let data = {};
-        data[name] = payload;
 
-        this.setState({
-            titlesParams: {
-                ...this.state.titlesParams,
-                ...data
-            }
-        }, () => {
-            const { titlesParams } = this.state;
+        if(this.props.fetchTitlesStatus) {
+            this.setState({
+                titlesParams: {
+                    ...this.state.titlesParams,
+                    ...{ [name]: payload }
+                }
+            }, () => {
+                const { titlesParams } = this.state;
 
-            this.props.changeTitlesParams(titlesParams);
-            this.props.fetchTitles(titlesParams);
-        });
+                this.props.changeTitlesParams(titlesParams);
+                this.props.fetchTitles(titlesParams);
+            });
+        }
     }
 
     render() {
@@ -119,6 +119,13 @@ class TitlesForm extends Component {
 TitlesForm.propTypes = {
     fetchTitles: PropTypes.func.isRequired,
     changeTitlesParams: PropTypes.func.isRequired,
+    fetchTitlesStatus: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        fetchTitlesStatus: state.titles.fetchTitlesStatus
+    };
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -126,4 +133,4 @@ const mapDispatchToProps = (dispatch) => ({
     changeTitlesParams: (params) => dispatch(changeTitlesParams(params))
 });
 
-export default connect(null, mapDispatchToProps)(TitlesForm);
+export default connect(mapStateToProps, mapDispatchToProps)(TitlesForm);

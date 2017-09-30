@@ -19,6 +19,7 @@ export const fetchTitlesStatus = (status) => {
 };
 
 export const fetchTitles = (params, appendTitles) => {
+    console.log('fetch titles');
     return (dispatch) => {
 
         dispatch(fetchTitlesStatus(false));
@@ -30,13 +31,13 @@ export const fetchTitles = (params, appendTitles) => {
         })
             .then(response => {
                 const { titles, count } = response.data;
-                if(titles.length) {
-                    if(appendTitles) {
-                        dispatch(fetchUpTitlesSuccess(titles));
-                    } else {
-                        dispatch(fetchTitlesSuccess({ titles, count }));
-                    }
+
+                if(appendTitles) {
+                    dispatch(fetchUpTitlesSuccess(titles));
+                } else {
+                    dispatch(fetchTitlesSuccess({ titles, count }));
                 }
+
                 dispatch(fetchTitlesStatus(true));
             })
             .catch(error => {

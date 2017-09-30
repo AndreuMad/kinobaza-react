@@ -19,7 +19,10 @@ export const signinUser = ({ email, password }, history) => {
                 // - Update state to indicate user is authenticated
                 dispatch({
                     type: AUTH_USER,
-                    name: response.data.name
+                    data: {
+                        id: response.data.id,
+                        name: response.data.name
+                    }
                 });
                 // - Save the JWT token
                 localStorage.setItem('token', response.data.token);
@@ -36,7 +39,6 @@ export const signinUser = ({ email, password }, history) => {
 
 export const signWithToken = (token) => {
     return (dispatch) => {
-        console.log('sign in');
         axios.get(`${apiUrl}/signin`, {
             headers: {
                 Authorization: token
@@ -45,7 +47,10 @@ export const signWithToken = (token) => {
             .then(response => {
                 dispatch({
                     type: AUTH_USER,
-                    name: response.data.name
+                    data: {
+                        id: response.data.id,
+                        name: response.data.name
+                    }
                 });
             })
             .catch(error => {
@@ -62,7 +67,10 @@ export const signupUser = ({ email, name, password }, history) => {
             .then(response => {
                 dispatch({
                     type: AUTH_USER,
-                    name: response.data.name
+                    data: {
+                        id: response.data.id,
+                        name: response.data.name
+                    }
                 });
                 localStorage.setItem('token', response.data.token);
                 history.push('/feature');
