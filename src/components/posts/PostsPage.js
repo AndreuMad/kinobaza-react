@@ -6,10 +6,10 @@ import _ from 'lodash';
 import {
     fetchPosts,
     clearPosts
-} from '../../actions/posts-actions';
+} from 'Actions/posts-actions';
 
-import CardRegular from './components/CardRegular';
-import CardArticle from './components/CardArticle';
+import CardRegular from 'Components/posts/components/CardRegular';
+import CardArticle from 'Components/posts/components/CardArticle';
 
 class PostsPage extends Component {
     constructor(props) {

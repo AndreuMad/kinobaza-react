@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import Title from './Title';
-import TitlesForm from './TitlesForm';
+import Title from 'Components/titles/Title';
+import TitlesForm from 'Components/titles/TitlesForm';
 
 import {
     fetchTitles,
     clearTitles
-} from '../../actions/titles-actions';
+} from 'Actions/titles-actions';
 
 class TitlesPage extends Component {
     constructor(props) {

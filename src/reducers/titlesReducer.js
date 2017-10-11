@@ -4,7 +4,7 @@ import {
     FETCH_UP_TITLES_SUCCESS,
     CLEAR_TITLES,
     CHANGE_TITLES_PARAMS
-} from '../constants/actions';
+} from 'Constants/actions';
 
 const defaultTitlesState = {
     titles: [],

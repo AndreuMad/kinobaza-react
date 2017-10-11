@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 
-import { signinUser } from '../../actions/auth-actions'
-import { renderInput } from './components/renderInput';
+import { signinUser } from 'Actions/auth-actions'
+import { renderInput } from 'Components/auth/components/renderInput';
 
 class SignIn extends Component {
     constructor(props) {

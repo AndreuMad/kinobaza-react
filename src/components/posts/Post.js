@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { fetchPost } from '../../actions/posts-actions';
+import { fetchPost } from 'Actions/posts-actions';
 
-import PostComments from './components/PostComments';
+import PostComments from 'Components/posts/components/PostComments';
 
 class Post extends Component {
     constructor(props) {

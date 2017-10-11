@@ -4,7 +4,7 @@ import {
     CLEAR_POSTS,
     FETCH_ARTICLE_POST_SUCCESS,
     FETCH_POST_SUCCESS
-} from '../constants/actions';
+} from 'Constants/actions';
 
 const defaultPostsState = {
     posts: [],

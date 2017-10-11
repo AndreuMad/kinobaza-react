@@ -5,7 +5,7 @@ import { Link, NavLink, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import classNames from 'classnames';
 
-import { signWithToken, signoutUser } from '../../actions/auth-actions';
+import { signWithToken, signoutUser } from 'Actions/auth-actions';
 
 class Header extends Component {
     constructor(props) {

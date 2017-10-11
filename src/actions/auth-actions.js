@@ -4,7 +4,7 @@ import {
     AUTH_USER,
     UNAUTH_USER,
     AUTH_ERROR
-} from '../constants/actions';
+} from 'Constants/actions';
 
 import { apiUrl } from '../constants/urls';
 

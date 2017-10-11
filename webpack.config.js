@@ -76,6 +76,15 @@ const config = {
             }
         ]
     },
+    resolve: {
+        alias: {
+            Actions: path.resolve(srcPath, 'actions'),
+            Components: path.resolve(srcPath, 'components'),
+            Constants: path.resolve(srcPath, 'constants'),
+            Reducers: path.resolve(srcPath, 'reducers'),
+            Utilities: path.resolve(srcPath, 'utilities')
+        }
+    },
     devServer: {
         historyApiFallback: true,
     },

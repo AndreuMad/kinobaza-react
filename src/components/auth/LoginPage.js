@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 
-import SignInForm from './SignInForm';
-import SignUpForm from './SignUpForm';
+import SignInForm from 'Components/auth/SignInForm';
+import SignUpForm from 'Components/auth/SignUpForm';
 
 const LoginPage = () => (
 

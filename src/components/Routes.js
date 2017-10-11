@@ -6,6 +6,7 @@ import LoginPage from './auth/LoginPage';
 import PostsPage from './posts/PostsPage';
 import Post from './posts/Post';
 import TitlesPage from './titles/TitlesPage';
+//import PersonsPage from './persons/';
 
 const Routes = () => {
     return (
@@ -15,9 +16,10 @@ const Routes = () => {
                 <Switch>
                     <Route exact path='/' component={() => <div>Main Page</div>} />
                     <Route path='/login' component={LoginPage} />
-                    <Route exact path='/posts' component={PostsPage} />
                     <Route path='/posts/:id' component={Post} />
+                    <Route path='/posts' component={PostsPage} />
                     <Route path='/titles' component={TitlesPage} />
+                    {/*<Route path='/persons' component={} />*/}
                 </Switch>
             </main>
         </div>

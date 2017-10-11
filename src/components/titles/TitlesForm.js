@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import RenderInputField from './components/InputField';
-import RenderCheckboxGroup from './components/CheckboxGroup';
-import RenderInputRange from './components/InputRange';
+import RenderInputField from 'Components/titles/components/InputField';
+import RenderCheckboxGroup from 'Components/titles/components/CheckboxGroup';
+import RenderInputRange from 'Components/titles/components/InputRange';
 
 import {
     fetchTitles,

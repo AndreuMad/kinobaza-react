@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { signupUser } from '../../actions/auth-actions';
+import { signupUser } from 'Actions/auth-actions';
 
-import { renderInput } from './components/renderInput';
+import { renderInput } from 'Components/auth/components/renderInput';
 
 class SignUp extends Component {
     constructor(props) {

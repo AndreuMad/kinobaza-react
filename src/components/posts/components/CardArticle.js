@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import sliceString from '../../../utilites/sliceString';
+import sliceString from 'Utilities/sliceString';
 
 const CardArticle = ({ id, image, title, text }) => {
     return (

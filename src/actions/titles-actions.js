@@ -7,7 +7,7 @@ import {
     CLEAR_TITLES,
     CHANGE_TITLES_PARAMS,
     FETCH_TITLE_SUCCESS
-} from '../constants/actions'
+} from 'Constants/actions'
 
 import { apiUrl } from '../constants/urls';
 
