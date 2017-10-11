@@ -7,6 +7,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import RenderInputField from 'Components/titles/components/InputField';
 import RenderCheckboxGroup from 'Components/titles/components/CheckboxGroup';
 import RenderInputRange from 'Components/titles/components/InputRange';
+import RenderSelectField from 'Components/titles/components/SelectField'
 
 import {
     fetchTitles,
@@ -61,6 +62,13 @@ class TitlesForm extends Component {
         return (
             <div className="titles-filter-wrap">
                 <form>
+                    <div className="filter-item">
+                        <RenderSelectField
+                            name="sort"
+                            value="name.ukr"
+                            onFieldChange={this.handleFormChange}
+                        />
+                    </div>
                     <div className="filter-item">
                         <RenderInputField
                             type="text"
