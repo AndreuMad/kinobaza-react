@@ -9,23 +9,25 @@ class RenderInputRange extends Component {
         this.handleChange = this.handleChange.bind(this);
 
         this.state = {
-            value: { min: this.props.minValue, max: this.props.maxValue },
+            value: { min: this.props.values.min, max: this.props.values.max },
         };
     }
 
     handleChange(value) {
+        console.log(value);
         this.setState({ value });
         this.props.onFieldChange(this.props.name, value);
     }
 
     render() {
-        const { name, minValue, maxValue } = this.props;
+        const { name } = this.props;
+        const { min, max } = this.props.values;
 
         return (
             <InputRange
                 name={name}
-                minValue={minValue}
-                maxValue={maxValue}
+                minValue={min}
+                maxValue={max}
                 value={this.state.value}
                 onChange={(value) => this.handleChange(value)}
             />
@@ -35,8 +37,10 @@ class RenderInputRange extends Component {
 
 RenderInputRange.propTypes = {
     name: PropTypes.string.isRequired,
-    minValue: PropTypes.number.isRequired,
-    maxValue: PropTypes.number.isRequired,
+    values: PropTypes.shape({
+        min: PropTypes.number,
+        max: PropTypes.number
+    }),
     onFieldChange: PropTypes.func.isRequired
 };
 

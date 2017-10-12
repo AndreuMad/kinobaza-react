@@ -38,7 +38,8 @@ export const titlesReducer = (state = defaultTitlesState, action) => {
             return {
                 ...state,
                 titles: action.titlesData.titles,
-                titlesTotalCount: action.titlesData.count
+                titlesTotalCount: action.titlesData.count,
+                year: action.titlesData.year
             };
 
         case FETCH_UP_TITLES_SUCCESS:

@@ -103,8 +103,10 @@ class TitlesForm extends Component {
                         <p className="filter-item-title">Рік</p>
                         <RenderInputRange
                             name="year"
-                            minValue={1878}
-                            maxValue={2017}
+                            values={{
+                                min: 1878,
+                                max: 2017
+                            }}
                             onFieldChange={this.handleFormChange}
                         />
                     </div>
@@ -112,8 +114,10 @@ class TitlesForm extends Component {
                         <p className="filter-item-title">Рейтинг IMDb</p>
                         <RenderInputRange
                             name="score"
-                            minValue={1}
-                            maxValue={10}
+                            values={{
+                                min: 1,
+                                max: 10
+                            }}
                             onFieldChange={this.handleFormChange}
                         />
                     </div>
@@ -131,6 +135,7 @@ TitlesForm.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        titlesYear: state.titles.year,
         fetchTitlesStatus: state.titles.fetchTitlesStatus
     };
 };
