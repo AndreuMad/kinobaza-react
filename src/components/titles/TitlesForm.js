@@ -31,8 +31,9 @@ class TitlesForm extends Component {
                 score: {
                     min: 1,
                     max: 10
-                }
-            }
+                },
+                sort: 'name.ukr'
+            },
         }
     }
 
@@ -65,7 +66,13 @@ class TitlesForm extends Component {
                     <div className="filter-item">
                         <RenderSelectField
                             name="sort"
-                            value="name.ukr"
+                            options={[
+                                { label: 'назва укр', value: 'name.ukr' },
+                                { label: 'назва англ', value: 'name.en' },
+                                { label: 'рік', value: 'year' },
+                                { label: 'рейтинг', value: 'score' },
+                            ]}
+                            value={this.state.titlesQuery.sort}
                             onFieldChange={this.handleFormChange}
                         />
                     </div>
@@ -103,10 +110,11 @@ class TitlesForm extends Component {
                         <p className="filter-item-title">Рік</p>
                         <RenderInputRange
                             name="year"
-                            values={{
+                            params={{
                                 min: 1878,
                                 max: 2017
                             }}
+                            value={this.state.titlesQuery.year}
                             onFieldChange={this.handleFormChange}
                         />
                     </div>
@@ -114,10 +122,11 @@ class TitlesForm extends Component {
                         <p className="filter-item-title">Рейтинг IMDb</p>
                         <RenderInputRange
                             name="score"
-                            values={{
+                            params={{
                                 min: 1,
                                 max: 10
                             }}
+                            value={this.state.titlesQuery.score}
                             onFieldChange={this.handleFormChange}
                         />
                     </div>
@@ -135,7 +144,6 @@ TitlesForm.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        titlesParams: state.titles.titlesParams,
         fetchTitlesStatus: state.titles.fetchTitlesStatus
     };
 };

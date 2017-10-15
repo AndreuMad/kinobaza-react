@@ -1,25 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox, CheckboxGroup } from 'react-checkbox-group';
 
-class RenderCheckboxGroup extends Component {
-    constructor(props) {
-        super(props);
-
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(values) {
-        this.props.onFieldChange(this.props.name, values);
-    }
-
-    render() {
-        const { name, options } = this.props;
+const RenderCheckboxGroup = ({ name, options, onFieldChange}) => {
 
         return (
             <CheckboxGroup
                 name={name}
-                onChange={this.handleChange}
+                onChange={(values) => onFieldChange(name, values)}
             >
                 {options.map((option, index) => (
                 <div className="checkbox-item" key={`checkbox${index}`}>
@@ -35,8 +23,7 @@ class RenderCheckboxGroup extends Component {
                 ))}
             </CheckboxGroup>
         );
-    }
-}
+};
 
 RenderCheckboxGroup.propTypes = {
     name: PropTypes.string.isRequired,

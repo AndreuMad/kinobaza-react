@@ -21,16 +21,6 @@ const defaultTitlesState = {
             max: 10
         }
     },
-    titlesParams: {
-        year: {
-            min: 1878,
-            max: 2017
-        },
-        score: {
-            min: 1,
-            max: 10
-        }
-    },
     fetchTitlesStatus: true
 };
 
@@ -49,9 +39,6 @@ export const titlesReducer = (state = defaultTitlesState, action) => {
                 ...state,
                 titles: action.titlesData.titles,
                 titlesTotalCount: action.titlesData.count,
-                titlesParams: {
-                    year: action.titlesData.params.year
-                }
             };
 
         case FETCH_UP_TITLES_SUCCESS:

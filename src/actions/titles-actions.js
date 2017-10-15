@@ -29,12 +29,12 @@ export const fetchTitles = (params, appendTitles) => {
             }
         })
             .then(response => {
-                const { count, params, titles } = response.data;
+                const { count, titles } = response.data;
 
                 if(appendTitles) {
                     dispatch(fetchUpTitlesSuccess(titles));
                 } else {
-                    dispatch(fetchTitlesSuccess({ count, params, titles }));
+                    dispatch(fetchTitlesSuccess({ count, titles }));
                 }
 
                 dispatch(fetchTitlesStatus(true));
@@ -45,12 +45,11 @@ export const fetchTitles = (params, appendTitles) => {
     }
 };
 
-export const fetchTitlesSuccess = ({ count, params, titles }) => {
+export const fetchTitlesSuccess = ({ count, titles }) => {
     return {
         type: FETCH_TITLES_SUCCESS,
         titlesData: {
             count,
-            params,
             titles
         }
     }

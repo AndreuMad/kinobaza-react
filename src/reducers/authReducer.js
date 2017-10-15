@@ -7,7 +7,6 @@ import {
 export const authReducer = (state = {}, action) => {
     switch(action.type) {
         case AUTH_USER:
-            console.log(action.data);
             return {
                 ...state,
                 authenticated: true,
