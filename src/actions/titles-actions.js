@@ -5,7 +5,7 @@ import {
     FETCH_TITLES_SUCCESS,
     FETCH_UP_TITLES_SUCCESS,
     CLEAR_TITLES,
-    CHANGE_TITLES_PARAMS,
+    CHANGE_TITLES_QUERY,
     FETCH_TITLE_SUCCESS
 } from 'Constants/actions'
 
@@ -29,12 +29,12 @@ export const fetchTitles = (params, appendTitles) => {
             }
         })
             .then(response => {
-                const { count, year, titles } = response.data;
+                const { count, params, titles } = response.data;
 
                 if(appendTitles) {
                     dispatch(fetchUpTitlesSuccess(titles));
                 } else {
-                    dispatch(fetchTitlesSuccess({ count, year, titles }));
+                    dispatch(fetchTitlesSuccess({ count, params, titles }));
                 }
 
                 dispatch(fetchTitlesStatus(true));
@@ -45,12 +45,12 @@ export const fetchTitles = (params, appendTitles) => {
     }
 };
 
-export const fetchTitlesSuccess = ({ count, year, titles }) => {
+export const fetchTitlesSuccess = ({ count, params, titles }) => {
     return {
         type: FETCH_TITLES_SUCCESS,
         titlesData: {
             count,
-            year,
+            params,
             titles
         }
     }
@@ -71,9 +71,9 @@ export const clearTitles = () => {
     }
 };
 
-export const changeTitlesParams = (params) => {
+export const changeTitlesQuery = (params) => {
     return {
-        type: CHANGE_TITLES_PARAMS,
+        type: CHANGE_TITLES_QUERY,
         params
     }
 };

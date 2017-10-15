@@ -3,15 +3,25 @@ import {
     FETCH_TITLES_SUCCESS,
     FETCH_UP_TITLES_SUCCESS,
     CLEAR_TITLES,
-    CHANGE_TITLES_PARAMS
+    CHANGE_TITLES_QUERY
 } from 'Constants/actions';
 
 const defaultTitlesState = {
     titles: [],
     titlesTotalCount: 0,
-    titlesParams: {
+    titlesQuery: {
         name: '',
         genre: [],
+        year: {
+            min: 1878,
+            max: 2017
+        },
+        score: {
+            min: 1,
+            max: 10
+        }
+    },
+    titlesParams: {
         year: {
             min: 1878,
             max: 2017
@@ -39,7 +49,9 @@ export const titlesReducer = (state = defaultTitlesState, action) => {
                 ...state,
                 titles: action.titlesData.titles,
                 titlesTotalCount: action.titlesData.count,
-                year: action.titlesData.year
+                titlesParams: {
+                    year: action.titlesData.params.year
+                }
             };
 
         case FETCH_UP_TITLES_SUCCESS:
@@ -58,11 +70,11 @@ export const titlesReducer = (state = defaultTitlesState, action) => {
                 titlesTotalCount: 0
             };
 
-        case CHANGE_TITLES_PARAMS:
+        case CHANGE_TITLES_QUERY:
             return {
                 ...state,
-                titlesParams: {
-                    ...state.titlesParams,
+                titlesQuery: {
+                    ...state.titlesQuery,
                     ...action.params
                 }
             };

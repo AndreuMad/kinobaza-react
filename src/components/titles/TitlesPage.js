@@ -47,7 +47,7 @@ class TitlesPage extends Component {
     fetchUpTitles() {
 
         this.props.fetchUpTitles({
-            ...this.props.titlesParams,
+            ...this.props.titlesQuery,
             skip: this.state.titlesCurrentCount
         });
     }
@@ -120,7 +120,7 @@ class TitlesPage extends Component {
 TitlesPage.propTypes = {
     titles: PropTypes.arrayOf(PropTypes.object),
     titlesTotalCount: PropTypes.number.isRequired,
-    titlesParams: PropTypes.object,
+    titlesQuery: PropTypes.object,
     fetchTitlesStatus: PropTypes.bool.isRequired,
     fetchUpTitles: PropTypes.func.isRequired,
     clearTitles: PropTypes.func.isRequired
@@ -130,7 +130,7 @@ const mapStateToProps = (state) => {
     return {
         titles: state.titles.titles,
         titlesTotalCount: state.titles.titlesTotalCount,
-        titlesParams: state.titles.titlesParams,
+        titlesQuery: state.titles.titlesQuery,
         fetchTitlesStatus: state.titles.fetchTitlesStatus
     }
 };

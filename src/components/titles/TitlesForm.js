@@ -11,7 +11,7 @@ import RenderSelectField from 'Components/titles/components/SelectField'
 
 import {
     fetchTitles,
-    changeTitlesParams
+    changeTitlesQuery
 } from '../../actions/titles-actions';
 
 class TitlesForm extends Component {
@@ -21,7 +21,7 @@ class TitlesForm extends Component {
         this.handleFormChange = this.handleFormChange.bind(this);
 
         this.state = {
-            titlesParams: {
+            titlesQuery: {
                 name: '',
                 genre: [],
                 year: {
@@ -44,15 +44,15 @@ class TitlesForm extends Component {
 
         if(this.props.fetchTitlesStatus) {
             this.setState({
-                titlesParams: {
-                    ...this.state.titlesParams,
+                titlesQuery: {
+                    ...this.state.titlesQuery,
                     ...{ [name]: payload }
                 }
             }, () => {
-                const { titlesParams } = this.state;
+                const { titlesQuery } = this.state;
 
-                this.props.changeTitlesParams(titlesParams);
-                this.props.fetchTitles(titlesParams);
+                this.props.changeTitlesQuery(titlesQuery);
+                this.props.fetchTitles(titlesQuery);
             });
         }
     }
@@ -129,20 +129,20 @@ class TitlesForm extends Component {
 
 TitlesForm.propTypes = {
     fetchTitles: PropTypes.func.isRequired,
-    changeTitlesParams: PropTypes.func.isRequired,
+    changeTitlesQuery: PropTypes.func.isRequired,
     fetchTitlesStatus: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
-        titlesYear: state.titles.year,
+        titlesParams: state.titles.titlesParams,
         fetchTitlesStatus: state.titles.fetchTitlesStatus
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
     fetchTitles: (params) => dispatch(fetchTitles(params)),
-    changeTitlesParams: (params) => dispatch(changeTitlesParams(params))
+    changeTitlesQuery: (params) => dispatch(changeTitlesQuery(params))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TitlesForm);
