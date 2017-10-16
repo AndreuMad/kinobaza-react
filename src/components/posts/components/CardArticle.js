@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import sliceString from 'Utilities/sliceString';
 
-const CardArticle = ({ id, image, title, text }) => {
+const CardArticle = ({ id, image, title, text, date }) => {
     return (
         <article className="card-big">
             <div className="row">
@@ -34,7 +34,7 @@ const CardArticle = ({ id, image, title, text }) => {
                         <Link to={`/posts/${id}`}>
                             <h2 className="card-big-title">{title}</h2>
                         </Link>
-                        <p className="card-big-date">03.08.2017</p>
+                        <p className="card-big-date">{date}</p>
                         <p className="card-big-text">{sliceString(text, 192)}</p>
                         <div className="btn-group align-right">
                             <Link to={`/posts/${id}`}
@@ -53,7 +53,7 @@ CardArticle.propTypes = {
         url: PropTypes.string.isRequired
     }),
     title: PropTypes.string.isRequired,
-    date: PropTypes.string,
+    date: PropTypes.number,
     text: PropTypes.string.isRequired,
     shared: PropTypes.object
 };

@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const CardRegular = ({ id, image, title }) => {
+import moment from 'moment';
+import 'NodeModules/moment/locale/uk';
+
+const CardRegular = ({ id, image, title, date }) => {
 
     return (
         <article className="card-regular">
@@ -34,7 +37,7 @@ const CardRegular = ({ id, image, title }) => {
                             >
                             </figure>
                         </Link>
-                        <p className="card-regular-date">03.08.2017</p>
+                        <p className="card-regular-date">{moment(date).locale("ua").format("LLL")}</p>
                         <Link
                             className="card-regular-link"
                             to={`/posts/${id}`}
@@ -54,7 +57,7 @@ CardRegular.propTypes = {
     image: PropTypes.shape({
         url: PropTypes.string.isRequired
     }),
-    date: PropTypes.string,
+    date: PropTypes.number,
     title: PropTypes.string.isRequired,
     important: PropTypes.bool
 };

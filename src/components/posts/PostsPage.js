@@ -127,6 +127,7 @@ class PostsPage extends Component {
                             image={articlePost.image}
                             title={articlePost.title}
                             text={articlePost.text}
+                            date={articlePost.date}
                         />
                     </div>
                 </div>

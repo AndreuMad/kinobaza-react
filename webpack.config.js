@@ -82,7 +82,8 @@ const config = {
             Components: path.resolve(srcPath, 'components'),
             Constants: path.resolve(srcPath, 'constants'),
             Reducers: path.resolve(srcPath, 'reducers'),
-            Utilities: path.resolve(srcPath, 'utilities')
+            Utilities: path.resolve(srcPath, 'utilities'),
+            NodeModules: path.resolve(__dirname, 'node_modules')
         }
     },
     devServer: {
