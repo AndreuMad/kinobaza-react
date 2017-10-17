@@ -9,7 +9,7 @@ import {
     FETCH_TITLE_SUCCESS
 } from 'Constants/actions'
 
-import { apiUrl } from '../constants/urls';
+import { apiUrl } from 'Constants/urls';
 
 export const fetchTitlesStatus = (status) => {
     return {
