@@ -86,56 +86,9 @@ class PostsPage extends Component {
         }
     }
 
-    renderLoadSection() {
-        return !this.state.shouldLoadPosts ? <button className="btn blue" onClick={this.handleLoadButton}>Load more</button> : null;
-    }
-
-    renderPosts() {
-        const posts = this.props.posts;
-
-        if(posts) {
-
-            return (
-                posts.map((post, index) => (
-                        <div key={`post_${post._id}`} className="col m-4">
-                            <div className="col-inner">
-                                <CardRegular
-                                    id={`${post._id}`}
-                                    image={post.image}
-                                    title={post.title}
-                                    date={post.date}
-                                />
-                            </div>
-                        </div>
-                    )
-                )
-            )
-        }
-    }
-
-    renderArticlePost() {
-        const articlePost = this.props.articlePost;
-
-        if(articlePost) {
-
-            return (
-                <div className="col m-8">
-                    <div className="col-inner">
-                        <CardArticle
-                            key={`articlePost${articlePost._id}`}
-                            id={articlePost._id}
-                            image={articlePost.image}
-                            title={articlePost.title}
-                            text={articlePost.text}
-                            date={articlePost.date}
-                        />
-                    </div>
-                </div>
-            );
-        }
-    }
-
     render() {
+        const posts = this.props.posts;
+        const articlePost = this.props.articlePost;
 
         return (
             <article
@@ -145,12 +98,42 @@ class PostsPage extends Component {
                 <div className="container">
                     <h1 className="section-heading">Публікації</h1>
                     <div className="row">
-                        {this.renderArticlePost()}
-                        {this.renderPosts()}
+                        {
+                            articlePost ?
+                                <div className="col m-8">
+                                    <div className="col-inner">
+                                        <CardArticle
+                                            key={`articlePost${articlePost._id}`}
+                                            id={articlePost._id}
+                                            image={articlePost.image}
+                                            title={articlePost.title}
+                                            text={articlePost.text}
+                                            date={articlePost.date}
+                                        />
+                                    </div>
+                                </div> : null
+                        }
+                        {
+                            posts ? posts.map((post, index) => (
+                                    <div key={`post_${post._id}`} className="col m-4">
+                                        <div className="col-inner">
+                                            <CardRegular
+                                                id={`${post._id}`}
+                                                image={post.image}
+                                                title={post.title}
+                                                date={post.date}
+                                            />
+                                        </div>
+                                    </div>
+                                )
+                            ) : null
+                        }
                     </div>
                     <div className="load-more-section">
                         <div className="btn-group align-center" style={{marginBottom: '3.6rem'}}>
-                            {this.renderLoadSection()}
+                            {
+                                !this.state.shouldLoadPosts ? <button className="btn blue" onClick={this.handleLoadButton}>Load more</button> : null
+                            }
                         </div>
                     </div>
                 </div>
