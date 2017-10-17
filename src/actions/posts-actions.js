@@ -8,7 +8,7 @@ import {
     FETCH_POST_SUCCESS
 } from 'Constants/actions';
 
-import { apiUrl } from '../constants/urls';
+import { apiUrl } from 'Constants/urls';
 
 
 export const fetchPostsStatus = (status) => {

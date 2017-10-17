@@ -6,7 +6,7 @@ import {
     AUTH_ERROR
 } from 'Constants/actions';
 
-import { apiUrl } from '../constants/urls';
+import { apiUrl } from 'Constants/urls';
 
 export const signinUser = ({ email, password }, history) => {
 

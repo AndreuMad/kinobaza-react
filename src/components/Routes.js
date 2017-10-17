@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Header from './common/Header';
+import Header from 'Components/common/Header';
 import LoginPage from 'Components/auth/LoginPage';
 import PostsPage from 'Components/posts/PostsPage';
 import Post from 'Components/posts/Post';

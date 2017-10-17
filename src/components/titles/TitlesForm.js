@@ -12,7 +12,7 @@ import RenderSelectField from 'Components/titles/components/SelectField'
 import {
     fetchTitles,
     changeTitlesQuery
-} from '../../actions/titles-actions';
+} from 'Actions/titles-actions';
 
 class TitlesForm extends Component {
     constructor(props) {

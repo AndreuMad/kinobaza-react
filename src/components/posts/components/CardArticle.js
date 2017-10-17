@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+import moment from 'moment';
+import 'NodeModules/moment/locale/uk';
+
 import sliceString from 'Utilities/sliceString';
 
 const CardArticle = ({ id, image, title, text, date }) => {
@@ -34,7 +38,7 @@ const CardArticle = ({ id, image, title, text, date }) => {
                         <Link to={`/posts/${id}`}>
                             <h2 className="card-big-title">{title}</h2>
                         </Link>
-                        <p className="card-big-date">{date}</p>
+                        <p className="card-big-date">{moment(date).locale("ua").format("LLL")}</p>
                         <p className="card-big-text">{sliceString(text, 192)}</p>
                         <div className="btn-group align-right">
                             <Link to={`/posts/${id}`}
