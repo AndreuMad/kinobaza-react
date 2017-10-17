@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 
 import { signinUser } from 'Actions/auth-actions'
-import { renderInput } from 'Components/auth/components/renderInput';
+import { renderInput } from 'Components/auth/renderInput';
 
 class SignIn extends Component {
     constructor(props) {

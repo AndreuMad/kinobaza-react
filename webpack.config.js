@@ -79,6 +79,7 @@ const config = {
     resolve: {
         alias: {
             Actions: path.resolve(srcPath, 'actions'),
+            Screens: path.resolve(srcPath, 'screens'),
             Components: path.resolve(srcPath, 'components'),
             Constants: path.resolve(srcPath, 'constants'),
             Reducers: path.resolve(srcPath, 'reducers'),

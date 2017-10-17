@@ -1,5 +1,5 @@
 import React from 'react';
-import PostCommentItem from 'Components/posts/components/PostCommentItem';
+import PostCommentItem from 'Components/posts/PostCommentItem';
 
 const PostComments = ({ comments }) => {
     return (

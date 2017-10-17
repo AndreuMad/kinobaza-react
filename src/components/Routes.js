@@ -2,11 +2,11 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Header from 'Components/common/Header';
-import LoginPage from 'Components/auth/LoginPage';
-import PostsPage from 'Components/posts/PostsPage';
-import Post from 'Components/posts/Post';
-import TitlesPage from 'Components/titles/TitlesPage';
-import PersonsPage from 'Components/persons/PersonsPage';
+import LoginPage from 'Screens/Login';
+import PostsPage from 'Screens/Posts';
+import PostPage from 'Screens/Post';
+import TitlesPage from 'Screens/Titles';
+import PersonsPage from 'Screens/Persons';
 
 const Routes = () => {
     return (
@@ -16,7 +16,7 @@ const Routes = () => {
                 <Switch>
                     <Route exact path='/' component={() => <div>Main Page</div>} />
                     <Route path='/login' component={LoginPage} />
-                    <Route path='/posts/:id' component={Post} />
+                    <Route path='/posts/:id' component={PostPage} />
                     <Route path='/posts' component={PostsPage} />
                     <Route path='/titles' component={TitlesPage} />
                     <Route path='/persons' component={PersonsPage} />

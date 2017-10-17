@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import RenderInputField from 'Components/titles/components/InputField';
-import RenderCheckboxGroup from 'Components/titles/components/CheckboxGroup';
-import RenderInputRange from 'Components/titles/components/InputRange';
-import RenderSelectField from 'Components/titles/components/SelectField'
+import RenderInputField from 'Components/titles/formComponents/InputField';
+import RenderCheckboxGroup from 'Components/titles/formComponents/CheckboxGroup';
+import RenderInputRange from 'Components/titles/formComponents/InputRange';
+import RenderSelectField from 'Components/titles/formComponents/SelectField'
 
 import {
     fetchTitles,

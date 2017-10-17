@@ -8,8 +8,8 @@ import {
     clearPosts
 } from 'Actions/posts-actions';
 
-import CardRegular from 'Components/posts/components/CardRegular';
-import CardArticle from 'Components/posts/components/CardArticle';
+import CardRegular from 'Components/posts/CardRegular';
+import CardArticle from 'Components/posts/CardArticle';
 
 class PostsPage extends Component {
     constructor(props) {
