@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PersonItem = ({ image, name, dateOfBirth, zodiacSign, titlesNumber }) => (
+const ActorItem = ({ image, name, dateOfBirth, zodiacSign, titlesNumber }) => (
     <div className="person-item">
         <div className="row">
             <div className="col m-4">
@@ -29,4 +29,4 @@ const PersonItem = ({ image, name, dateOfBirth, zodiacSign, titlesNumber }) => (
     </div>
 );
 
-export default PersonItem;
+export default ActorItem;
