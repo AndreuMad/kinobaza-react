@@ -36,7 +36,6 @@ export const fetchActors = (params, appendActors) => {
                 }
 
                 dispatch(fetchActorsStatus(true));
-                console.log(total, actors);
             })
             .catch(error => {
                 throw(error);

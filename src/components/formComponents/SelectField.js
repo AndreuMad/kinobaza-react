@@ -9,7 +9,7 @@ const RenderSelectField= ({ name, value, options, onFieldChange }) => {
             name={name}
             value={value}
             options={options}
-            onChange={({ value }) => onFieldChange(name, value)}
+            onChange={(value) => onFieldChange(name, value.value)}
         />
     )
 };

@@ -6,21 +6,14 @@ import {
     CHANGE_TITLES_QUERY
 } from 'Constants/actions';
 
+import {
+    titlesDefaultParams
+} from 'Constants/searchParams';
+
 const defaultTitlesState = {
     titles: [],
     titlesTotalCount: 0,
-    titlesQuery: {
-        name: '',
-        genre: [],
-        year: {
-            min: 1878,
-            max: 2017
-        },
-        score: {
-            min: 1,
-            max: 10
-        }
-    },
+    titlesQuery: titlesDefaultParams,
     fetchTitlesStatus: true
 };
 

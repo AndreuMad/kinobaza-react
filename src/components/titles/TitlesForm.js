@@ -14,6 +14,10 @@ import {
     changeTitlesQuery
 } from 'Actions/titles-actions';
 
+import {
+    titlesDefaultParams
+} from 'Constants/searchParams';
+
 class TitlesForm extends Component {
     constructor(props) {
         super(props);
@@ -21,39 +25,29 @@ class TitlesForm extends Component {
         this.handleFormChange = this.handleFormChange.bind(this);
 
         this.state = {
-            titlesQuery: {
-                name: '',
-                genre: [],
-                year: {
-                    min: 1878,
-                    max: 2017
-                },
-                score: {
-                    min: 1,
-                    max: 10
-                },
-                sort: 'name.ukr'
-            },
+            titlesParams: titlesDefaultParams
         }
     }
 
     componentDidMount() {
-        this.props.fetchTitles();
+        const { titlesParams } = this.state;
+
+        this.props.fetchTitles(titlesParams);
     }
 
     handleFormChange(name, payload) {
 
         if(this.props.fetchTitlesStatus) {
             this.setState({
-                titlesQuery: {
-                    ...this.state.titlesQuery,
+                titlesParams: {
+                    ...this.state.titlesParams,
                     ...{ [name]: payload }
                 }
             }, () => {
-                const { titlesQuery } = this.state;
+                const { titlesParams } = this.state;
 
-                this.props.changeTitlesQuery(titlesQuery);
-                this.props.fetchTitles(titlesQuery);
+                this.props.changeTitlesQuery(titlesParams);
+                this.props.fetchTitles(titlesParams);
             });
         }
     }
@@ -72,7 +66,7 @@ class TitlesForm extends Component {
                                 { label: 'рік', value: 'year' },
                                 { label: 'рейтинг', value: 'score' },
                             ]}
-                            value={this.state.titlesQuery.sort}
+                            value={this.state.titlesParams.sort}
                             onFieldChange={this.handleFormChange}
                         />
                     </div>
@@ -112,9 +106,9 @@ class TitlesForm extends Component {
                             name="year"
                             params={{
                                 min: 1878,
-                                max: 2017
+                                max: 2018
                             }}
-                            value={this.state.titlesQuery.year}
+                            value={this.state.titlesParams.year}
                             onFieldChange={this.handleFormChange}
                         />
                     </div>
@@ -126,7 +120,7 @@ class TitlesForm extends Component {
                                 min: 1,
                                 max: 10
                             }}
-                            value={this.state.titlesQuery.score}
+                            value={this.state.titlesParams.score}
                             onFieldChange={this.handleFormChange}
                         />
                     </div>
