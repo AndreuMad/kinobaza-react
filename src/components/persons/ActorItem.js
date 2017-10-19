@@ -1,6 +1,8 @@
 import React from 'react';
 
-const ActorItem = ({ image, name, dateOfBirth, zodiacSign, titlesNumber }) => (
+import ActorsTitle from 'Components/persons/ActorsTitle';
+
+const ActorItem = ({ image, name, dateOfBirth, zodiacSign, titlesNumber, birthLocation, titles }) => (
     <div className="person-item">
         <div className="row">
             <div className="col m-4">
@@ -22,7 +24,24 @@ const ActorItem = ({ image, name, dateOfBirth, zodiacSign, titlesNumber }) => (
                     <p>{name.en}</p>
                     <p>{dateOfBirth}</p>
                     <p>{zodiacSign}</p>
+                    <p>{birthLocation}</p>
                     <p>{titlesNumber}</p>
+                        {
+                            titles.length ?
+
+                                <div className="titles-wrap">
+                                    {titles.map((title) => {
+                                        const { image, name } = title;
+
+                                        return (
+                                            <ActorsTitle
+                                                image={image}
+                                                name={name}
+                                            />
+                                        );
+                                    })}
+                                </div> : null
+                        }
                 </div>
             </div>
         </div>

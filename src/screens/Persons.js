@@ -13,18 +13,44 @@ import {
 class PersonsPage extends Component {
 
     render() {
+        const { actors } = this.props;
+
         return (
             <article className="persons-page">
                 <div className="container">
                     <div className="row">
                         <div className="col m-8">
                             <div className="col-inner">
+                                {actors.length ?
+                                    actors.map((actor) => {
+                                        const {
+                                            birthLocation,
+                                            image,
+                                            name,
+                                            titles,
+                                            dateOfBirth,
+                                            titlesNumber,
+                                            zodiacSign
+                                        } = actor;
 
+                                        return (
+                                            <ActorItem
+                                                image={image}
+                                                name={name}
+                                                dateOfBirth={dateOfBirth}
+                                                zodiacSign={zodiacSign}
+                                                titlesNumber={titlesNumber}
+                                                birthLocation={birthLocation}
+                                                titles={titles}
+                                            />
+                                        )
+                                    }) : <span>Нічого не знайдено</span>
+                                }
                             </div>
                         </div>
                         <div className="col m-4">
                             <div className="col-inner">
-
+                                <ActorsForm />
                             </div>
                         </div>
                     </div>

@@ -9,19 +9,69 @@ import {
     changeActorsQuery
 } from 'Actions/actors-actions';
 
-class ActorsForm extends Component {
+import {
+    actorsDefaultParams
+} from 'Constants/searchParams';
 
-};
+class ActorsForm extends Component {
+    constructor(props) {
+        super(props);
+
+        this.handleFormChange = this.handleFormChange.bind(this);
+
+        this.state = {
+            actorsParams: actorsDefaultParams
+        }
+    }
+
+    componentDidMount() {
+        const { actorsParams } = this.state;
+
+        this.props.fetchActors(actorsParams);
+    };
+
+    handleFormChange(name, payload) {
+        if(this.props.fetchActorsStatus) {
+            this.setState({
+                ...this.state.actorsParams,
+                ...{ [name]: payload }
+            }, () => {
+                const { actorsParams } = this.state;
+
+                this.props.changeActorsQuery(actorsParams);
+                this.props.fetchActors(actorsParams);
+            });
+        }
+    }
+
+    render() {
+
+        return (
+            <div className="actors-filter-wrap">
+                <form>
+                    <div className="filter-item">
+                        <RenderInputField
+                            type="text"
+                            name="name"
+                            placeholder="Ім'я"
+                            onFieldChange={this.handleFormChange}
+                        />
+                    </div>
+                </form>
+            </div>
+        )
+    }
+}
 
 ActorsForm.propTypes = {
     fetchActors: PropTypes.func.isRequired,
     changeActorsQuery: PropTypes.func.isRequired,
-    fetchActorsStatus: PropTypes.func.isRequired
+    fetchActorsStatus: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
-        fetchActorsStatus: state.titles.fetchActorsStatus
+        fetchActorsStatus: state.actors.fetchActorsStatus
     };
 };
 
@@ -30,4 +80,4 @@ const mapDispatchToProps = (dispatch) => ({
     changeActorsQuery: (params) => dispatch(changeActorsQuery(params))
 });
 
-export default connect(mapStateToProps)(ActorsForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ActorsForm);

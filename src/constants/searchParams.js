@@ -11,3 +11,7 @@ export const titlesDefaultParams = {
     },
     sort: 'year'
 };
+
+export const actorsDefaultParams = {
+    name: ''
+};
