@@ -45,7 +45,6 @@ class TitlesPage extends Component {
     }
 
     fetchUpTitles() {
-
         this.props.fetchUpTitles({
             ...this.props.titlesQuery,
             skip: this.state.titlesCurrentCount

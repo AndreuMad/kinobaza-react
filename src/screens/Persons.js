@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import ActorItem from 'Components/persons/ActorItem';
 import ActorsForm from 'Components/persons/ActorsForm';
@@ -11,12 +12,61 @@ import {
 } from 'Actions/actors-actions';
 
 class PersonsPage extends Component {
+    constructor(props) {
+        super(props);
+
+        this.handleActorsLoad = _.debounce(this.handleActorsLoad.bind(this));
+
+        this.state = {
+            actorsCurrentCount: 0,
+            shouldLoadActors: true
+        }
+    }
+
+    componentDidMount() {
+        window.addEventListener('scroll', this.handleActorsLoad);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const actorsCurrentCount = nextProps.actors.length;
+        const { actorsTotalCount } = this.props;
+
+        const actorsLoadStatus = actorsCurrentCount < actorsTotalCount;
+
+        this.setState({
+            actorsCurrentCount,
+            shouldLoadActors: actorsLoadStatus
+        });
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleActorsLoad);
+    }
+
+    fetchUpActors() {
+        this.props.fetchUpActors({
+            ...this.props.actorsQuery,
+            skip: this.state.actorsCurrentCount
+        });
+    }
+
+    handleActorsLoad() {
+        if(this.state.shouldLoadActors && this.props.fetchActorsStatus) {
+
+            if(this.pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
+                this.fetchUpActors();
+            }
+        }
+    }
 
     render() {
         const { actors } = this.props;
 
         return (
-            <article className="persons-page">
+            <article
+                className="persons-page"
+                ref={node => this.pageNode = node}
+            >
                 <div className="container">
                     <div className="row">
                         <div className="col m-8">
@@ -24,6 +74,7 @@ class PersonsPage extends Component {
                                 {actors.length ?
                                     actors.map((actor) => {
                                         const {
+                                            _id,
                                             birthLocation,
                                             image,
                                             name,
@@ -35,6 +86,7 @@ class PersonsPage extends Component {
 
                                         return (
                                             <ActorItem
+                                                key={`actor${_id}`}
                                                 image={image}
                                                 name={name}
                                                 dateOfBirth={dateOfBirth}

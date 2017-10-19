@@ -33,8 +33,10 @@ class ActorsForm extends Component {
     handleFormChange(name, payload) {
         if(this.props.fetchActorsStatus) {
             this.setState({
-                ...this.state.actorsParams,
-                ...{ [name]: payload }
+                actorsParams: {
+                    ...this.state.actorsParams,
+                    ...{ [name]: payload }
+                }
             }, () => {
                 const { actorsParams } = this.state;
 

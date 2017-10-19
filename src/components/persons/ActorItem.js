@@ -1,9 +1,14 @@
 import React from 'react';
 
+import moment from 'moment';
+import 'NodeModules/moment/locale/uk';
+
 import ActorsTitle from 'Components/persons/ActorsTitle';
 
-const ActorItem = ({ image, name, dateOfBirth, zodiacSign, titlesNumber, birthLocation, titles }) => (
-    <div className="person-item">
+const ActorItem = ({ _id, image, name, dateOfBirth, zodiacSign, titlesNumber, birthLocation, titles }) => (
+    <div
+        className="person-item"
+    >
         <div className="row">
             <div className="col m-4">
                 <div className="col-inner">
@@ -22,19 +27,19 @@ const ActorItem = ({ image, name, dateOfBirth, zodiacSign, titlesNumber, birthLo
                 <div className="col-inner">
                     <h2>{name.ukr}</h2>
                     <p>{name.en}</p>
-                    <p>{dateOfBirth}</p>
+                    <p>{moment(dateOfBirth).locale("ua").format("LL")}</p>
                     <p>{zodiacSign}</p>
                     <p>{birthLocation}</p>
                     <p>{titlesNumber}</p>
                         {
                             titles.length ?
-
                                 <div className="titles-wrap">
                                     {titles.map((title) => {
-                                        const { image, name } = title;
+                                        const { _id, image, name } = title;
 
                                         return (
                                             <ActorsTitle
+                                                key={`actorsTitle${_id}`}
                                                 image={image}
                                                 name={name}
                                             />

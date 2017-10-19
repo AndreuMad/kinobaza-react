@@ -54,9 +54,12 @@ export const fetchActorsSuccess = ({ total, actors }) => {
 };
 
 export const fetchUpActorsSuccess = (actors) => {
+    console.log(actors);
     return {
         type: FETCH_UP_ACTORS_SUCCESS,
-        actorsData: actors
+        actorsData: {
+            actors
+        }
     }
 };
 
