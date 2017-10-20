@@ -26,8 +26,10 @@ class ActorsForm extends Component {
 
     componentDidMount() {
         const { actorsParams } = this.state;
-
-        this.props.fetchActors(actorsParams);
+        this.props.fetchActors({
+            ...actorsParams,
+            userId: this.props.userId
+        });
     };
 
     handleFormChange(name, payload) {
@@ -66,6 +68,7 @@ class ActorsForm extends Component {
 }
 
 ActorsForm.propTypes = {
+    userId: PropTypes.string,
     fetchActors: PropTypes.func.isRequired,
     changeActorsQuery: PropTypes.func.isRequired,
     fetchActorsStatus: PropTypes.bool.isRequired
@@ -73,6 +76,7 @@ ActorsForm.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        userId: state.auth.id,
         fetchActorsStatus: state.actors.fetchActorsStatus
     };
 };
