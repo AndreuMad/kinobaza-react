@@ -16,6 +16,7 @@ class PersonsPage extends Component {
         super(props);
 
         this.handleActorsLoad = _.debounce(this.handleActorsLoad.bind(this));
+        this.handleActorLike = this.handleActorLike.bind(this);
 
         this.state = {
             actorsCurrentCount: 0,
@@ -59,6 +60,10 @@ class PersonsPage extends Component {
         }
     }
 
+    handleActorLike(actorId) {
+        console.log(actorId);
+    }
+
     render() {
         const { actors } = this.props;
 
@@ -81,12 +86,14 @@ class PersonsPage extends Component {
                                             titles,
                                             dateOfBirth,
                                             titlesNumber,
-                                            zodiacSign
+                                            zodiacSign,
+                                            likes
                                         } = actor;
 
                                         return (
                                             <ActorItem
                                                 key={`actor${_id}`}
+                                                _id={_id}
                                                 image={image}
                                                 name={name}
                                                 dateOfBirth={dateOfBirth}
@@ -94,6 +101,8 @@ class PersonsPage extends Component {
                                                 titlesNumber={titlesNumber}
                                                 birthLocation={birthLocation}
                                                 titles={titles}
+                                                likes={likes}
+                                                handleActorLike={this.handleActorLike}
                                             />
                                         )
                                     }) : <span>Нічого не знайдено</span>

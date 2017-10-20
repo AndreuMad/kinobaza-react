@@ -6,7 +6,8 @@ import {
     FETCH_UP_ACTORS_SUCCESS,
     CLEAR_ACTORS,
     FETCH_ACTOR_SUCCESS,
-    CHANGE_ACTORS_QUERY
+    CHANGE_ACTORS_QUERY,
+    LIKE_ACTOR
 } from 'Constants/actions';
 
 import { apiUrl } from 'Constants/urls';
@@ -72,5 +73,16 @@ export const changeActorsQuery = (params) => {
     return {
         type: CHANGE_ACTORS_QUERY,
         params
+    }
+};
+
+export const likeActor = ({ userId, actorId }) => {
+    return (dispatch) => {
+
+        return Axios.post(`${apiUrl}/actors/like`, { userId, actorId })
+            .then(() => console.log('liked'))
+            .catch(error => {
+                throw(error);
+            });
     }
 };

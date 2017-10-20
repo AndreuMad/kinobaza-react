@@ -5,7 +5,18 @@ import 'NodeModules/moment/locale/uk';
 
 import ActorsTitle from 'Components/persons/ActorsTitle';
 
-const ActorItem = ({ _id, image, name, dateOfBirth, zodiacSign, titlesNumber, birthLocation, titles }) => (
+const ActorItem = ({
+                       _id,
+                       image,
+                       name,
+                       dateOfBirth,
+                       zodiacSign,
+                       titlesNumber,
+                       birthLocation,
+                       titles,
+                       likes,
+                       handleActorLike
+}) => (
     <div
         className="person-item"
     >
@@ -16,9 +27,15 @@ const ActorItem = ({ _id, image, name, dateOfBirth, zodiacSign, titlesNumber, bi
                         <img src={image.url} alt={name.ukr}/>
                     </figure>
                     <div className="btn-group">
-                        <button>
+                        <button
+                            onClick={() => handleActorLike(_id)}
+                        >
                             <i className="fa fa-heart" aria-hidden="true" />
-                            <span>Додати до улюблених</span>
+                            <span>
+                                {
+                                    likes.length ? 'Видалити з улюблених' : 'Додати до улюблених'
+                                }
+                            </span>
                         </button>
                     </div>
                 </div>
