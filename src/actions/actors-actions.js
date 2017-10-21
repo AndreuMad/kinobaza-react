@@ -33,7 +33,7 @@ export const fetchActors = (params, appendActors) => {
                 const { total, actors, likes } = response.data;
 
                 if(appendActors) {
-                    dispatch(fetchUpActorsSuccess(actors))
+                    dispatch(fetchUpActorsSuccess({ actors, likes }))
                 } else {
                     dispatch(fetchActorsSuccess({ total, actors, likes }))
                 }
@@ -57,11 +57,12 @@ export const fetchActorsSuccess = ({ total, actors, likes }) => {
     }
 };
 
-export const fetchUpActorsSuccess = (actors) => {
+export const fetchUpActorsSuccess = ({ actors, likes }) => {
     return {
         type: FETCH_UP_ACTORS_SUCCESS,
         actorsData: {
-            actors
+            actors,
+            likes
         }
     }
 };

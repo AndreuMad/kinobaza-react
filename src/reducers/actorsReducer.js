@@ -44,6 +44,10 @@ export const actorsReducer = (state = defaultActorsState, action) => {
                 actors: [
                     ...state.actors,
                     ...action.actorsData.actors
+                ],
+                actorsLikes: [
+                    ...state.actorsLikes,
+                    ...action.actorsData.likes
                 ]
             };
 

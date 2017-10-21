@@ -39,6 +39,9 @@ class ActorsForm extends Component {
                     userId: nextProps.userId
                 }
             }, () => {
+                const { actorsParams } = this.state;
+
+                this.props.changeActorsQuery(actorsParams);
                 this.handleFetchActors();
             });
         }
