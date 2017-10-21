@@ -14,7 +14,7 @@ const ActorItem = ({
                        titlesNumber,
                        birthLocation,
                        titles,
-                       likes,
+                       liked,
                        handleActorLike
 }) => (
     <div
@@ -33,7 +33,7 @@ const ActorItem = ({
                             <i className="fa fa-heart" aria-hidden="true" />
                             <span>
                                 {
-                                    likes.length ? 'Видалити з улюблених' : 'Додати до улюблених'
+                                    liked ? 'Видалити з улюблених' : 'Додати до улюблених'
                                 }
                             </span>
                         </button>

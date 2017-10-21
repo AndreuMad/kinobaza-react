@@ -4,16 +4,21 @@ import {
     FETCH_UP_ACTORS_SUCCESS,
     CLEAR_ACTORS,
     FETCH_ACTOR_SUCCESS,
-    CHANGE_ACTORS_QUERY
+    CHANGE_ACTORS_QUERY,
+    LIKE_ACTOR_STATUS,
+    SAVE_ACTOR_LIKE,
+    REMOVE_ACTOR_LIKE
 } from 'Constants/actions';
 
 const defaultActorsState = {
     actors: [],
     actorsTotalCount: 0,
+    actorsLikes: [],
     actorsQuery: {
         name: ''
     },
-    fetchActorsStatus: true
+    fetchActorsStatus: true,
+    likeActorStatus: true
 };
 
 export const actorsReducer = (state = defaultActorsState, action) => {
@@ -29,7 +34,8 @@ export const actorsReducer = (state = defaultActorsState, action) => {
             return {
                 ...state,
                 actors: action.actorsData.actors,
-                actorsTotalCount: action.actorsData.total
+                actorsTotalCount: action.actorsData.total,
+                actorsLikes: action.actorsData.likes
             };
 
         case FETCH_UP_ACTORS_SUCCESS:
@@ -55,6 +61,27 @@ export const actorsReducer = (state = defaultActorsState, action) => {
                     ...state.actorsQuery,
                     ...action.params
                 }
+            };
+
+        case LIKE_ACTOR_STATUS:
+            return {
+                ...state,
+                likeActorStatus: action.status
+            };
+
+        case SAVE_ACTOR_LIKE:
+            return {
+                ...state,
+                actorsLikes: [
+                    ...state.actorsLikes,
+                    action.actorId
+                ]
+            };
+
+        case REMOVE_ACTOR_LIKE:
+            return {
+                ...state,
+                actorsLikes: state.actorsLikes.filter(item => item !== action.actorId)
             };
 
         default:

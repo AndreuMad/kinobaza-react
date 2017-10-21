@@ -7,7 +7,9 @@ import {
     CLEAR_ACTORS,
     FETCH_ACTOR_SUCCESS,
     CHANGE_ACTORS_QUERY,
-    LIKE_ACTOR
+    LIKE_ACTOR_STATUS,
+    SAVE_ACTOR_LIKE,
+    REMOVE_ACTOR_LIKE
 } from 'Constants/actions';
 
 import { apiUrl } from 'Constants/urls';
@@ -28,12 +30,12 @@ export const fetchActors = (params, appendActors) => {
             params: params
         })
             .then(response => {
-                const { total, actors } = response.data;
+                const { total, actors, likes } = response.data;
 
                 if(appendActors) {
                     dispatch(fetchUpActorsSuccess(actors))
                 } else {
-                    dispatch(fetchActorsSuccess({ total, actors }))
+                    dispatch(fetchActorsSuccess({ total, actors, likes }))
                 }
 
                 dispatch(fetchActorsStatus(true));
@@ -44,12 +46,13 @@ export const fetchActors = (params, appendActors) => {
     }
 };
 
-export const fetchActorsSuccess = ({ total, actors }) => {
+export const fetchActorsSuccess = ({ total, actors, likes }) => {
     return {
         type: FETCH_ACTORS_SUCCESS,
         actorsData: {
             total,
-            actors
+            actors,
+            likes
         }
     }
 };
@@ -79,10 +82,44 @@ export const changeActorsQuery = (params) => {
 export const likeActor = ({ userId, actorId }) => {
     return (dispatch) => {
 
+        dispatch(likeActorStatus(false));
+
         return Axios.post(`${apiUrl}/actors/like`, { userId, actorId })
-            .then(() => console.log('liked'))
+            .then((response) => {
+                const { action, actorId } = response.data;
+
+                if(action === 'saved') {
+                    dispatch(saveActorLike(actorId));
+                } else if(action === 'removed') {
+                    dispatch(removeActorLike(actorId));
+                }
+
+                dispatch(likeActorStatus(true));
+
+            })
             .catch(error => {
                 throw(error);
             });
+    }
+};
+
+export const likeActorStatus = (status) => {
+    return {
+        type: LIKE_ACTOR_STATUS,
+        status
+    }
+};
+
+export const saveActorLike = (actorId) => {
+    return {
+        type: SAVE_ACTOR_LIKE,
+        actorId
+    }
+};
+
+export const removeActorLike = (actorId) => {
+    return {
+        type: REMOVE_ACTOR_LIKE,
+        actorId
     }
 };

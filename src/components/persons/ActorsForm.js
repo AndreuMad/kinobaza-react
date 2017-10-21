@@ -20,31 +20,49 @@ class ActorsForm extends Component {
         this.handleFormChange = this.handleFormChange.bind(this);
 
         this.state = {
-            actorsParams: actorsDefaultParams
+            actorsParams: {
+                ...actorsDefaultParams,
+                userId: this.props.userId
+            }
         }
     }
 
     componentDidMount() {
-        const { actorsParams } = this.state;
-        this.props.fetchActors({
-            ...actorsParams,
-            userId: this.props.userId
-        });
+        this.handleFetchActors();
     };
 
-    handleFormChange(name, payload) {
-        if(this.props.fetchActorsStatus) {
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.userId !== this.props.userId) {
             this.setState({
                 actorsParams: {
                     ...this.state.actorsParams,
-                    ...{ [name]: payload }
+                    userId: nextProps.userId
                 }
             }, () => {
-                const { actorsParams } = this.state;
-
-                this.props.changeActorsQuery(actorsParams);
-                this.props.fetchActors(actorsParams);
+                this.handleFetchActors();
             });
+        }
+    }
+
+    handleFormChange(name, payload) {
+        this.setState({
+            actorsParams: {
+                ...this.state.actorsParams,
+                ...{ [name]: payload }
+            }
+        }, () => {
+            const { actorsParams } = this.state;
+
+            this.props.changeActorsQuery(actorsParams);
+            this.handleFetchActors();
+        });
+    }
+
+    handleFetchActors() {
+        if(this.props.fetchActorsStatus) {
+            const { actorsParams } = this.state;
+
+            this.props.fetchActors(actorsParams);
         }
     }
 

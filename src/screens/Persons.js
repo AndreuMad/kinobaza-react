@@ -8,7 +8,8 @@ import ActorsForm from 'Components/persons/ActorsForm';
 
 import {
     fetchActors,
-    clearActors
+    clearActors,
+    likeActor
 } from 'Actions/actors-actions';
 
 class PersonsPage extends Component {
@@ -61,7 +62,9 @@ class PersonsPage extends Component {
     }
 
     handleActorLike(actorId) {
-        console.log(actorId);
+        if(this.props.likeActorStatus) {
+            this.props.likeActor(this.props.userId, actorId);
+        }
     }
 
     render() {
@@ -87,8 +90,9 @@ class PersonsPage extends Component {
                                             dateOfBirth,
                                             titlesNumber,
                                             zodiacSign,
-                                            likes
                                         } = actor;
+
+                                       const liked = this.props.actorsLikes.indexOf(_id) !== -1;
 
                                         return (
                                             <ActorItem
@@ -101,7 +105,7 @@ class PersonsPage extends Component {
                                                 titlesNumber={titlesNumber}
                                                 birthLocation={birthLocation}
                                                 titles={titles}
-                                                likes={likes}
+                                                liked={liked}
                                                 handleActorLike={this.handleActorLike}
                                             />
                                         )
@@ -122,28 +126,35 @@ class PersonsPage extends Component {
 }
 
 PersonsPage.propTypes = {
+    userId: PropTypes.string,
     actors: PropTypes.arrayOf(PropTypes.object),
     actorsTotalCount: PropTypes.number.isRequired,
     actorsQuery: PropTypes.object,
     fetchActorsStatus: PropTypes.bool.isRequired,
     fetchUpActors: PropTypes.func.isRequired,
-    clearActors: PropTypes.func.isRequired
+    clearActors: PropTypes.func.isRequired,
+    likeActor: PropTypes.func.isRequired,
+    likeActorStatus: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
     const actorsState = state.actors;
 
     return {
+        userId: state.auth.id,
         actors: actorsState.actors,
         actorsTotalCount: actorsState.actorsTotalCount,
+        actorsLikes: actorsState.actorsLikes,
         actorsQuery: actorsState.actorsQuery,
-        fetchActorsStatus: actorsState.fetchActorsStatus
+        fetchActorsStatus: actorsState.fetchActorsStatus,
+        likeActorStatus: actorsState.likeActorStatus
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
     fetchUpActors: (props) => dispatch(fetchActors(props, true)),
-    clearActors: () => dispatch(clearActors())
+    clearActors: () => dispatch(clearActors()),
+    likeActor: (userId, actorId) => dispatch(likeActor({ userId, actorId }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonsPage);
