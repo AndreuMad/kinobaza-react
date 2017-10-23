@@ -9,26 +9,6 @@ const isProd = process.env.NODE_ENV === 'production';
 const srcPath = path.resolve(__dirname, 'src');
 const distPath = path.resolve(__dirname, 'dist');
 
-const cssDev = ['style-loader', 'css-loader', 'sass-loader'];
-const cssProd = ExtractTextPlugin.extract({
-    fallback: 'style-loader',
-    use: [
-        'css-loader',
-        {
-            loader: 'postcss-loader',
-            options: {
-                config: {
-                    path: 'postcss.config.js'
-                }
-            }
-        },
-        'sass-loader'
-    ],
-    publicPath: '/dist'
-});
-
-const cssConfig = isProd ? { use: cssProd } : { loader: cssDev };
-
 const config = {
     context: srcPath,
     entry: './index.js',
@@ -55,13 +35,11 @@ const config = {
                 }]
             },
             // scss
-            Object.assign(
-                {
-                    test: /\.scss$/,
-                    exclude: /node_modules/,
-                },
-                cssConfig
-            ),
+            {
+                test: /\.scss$/,
+                exclude: /node_modules/,
+                loader: ['style-loader', 'css-loader', 'sass-loader']
+            },
             // Fonts
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

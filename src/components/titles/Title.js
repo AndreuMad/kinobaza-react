@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Rating from 'react-rating';
+
 const Title = ({ id, titleEn, titleUkr, imageUrl, year, averageScore, imdbScore, text }) => {
     return (
         <article className="title-item" key={`title${id}`}>
@@ -28,6 +30,13 @@ const Title = ({ id, titleEn, titleUkr, imageUrl, year, averageScore, imdbScore,
                                 <span className="score-number imdb">{imdbScore}</span>
                                 <span className="score-description">iMDb</span>
                             </div>
+                        </div>
+                        <div className="title-set-score">
+                            <Rating
+                                start={0}
+                                stop={10}
+                                initialRate={3}
+                            />
                         </div>
                         <p className="title-text">{text}</p>
                     </div>
