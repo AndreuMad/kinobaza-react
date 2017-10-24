@@ -1,4 +1,4 @@
-import axios from 'axios';1
+import axios from 'axios';
 
 import {
     AUTH_USER,
