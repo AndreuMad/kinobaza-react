@@ -25,30 +25,53 @@ class TitlesForm extends Component {
         this.handleFormChange = this.handleFormChange.bind(this);
 
         this.state = {
-            titlesParams: titlesDefaultParams
+            titlesParams: {
+                ...titlesDefaultParams,
+                userId: this.props.userId
+            }
         }
     }
 
     componentDidMount() {
-        const { titlesParams } = this.state;
-
-        this.props.fetchTitles(titlesParams);
+        this.handleFetchTitles();
     }
 
-    handleFormChange(name, payload) {
+    componentWillReceiveProps(nextProps) {
 
-        if(this.props.fetchTitlesStatus) {
+        if(nextProps.userId !== this.props.userId) {
             this.setState({
                 titlesParams: {
                     ...this.state.titlesParams,
-                    ...{ [name]: payload }
+                    userId: nextProps.userId
                 }
             }, () => {
                 const { titlesParams } = this.state;
 
                 this.props.changeTitlesQuery(titlesParams);
-                this.props.fetchTitles(titlesParams);
+                this.handleFetchTitles();
             });
+        }
+    }
+
+    handleFormChange(name, payload) {
+        this.setState({
+            titlesParams: {
+                ...this.state.titlesParams,
+                ...{ [name]: payload }
+            }
+        }, () => {
+            const { titlesParams } = this.state;
+
+            this.props.changeTitlesQuery(titlesParams);
+            this.handleFetchTitles();
+        });
+    }
+
+    handleFetchTitles() {
+        if(this.props.fetchTitlesStatus) {
+            const { titlesParams } = this.state;
+
+            this.props.fetchTitles(titlesParams);
         }
     }
 
@@ -131,6 +154,7 @@ class TitlesForm extends Component {
 }
 
 TitlesForm.propTypes = {
+    userId: PropTypes.string,
     fetchTitles: PropTypes.func.isRequired,
     changeTitlesQuery: PropTypes.func.isRequired,
     fetchTitlesStatus: PropTypes.bool.isRequired
@@ -138,6 +162,7 @@ TitlesForm.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        userId: state.auth.id,
         fetchTitlesStatus: state.titles.fetchTitlesStatus
     };
 };

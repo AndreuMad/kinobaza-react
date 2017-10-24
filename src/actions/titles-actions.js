@@ -77,3 +77,14 @@ export const changeTitlesQuery = (params) => {
     }
 };
 
+export const setTitleRating = (userId, titleId, rating) => {
+    return (dispatch) => {
+        return Axios.post(`${apiUrl}/titles/rate`, { userId, titleId, rating })
+            .then((response) => {
+
+            })
+            .catch(error => {
+                throw(error);
+            });
+    }
+};

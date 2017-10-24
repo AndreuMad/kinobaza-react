@@ -8,7 +8,8 @@ import TitlesForm from 'Components/titles/TitlesForm';
 
 import {
     fetchTitles,
-    clearTitles
+    clearTitles,
+    setTitleRating
 } from 'Actions/titles-actions';
 
 class TitlesPage extends Component {
@@ -16,6 +17,7 @@ class TitlesPage extends Component {
         super(props);
 
         this.handleTitlesLoad = _.debounce(this.handleTitlesLoad.bind(this));
+        this.handleTitleRate = this.handleTitleRate.bind(this);
 
         this.state = {
             titlesCurrentCount: 0,
@@ -62,6 +64,14 @@ class TitlesPage extends Component {
         }
     }
 
+    handleTitleRate(titleId, newRating) {
+        const { userId } = this.props;
+
+        if(this.props.userId) {
+            this.props.setTitleRating(userId, titleId, newRating);
+        }
+    }
+
     render() {
         const { titles } = this.props;
 
@@ -84,13 +94,14 @@ class TitlesPage extends Component {
                                                 image,
                                                 year,
                                                 score,
-                                                text
+                                                text,
+                                                userRating
                                             } = title;
 
                                             return (
                                                 <Title
                                                     key={`title${_id}`}
-                                                    id={_id}
+                                                    _id={_id}
                                                     titleEn={name.en}
                                                     titleUkr={name.ukr}
                                                     imageUrl={image.url}
@@ -98,6 +109,8 @@ class TitlesPage extends Component {
                                                     averageScore={score.average}
                                                     imdbScore={score.imdb}
                                                     text={text}
+                                                    userRating={userRating ? userRating.rating : null}
+                                                    handleTitleRate={this.handleTitleRate}
                                                 />
                                             );
 
@@ -117,6 +130,7 @@ class TitlesPage extends Component {
 }
 
 TitlesPage.propTypes = {
+    userId: PropTypes.string,
     titles: PropTypes.arrayOf(PropTypes.object),
     titlesTotalCount: PropTypes.number.isRequired,
     titlesQuery: PropTypes.object,
@@ -127,6 +141,7 @@ TitlesPage.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        userId: state.auth.id,
         titles: state.titles.titles,
         titlesTotalCount: state.titles.titlesTotalCount,
         titlesQuery: state.titles.titlesQuery,
@@ -136,7 +151,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     fetchUpTitles: (props) => dispatch(fetchTitles(props, true)),
-    clearTitles: () => dispatch(clearTitles())
+    clearTitles: () => dispatch(clearTitles()),
+    setTitleRating: (userId, titleId, newRating) => dispatch(setTitleRating(userId, titleId, newRating))
 });
 
 

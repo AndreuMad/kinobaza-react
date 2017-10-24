@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import Rating from 'react-rating';
 
-const Title = ({ id, titleEn, titleUkr, imageUrl, year, averageScore, imdbScore, text }) => {
+const Title = ({ _id, titleEn, titleUkr, imageUrl, year, averageScore, imdbScore, text, userRating, handleTitleRate }) => {
+
     return (
-        <article className="title-item" key={`title${id}`}>
+        <article className="title-item" key={`title${_id}`}>
             <div className="row">
                 <div className="col m-5">
                     <div className="col-inner">
@@ -35,7 +36,8 @@ const Title = ({ id, titleEn, titleUkr, imageUrl, year, averageScore, imdbScore,
                             <Rating
                                 start={0}
                                 stop={10}
-                                initialRate={3}
+                                initialRate={userRating}
+                                onChange={(newRating) => handleTitleRate(_id, newRating)}
                             />
                         </div>
                         <p className="title-text">{text}</p>
@@ -47,7 +49,7 @@ const Title = ({ id, titleEn, titleUkr, imageUrl, year, averageScore, imdbScore,
 };
 
 Title.propTypes = {
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
     titleEn: PropTypes.string,
     titleUkr: PropTypes.string.isRequired,
     imageUrl: PropTypes.string,
