@@ -14,27 +14,39 @@ class SignUp extends Component {
     }
 
     renderAlert() {
-        if(this.props.errorMessage) {
+        const { errorMessage } = this.props;
+
+        if(errorMessage) {
             return (
                 <div className="alert alert-danger">
-                    <b>Ooops!</b> {this.props.errorMessage}
+                    <b>Ooops!</b>
+                    {errorMessage}
                 </div>
             )
         }
     }
 
     handleFormSubmit({ email, name, password }) {
-        this.props.signupUser(
+        const {
+            signupUser,
+            history
+        } = this.props;
+
+        signupUser(
             { email, name, password },
-            this.props.history
+            history
         );
     }
 
     render() {
+        const {
+            handleFormSubmit,
+            renderAlert
+        } = this;
         const { handleSubmit } = this.props;
 
         return (
-            <form onSubmit={handleSubmit(this.handleFormSubmit)}>
+            <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <Field
                     name="email"
                     component={renderInput}
@@ -59,7 +71,7 @@ class SignUp extends Component {
                     type="password"
                     label="Confirm Password"
                 />
-                {this.renderAlert()}
+                {renderAlert()}
                 <button className="btn btn-primary">Sign Up</button>
             </form>
         );
@@ -67,25 +79,31 @@ class SignUp extends Component {
 }
 
 const validate = (values) => {
+    const {
+        email,
+        name,
+        password,
+        passwordConfirm
+    } = values;
     const errors = {};
 
     if(!values.email) {
         errors.email = 'Please, enter an email';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
         errors.email = 'Please, enter a valid email';
     }
 
-    if(!values.name) {
+    if(!name) {
         errors.name = 'Please, enter your name';
     }
 
-    if(!values.password) {
+    if(!password) {
         errors.password = 'Please, enter password';
-    } else if (values.password !== values.passwordConfirm) {
+    } else if (password !== passwordConfirm) {
         errors.password = 'Passwords do not match';
     }
 
-    if(!values.passwordConfirm) {
+    if(!passwordConfirm) {
         errors.passwordConfirm = 'Please, enter password';
     }
 
@@ -98,8 +116,8 @@ SignUp.propTypes = {
     history: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
-    errorMessage: state.auth.error
+const mapStateToProps = ({ auth: { error } }) => ({
+    errorMessage: error
 });
 
 const mapDispatchToProps = (dispatch) => ({

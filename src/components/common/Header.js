@@ -10,6 +10,7 @@ import { signWithToken, signoutUser } from 'Actions/auth-actions';
 class Header extends Component {
     constructor(props) {
         super(props);
+        this.renderUserBlock = this.renderUserBlock.bind(this);
         this.handleScroll = _.debounce(this.handleScroll.bind(this), 15);
         this.state = {
             sticky: false
@@ -26,24 +27,31 @@ class Header extends Component {
     }
 
     singWithToken() {
+        const { signWithToken } = this.props;
         const token = localStorage.getItem('token');
 
         if(token) {
-            this.props.signWithToken(token);
+            signWithToken(token);
         }
     }
 
     renderUserBlock() {
-        if(this.props.authenticated) {
+        const {
+            authenticated,
+            userName,
+            signoutUser
+        } = this.props;
+
+        if(authenticated) {
             return ([
                 <span
                     key="headerUsername"
                     className="username"
-                >{this.props.userName}</span>,
+                >{userName}</span>,
                 <button
                     key="headerSignoutUser"
                     className="btn"
-                    onClick={this.props.signoutUser}
+                    onClick={signoutUser}
                 >Sign out</button>
             ])
         } else {
@@ -58,16 +66,17 @@ class Header extends Component {
     }
 
     handleScroll() {
+        const { sticky } = this.state;
 
         if(window.pageYOffset > 0) {
 
-            if(this.state.sticky === false) {
+            if(sticky === false) {
                 this.setState({
                     sticky: true
                 });
             }
         } else {
-            if(this.state.sticky === true) {
+            if(sticky === true) {
                 this.setState({
                     sticky: false
                 });
@@ -76,11 +85,18 @@ class Header extends Component {
     }
 
     render() {
+        const {
+            renderUserBlock
+        } = this;
+        const {
+            sticky
+        } = this.state;
+
         return (
             <header
                 className={classNames(
                     "main-header",
-                    { "sticky": this.state.sticky }
+                    { "sticky": sticky }
                 )}
             >
                 <div className="container-full">
@@ -88,7 +104,7 @@ class Header extends Component {
                         <div className="row">
                             <div className="col m-4">
                                 <div className="col-inner header-control-item">
-                                    {this.renderUserBlock()}
+                                    {renderUserBlock()}
                                 </div>
                             </div>
                             <div className="col m-4">
@@ -179,10 +195,10 @@ Header.propTypes = {
     signoutUser: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => (
+const mapStateToProps = ({ auth: { authenticated, name } }) => (
     {
-        authenticated: state.auth.authenticated,
-        userName: state.auth.name
+        authenticated: authenticated,
+        userName: name
     }
 );
 

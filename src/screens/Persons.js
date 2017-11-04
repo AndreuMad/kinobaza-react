@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import ActorItem from 'Components/persons/ActorItem';
@@ -29,9 +29,9 @@ class PersonsPage extends Component {
         window.addEventListener('scroll', this.handleActorsLoad);
     }
 
-    componentWillReceiveProps(nextProps) {
-        const actorsCurrentCount = nextProps.actors.length;
+    componentWillReceiveProps({ actors: nextActors }) {
         const { actorsTotalCount } = this.props;
+        const actorsCurrentCount = nextActors.length;
 
         const actorsLoadStatus = actorsCurrentCount < actorsTotalCount;
 
@@ -46,29 +46,64 @@ class PersonsPage extends Component {
     }
 
     fetchUpActors() {
-        this.props.fetchUpActors({
-            ...this.props.actorsQuery,
-            skip: this.state.actorsCurrentCount
+        const {
+            actorsQuery,
+            fetchUpActors
+        } = this.props;
+
+        const {
+            actorsCurrentCount
+        } = this.state;
+
+        fetchUpActors({
+            ...actorsQuery,
+            skip: actorsCurrentCount
         });
     }
 
     handleActorsLoad() {
-        if(this.state.shouldLoadActors && this.props.fetchActorsStatus) {
+        const {
+            pageNode,
+            fetchUpActors
+        } = this;
 
-            if(this.pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
-                this.fetchUpActors();
+        const{
+            fetchActorsStatus
+        } = this.props;
+
+        const {
+            shouldLoadActors
+        } = this.state;
+
+        if (shouldLoadActors && fetchActorsStatus) {
+
+            if (pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
+                fetchUpActors();
             }
         }
     }
 
     handleActorLike(actorId) {
-        if(this.props.likeActorStatus) {
-            this.props.likeActor(this.props.userId, actorId);
+        const {
+            likeActorStatus,
+            userId,
+            likeActor
+        } = this.props;
+
+        if (likeActorStatus) {
+            likeActor(userId, actorId);
         }
     }
 
     render() {
-        const { actors } = this.props;
+        const {
+            handleActorLike
+        } = this;
+
+        const {
+            actors,
+            actorsLikes
+        } = this.props;
 
         return (
             <article
@@ -92,7 +127,7 @@ class PersonsPage extends Component {
                                             zodiacSign,
                                         } = actor;
 
-                                       const liked = this.props.actorsLikes.indexOf(_id) !== -1;
+                                        const liked = actorsLikes.indexOf(_id) !== -1;
 
                                         return (
                                             <ActorItem
@@ -106,7 +141,7 @@ class PersonsPage extends Component {
                                                 birthLocation={birthLocation}
                                                 titles={titles}
                                                 liked={liked}
-                                                handleActorLike={this.handleActorLike}
+                                                handleActorLike={handleActorLike}
                                             />
                                         )
                                     }) : <span>Нічого не знайдено</span>
@@ -137,24 +172,30 @@ PersonsPage.propTypes = {
     likeActorStatus: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = (state) => {
-    const actorsState = state.actors;
-
-    return {
-        userId: state.auth.id,
-        actors: actorsState.actors,
-        actorsTotalCount: actorsState.actorsTotalCount,
-        actorsLikes: actorsState.actorsLikes,
-        actorsQuery: actorsState.actorsQuery,
-        fetchActorsStatus: actorsState.fetchActorsStatus,
-        likeActorStatus: actorsState.likeActorStatus
-    };
-};
+const mapStateToProps = ({
+    auth: { id: userId },
+    actors: {
+        actors,
+        actorsTotalCount,
+        actorsLikes,
+        actorsQuery,
+        fetchActorsStatus,
+        likeActorStatus
+    }
+}) => ({
+    userId,
+    actors,
+    actorsTotalCount,
+    actorsLikes,
+    actorsQuery,
+    fetchActorsStatus,
+    likeActorStatus
+});
 
 const mapDispatchToProps = (dispatch) => ({
     fetchUpActors: (props) => dispatch(fetchActors(props, true)),
     clearActors: () => dispatch(clearActors()),
-    likeActor: (userId, actorId) => dispatch(likeActor({ userId, actorId }))
+    likeActor: (userId, actorId) => dispatch(likeActor({userId, actorId}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonsPage);

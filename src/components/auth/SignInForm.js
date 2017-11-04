@@ -14,31 +14,39 @@ class SignIn extends Component {
     }
 
     handleFormSubmit({ email, password }) {
-        this.props.signinUser(
+        const { signinUser, history } = this.props;
+
+        signinUser(
             { email, password },
-            this.props.history
+            history
         );
     }
 
     renderAlert() {
-        if(this.props.errorMessage) {
+        const { errorMessage } = this.props;
+
+        if(errorMessage) {
             return (
                 <div className="alert alert-danger">
                     <strong>Oops! </strong>
-                    {this.props.errorMessage}
+                    {errorMessage}
                 </div>
             );
         }
     }
 
     render() {
+        const {
+            handleFormSubmit,
+            renderAlert
+        } = this;
         const { handleSubmit } = this.props;
 
         return (
             <div className="login-from-wrap">
                 <form
                     className="login-form"
-                    onSubmit={handleSubmit(this.handleFormSubmit)}
+                    onSubmit={handleSubmit(handleFormSubmit)}
                 >
                     <Field
                         name="email"
@@ -52,7 +60,7 @@ class SignIn extends Component {
                         type="password"
                         label="Password"
                     />
-                    {this.renderAlert()}
+                    {renderAlert()}
                     <div className="btn-group">
                         <button className="btn btn-primary">Sign in</button>
                     </div>
@@ -68,8 +76,8 @@ SignIn.propTypes = {
     history: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
-    errorMessage: state.auth.error
+const mapStateToProps = ({ auth: { error } }) => ({
+    errorMessage: error
 });
 
 const mapDispatchToProps = (dispatch) => ({

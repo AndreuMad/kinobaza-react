@@ -23,6 +23,7 @@ class TitlesForm extends Component {
         super(props);
 
         this.handleFormChange = this.handleFormChange.bind(this);
+        this.handleFetchTitles = this.handleFetchTitles.bind(this);
 
         this.state = {
             titlesParams: {
@@ -36,24 +37,43 @@ class TitlesForm extends Component {
         this.handleFetchTitles();
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps({ userId: nextUserId }) {
+        const{
+            userId: currentUserId
+        } = this.props;
 
-        if(nextProps.userId !== this.props.userId) {
+        if(nextUserId !== currentUserId) {
+            const {
+                handleFetchTitles
+            } = this;
+
+            const {
+                changeTitlesQuery
+            } = this.props;
+
             this.setState({
                 titlesParams: {
                     ...this.state.titlesParams,
-                    userId: nextProps.userId
+                    userId: nextUserId
                 }
             }, () => {
                 const { titlesParams } = this.state;
 
-                this.props.changeTitlesQuery(titlesParams);
-                this.handleFetchTitles();
+                changeTitlesQuery(titlesParams);
+                handleFetchTitles();
             });
         }
     }
 
     handleFormChange(name, payload) {
+        const {
+            handleFetchTitles
+        } = this;
+
+        const {
+            changeTitlesQuery
+        } = this.props;
+
         this.setState({
             titlesParams: {
                 ...this.state.titlesParams,
@@ -62,20 +82,36 @@ class TitlesForm extends Component {
         }, () => {
             const { titlesParams } = this.state;
 
-            this.props.changeTitlesQuery(titlesParams);
-            this.handleFetchTitles();
+            changeTitlesQuery(titlesParams);
+            handleFetchTitles();
         });
     }
 
     handleFetchTitles() {
-        if(this.props.fetchTitlesStatus) {
+        const {
+            fetchTitlesStatus,
+            fetchTitles
+        } = this.props;
+
+        if(fetchTitlesStatus) {
             const { titlesParams } = this.state;
 
-            this.props.fetchTitles(titlesParams);
+            fetchTitles(titlesParams);
         }
     }
 
     render() {
+        const {
+            handleFormChange
+        } = this;
+
+        const {
+            titlesParams: {
+                sort: sortTitlesBy,
+                year: titlesYear,
+                score: titlesScore
+            }
+        } = this.state;
 
         return (
             <div className="titles-filter-wrap">
@@ -89,8 +125,8 @@ class TitlesForm extends Component {
                                 { label: 'рік', value: 'year' },
                                 { label: 'рейтинг', value: 'score' },
                             ]}
-                            value={this.state.titlesParams.sort}
-                            onFieldChange={this.handleFormChange}
+                            value={sortTitlesBy}
+                            onFieldChange={handleFormChange}
                         />
                     </div>
                     <div className="filter-item">
@@ -98,7 +134,7 @@ class TitlesForm extends Component {
                             type="text"
                             name="name"
                             placeholder="назва"
-                            onFieldChange={this.handleFormChange}
+                            onFieldChange={handleFormChange}
                         />
                     </div>
                     <div className="filter-item">
@@ -118,7 +154,7 @@ class TitlesForm extends Component {
                                         { name: 'thriller', label: 'триллер' },
                                         { name: 'comedy', label: 'комедія' }
                                     ]}
-                                    onFieldChange={this.handleFormChange}
+                                    onFieldChange={handleFormChange}
                                 />
                             </Scrollbars>
                         </div>
@@ -131,8 +167,8 @@ class TitlesForm extends Component {
                                 min: 1878,
                                 max: 2018
                             }}
-                            value={this.state.titlesParams.year}
-                            onFieldChange={this.handleFormChange}
+                            value={titlesYear}
+                            onFieldChange={handleFormChange}
                         />
                     </div>
                     <div className="filter-item">
@@ -143,8 +179,8 @@ class TitlesForm extends Component {
                                 min: 1,
                                 max: 10
                             }}
-                            value={this.state.titlesParams.score}
-                            onFieldChange={this.handleFormChange}
+                            value={titlesScore}
+                            onFieldChange={handleFormChange}
                         />
                     </div>
                 </form>
@@ -160,12 +196,13 @@ TitlesForm.propTypes = {
     fetchTitlesStatus: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = (state) => {
-    return {
-        userId: state.auth.id,
-        fetchTitlesStatus: state.titles.fetchTitlesStatus
-    };
-};
+const mapStateToProps = ({
+    auth: { id: userId },
+    titles: { fetchTitlesStatus }
+}) => ({
+    userId,
+    fetchTitlesStatus
+});
 
 const mapDispatchToProps = (dispatch) => ({
     fetchTitles: (params) => dispatch(fetchTitles(params)),

@@ -7,7 +7,17 @@ class ReviewsPage extends Component {
 
     render() {
         return (
-            <div>Reviews Page</div>
+            <article
+                className="reviews-page"
+                ref={node => this.pageNode = node}
+            >
+                <div className="container">
+                    <h1 className="section-heading">Рецензії</h1>
+                    <div className="reviews-holder">
+
+                    </div>
+                </div>
+            </article>
         );
     }
 }

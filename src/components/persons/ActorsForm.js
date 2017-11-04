@@ -18,6 +18,7 @@ class ActorsForm extends Component {
         super(props);
 
         this.handleFormChange = this.handleFormChange.bind(this);
+        this.handleFetchActors = this.handleFetchActors.bind(this);
 
         this.state = {
             actorsParams: {
@@ -31,18 +32,24 @@ class ActorsForm extends Component {
         this.handleFetchActors();
     };
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.userId !== this.props.userId) {
+    componentWillReceiveProps({ userId: nextUserId }) {
+        const {
+            userId: currentUserId
+        } = this.props;
+
+        if(nextUserId !== currentUserId) {
             this.setState({
                 actorsParams: {
                     ...this.state.actorsParams,
-                    userId: nextProps.userId
+                    userId: nextUserId
                 }
             }, () => {
+                const { handleFetchActors } = this;
+                const { changeActorsQuery } = this.props;
                 const { actorsParams } = this.state;
 
-                this.props.changeActorsQuery(actorsParams);
-                this.handleFetchActors();
+                changeActorsQuery(actorsParams);
+                handleFetchActors();
             });
         }
     }
@@ -54,22 +61,31 @@ class ActorsForm extends Component {
                 ...{ [name]: payload }
             }
         }, () => {
+            const { handleFetchActors } = this;
+            const { changeActorsQuery } = this.props;
             const { actorsParams } = this.state;
 
-            this.props.changeActorsQuery(actorsParams);
-            this.handleFetchActors();
+            changeActorsQuery(actorsParams);
+            handleFetchActors();
         });
     }
 
     handleFetchActors() {
-        if(this.props.fetchActorsStatus) {
-            const { actorsParams } = this.state;
+        const {
+            fetchActorsStatus,
+            fetchActors
+        } = this.props;
 
-            this.props.fetchActors(actorsParams);
+        if(fetchActorsStatus) {
+            const { actorsParams } = this.state;
+            fetchActors(actorsParams);
         }
     }
 
     render() {
+        const {
+            handleFormChange
+        } = this;
 
         return (
             <div className="actors-filter-wrap">
@@ -79,7 +95,7 @@ class ActorsForm extends Component {
                             type="text"
                             name="name"
                             placeholder="Ім'я"
-                            onFieldChange={this.handleFormChange}
+                            onFieldChange={handleFormChange}
                         />
                     </div>
                 </form>

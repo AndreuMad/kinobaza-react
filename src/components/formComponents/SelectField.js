@@ -2,17 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 
-const RenderSelectField= ({ name, value, options, onFieldChange }) => {
-
-    return (
-        <Select
-            name={name}
-            value={value}
-            options={options}
-            onChange={(value) => onFieldChange(name, value.value)}
-        />
-    )
-};
+const RenderSelectField= ({ name, value, options, onFieldChange }) => (
+    <Select
+        name={name}
+        value={value}
+        options={options}
+        onChange={(value) => onFieldChange(name, value.value)}
+    />
+);
 
 RenderSelectField.propTypes = {
     name: PropTypes.string.isRequired,
