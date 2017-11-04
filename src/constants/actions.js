@@ -2,6 +2,8 @@ export const AUTH_USER = 'auth_user';
 export const UNAUTH_USER = 'unauth_user';
 export const AUTH_ERROR = 'auth_error';
 
+export const DEFINE_NIGHT_MODE = 'DEFINE_NIGHT_MODE';
+
 export const FETCH_POSTS_STATUS = 'FETCH_POSTS_STATUS';
 export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS';
 export const CLEAR_POSTS = 'CLEAR_POSTS';

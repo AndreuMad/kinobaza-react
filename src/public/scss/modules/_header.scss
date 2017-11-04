@@ -3,12 +3,14 @@
   top: 0;
   left: 0;
   right: 0;
-  background: $white;
+  background: inherit;
+  color: inherit;
   z-index: 50;
 
   &.sticky {
     height: 8.4rem;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .1);
+    background: #282f3a;
     transition: box-shadow .15s ease-in .15s;
 
     .login-btn,
@@ -44,7 +46,7 @@
 
     &-text {
       margin-left: 1rem;
-      color: rgb(110, 107, 108);
+      color: $white;
       font-family: $title-font-family;
       font-size: 2.4rem;
     }
@@ -106,17 +108,17 @@
       margin: 0 .4rem;
       padding: 0 1.6rem;
       border-bottom: .2rem solid transparent;
-      color: $base-text;
+      color: $white;
       font-size: 1.6rem;
       font-weight: 500;
       line-height: 4.8rem;
 
       &:hover {
-        border-bottom-color: rgba($base-text, .25);
+        border-bottom-color: rgba($white, .25);
       }
 
       &.current {
-        border-bottom-color: $base-text;
+        border-bottom-color: $white;
         pointer-events: none;
       }
     }

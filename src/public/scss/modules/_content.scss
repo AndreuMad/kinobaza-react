@@ -1,10 +1,11 @@
 .main-content {
   padding-top: map_get($header-height, default);
+  background: #282f3a;
 }
 
 .section-heading {
   margin: 0 0 4.8rem;
-  color: rgb(26, 26, 26);
+  color: $white;
   font-size: 3.6rem;
   font-weight: 400;
   font-style: italic;

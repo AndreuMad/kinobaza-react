@@ -28,14 +28,15 @@
 
     &-date {
       margin: 0 0 1.2rem;
-      color: rgba($base-text, .75);
+      color: rgba($white, .75);
       font-size: 1.4rem;
     }
 
     &-title {
       margin: 1.2rem 0 0;
-      color: $base-text;
+      color: $white;
       font-size: 1.8rem;
+      font-weight: 400;
       font-style: italic;
     }
   }

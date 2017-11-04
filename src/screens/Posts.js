@@ -130,9 +130,9 @@ class PostsPage extends Component {
                         }
                     </div>
                     <div className="load-more-section">
-                        <div className="btn-group align-center" style={{marginBottom: '3.6rem'}}>
+                        <div className="btn-group align-center">
                             {
-                                !this.state.shouldLoadPosts ? <button className="btn blue" onClick={this.handleLoadButton}>Load more</button> : null
+                                !this.state.shouldLoadPosts ? <button className="btn gradient-purple" onClick={this.handleLoadButton}>Load more</button> : null
                             }
                         </div>
                     </div>
