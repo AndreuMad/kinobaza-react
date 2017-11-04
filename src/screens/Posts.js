@@ -151,12 +151,12 @@ PostsPage.propTypes = {
     clearPosts: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ posts }) => {
     return {
-        posts: state.posts.posts,
-        postsTotalCount: state.posts.postsTotalCount,
-        articlePost: state.posts.articlePost,
-        fetchPostsStatus: state.posts.fetchPostsStatus
+        posts: posts.posts,
+        postsTotalCount: posts.postsTotalCount,
+        articlePost: posts.articlePost,
+        fetchPostsStatus: posts.fetchPostsStatus
     };
 };
 
