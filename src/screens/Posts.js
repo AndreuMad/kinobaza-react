@@ -17,6 +17,7 @@ class PostsPage extends Component {
 
         this.handlePostsLoad = _.debounce(this.handlePostsLoad.bind(this), 200);
         this.handleLoadButton = this.handleLoadButton.bind(this);
+        this.fetchPosts = this.fetchPosts.bind(this);
 
         this.state = {
             postsCurrentCount: 0,
@@ -26,14 +27,11 @@ class PostsPage extends Component {
 
     componentDidMount() {
         this.fetchPosts({ skip: 0, limit: 8 }, true);
-
-        window.addEventListener('scroll', this.handlePostsLoad);
     }
 
-    componentWillReceiveProps(nextProps) {
-
+    componentWillReceiveProps({ posts }) {
         this.setState({
-            postsCurrentCount: nextProps.posts.length + 1
+            postsCurrentCount: posts.length + 1
         });
     }
 
@@ -47,6 +45,9 @@ class PostsPage extends Component {
     }
 
     fetchPosts({ skip, limit }, shouldFetchArticle) {
+        const {
+            fetchPosts
+        } = this.props;
         let query = {};
 
         if(skip) {
@@ -56,39 +57,62 @@ class PostsPage extends Component {
             query.limit = limit;
         }
 
-        this.props.fetchPosts(query, shouldFetchArticle);
+        fetchPosts(query, shouldFetchArticle);
     }
 
     handleLoadButton() {
         this.setState({
             shouldLoadPosts: true
         }, () => {
+            window.addEventListener('scroll', this.handlePostsLoad);
             this.handlePostsLoad();
         });
     }
 
     handlePostsLoad() {
-        const { postsCurrentCount } = this.state;
-        const { postsTotalCount } = this.props;
+        const {
+            pageNode,
+            fetchPosts
+        } = this;
+
+        const {
+            postsTotalCount,
+            fetchPostsStatus
+        } = this.props;
+
+        const {
+            postsCurrentCount,
+            shouldLoadPosts
+        } = this.state;
 
         if(postsCurrentCount === postsTotalCount) {
             this.setState({
                 shouldLoadPosts: false
-            });
+            }, () => window.removeEventListener('scroll', this.handlePostsLoad));
+
+            return;
         }
 
-        if(this.state.shouldLoadPosts && this.props.fetchPostsStatus) {
-
-            if(this.pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
-
-                this.fetchPosts({ skip: this.state.postsCurrentCount, limit: 3 });
+        if(shouldLoadPosts && fetchPostsStatus) {
+            if(pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
+                fetchPosts({ skip: postsCurrentCount, limit: 3 });
             }
         }
     }
 
     render() {
-        const posts = this.props.posts;
-        const articlePost = this.props.articlePost;
+        const {
+            handleLoadButton
+        } = this;
+
+        const {
+            posts,
+            articlePost
+        } = this.props;
+
+        const {
+            shouldLoadPosts
+        } = this.state;
 
         return (
             <article
@@ -114,14 +138,15 @@ class PostsPage extends Component {
                                 </div> : null
                         }
                         {
-                            posts ? posts.map((post, index) => (
-                                    <div key={`post_${post._id}`} className="col m-4">
+                            posts.length ?
+                                posts.map(({ _id, image, title, date }, index) => (
+                                    <div key={`post_${_id}`} className="col m-4">
                                         <div className="col-inner">
                                             <CardRegular
-                                                id={`${post._id}`}
-                                                image={post.image}
-                                                title={post.title}
-                                                date={post.date}
+                                                id={_id}
+                                                image={image}
+                                                title={title}
+                                                date={date}
                                             />
                                         </div>
                                     </div>
@@ -132,7 +157,7 @@ class PostsPage extends Component {
                     <div className="load-more-section">
                         <div className="btn-group align-center">
                             {
-                                !this.state.shouldLoadPosts ? <button className="btn gradient-purple" onClick={this.handleLoadButton}>Load more</button> : null
+                                !shouldLoadPosts ? <button className="btn gradient-purple" onClick={handleLoadButton}>Load more</button> : null
                             }
                         </div>
                     </div>
