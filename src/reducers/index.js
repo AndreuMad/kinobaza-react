@@ -6,6 +6,7 @@ import { appReducer } from 'Reducers/appReducer';
 import { authReducer } from 'Reducers/authReducer';
 import { postsReducer } from 'Reducers/postsReducer';
 import { titlesReducer } from 'Reducers/titlesReducer';
+import { reviewsReducer } from 'Reducers/reviewsReducer';
 
 export default combineReducers({
     auth: authReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
     actors: actorsReducer,
     posts: postsReducer,
     titles: titlesReducer,
-    form: formReducer
+    form: formReducer,
+    reviews: reviewsReducer
 });

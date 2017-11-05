@@ -27,7 +27,7 @@ export const fetchActors = (params, appendActors) => {
         dispatch(fetchActorsStatus(false));
 
         return Axios.get(`${apiUrl}/actors`, {
-            params: params
+            params
         })
             .then(response => {
                 const { total, actors, likes } = response.data;

@@ -25,7 +25,6 @@ export const postsReducer = (state = defaultPostsState, action) => {
             };
 
         case FETCH_POSTS_SUCCESS:
-
             return {
                 ...state,
                 posts: [

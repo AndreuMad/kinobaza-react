@@ -17,6 +17,7 @@ class PersonsPage extends Component {
         super(props);
 
         this.handleActorsLoad = _.debounce(this.handleActorsLoad.bind(this));
+        this.fetchUpActors = this.fetchUpActors.bind(this);
         this.handleActorLike = this.handleActorLike.bind(this);
 
         this.state = {
@@ -29,8 +30,8 @@ class PersonsPage extends Component {
         window.addEventListener('scroll', this.handleActorsLoad);
     }
 
-    componentWillReceiveProps({ actors: nextActors }) {
-        const { actorsTotalCount } = this.props;
+    componentWillReceiveProps({actors: nextActors}) {
+        const {actorsTotalCount} = this.props;
         const actorsCurrentCount = nextActors.length;
 
         const actorsLoadStatus = actorsCurrentCount < actorsTotalCount;
@@ -67,7 +68,7 @@ class PersonsPage extends Component {
             fetchUpActors
         } = this;
 
-        const{
+        const {
             fetchActorsStatus
         } = this.props;
 
@@ -173,16 +174,16 @@ PersonsPage.propTypes = {
 };
 
 const mapStateToProps = ({
-    auth: { id: userId },
-    actors: {
-        actors,
-        actorsTotalCount,
-        actorsLikes,
-        actorsQuery,
-        fetchActorsStatus,
-        likeActorStatus
-    }
-}) => ({
+                             auth: {id: userId},
+                             actors: {
+                                 actors,
+                                 actorsTotalCount,
+                                 actorsLikes,
+                                 actorsQuery,
+                                 fetchActorsStatus,
+                                 likeActorStatus
+                             }
+                         }) => ({
     userId,
     actors,
     actorsTotalCount,
