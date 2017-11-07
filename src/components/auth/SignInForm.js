@@ -11,6 +11,7 @@ class SignIn extends Component {
         super(props);
 
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.renderAlert = this.renderAlert.bind(this);
     }
 
     handleFormSubmit({ email, password }) {
@@ -43,29 +44,30 @@ class SignIn extends Component {
         const { handleSubmit } = this.props;
 
         return (
-            <div className="login-from-wrap">
-                <form
-                    className="login-form"
-                    onSubmit={handleSubmit(handleFormSubmit)}
-                >
-                    <Field
-                        name="email"
-                        component={renderInput}
-                        type="text"
-                        label="Email"
-                    />
-                    <Field
-                        name="password"
-                        component={renderInput}
-                        type="password"
-                        label="Password"
-                    />
-                    {renderAlert()}
-                    <div className="btn-group">
-                        <button className="btn btn-primary">Sign in</button>
-                    </div>
-                </form>
-            </div>
+
+            <form
+                className="login-form"
+                onSubmit={handleSubmit(handleFormSubmit)}
+            >
+                <Field
+                    name="email"
+                    component={renderInput}
+                    placeholder="Логін"
+                    type="text"
+                    label="Email"
+                />
+                <Field
+                    name="password"
+                    component={renderInput}
+                    placeholder="Пароль"
+                    type="password"
+                    label="Password"
+                />
+                {renderAlert()}
+                <div className="btn-group auth-body-control">
+                    <button className="btn auth-body-button">Sign in</button>
+                </div>
+            </form>
         );
     }
 }

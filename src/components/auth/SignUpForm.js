@@ -11,6 +11,7 @@ class SignUp extends Component {
         super(props);
 
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.renderAlert = this.renderAlert.bind(this);
     }
 
     renderAlert() {
@@ -50,29 +51,35 @@ class SignUp extends Component {
                 <Field
                     name="email"
                     component={renderInput}
+                    placeholder="Емеіл"
                     type="text"
                     label="Email"
                 />
                 <Field
                     name="name"
                     component={renderInput}
+                    placeholder="Ім'я"
                     type="text"
                     label="Name"
                 />
                 <Field
                     name="password"
                     component={renderInput}
+                    placeholder="Пароль"
                     type="password"
                     label="Password"
                 />
                 <Field
                     name="passwordConfirm"
                     component={renderInput}
+                    placeholder="Повторіть пароль"
                     type="password"
                     label="Confirm Password"
                 />
                 {renderAlert()}
-                <button className="btn btn-primary">Sign Up</button>
+                <div className="btn-group auth-body-control">
+                    <button className="btn auth-body-button">Sign Up</button>
+                </div>
             </form>
         );
     }

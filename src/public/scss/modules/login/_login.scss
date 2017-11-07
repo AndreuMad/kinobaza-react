@@ -1,0 +1,77 @@
+.login-page {
+  padding: 10.4rem 0 0;
+}
+
+.auth-form-wrap {
+  max-width: 42rem;
+  margin: 0 auto;
+  border-radius: .6rem;
+  background: linear-gradient(to right, #6447c1 0%, #6880c9 100%);
+  overflow: hidden;
+
+  .auth-switcher {
+    display: flex;
+
+    &-item {
+      display: inline-block;
+      flex-grow: 1;
+      background: #6657a0;
+      color: #a3a3a3;
+      font-family: $title-font-family;
+      font-size: 2rem;
+      line-height: 5.2rem;
+      text-align: center;
+
+      &:first-child {
+        border-bottom-right-radius: .8rem;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: .8rem;
+      }
+
+      &.current {
+        background: transparent;
+        color: $white;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .auth-body {
+    padding: 4rem 3.6rem 3.6rem;
+
+    &-field {
+      margin: 0 0 .8rem;
+    }
+
+    &-input {
+      border: {
+        width: 0;
+        radius: .4rem;
+      };
+      background: #282f3a;
+      color: $white;
+
+      &::-webkit-input-placeholder { color: #808080; }
+      &::-moz-placeholder          { color: #808080; }
+      &:-moz-placeholder           { color: #808080; }
+      &:-ms-input-placeholder      { color: #808080; }
+    }
+
+    &-control {
+      margin-top: 3.6rem;
+      text-align: right;
+    }
+
+    &-button {
+      border: {
+        radius: .2rem;
+      }
+      background: $white;
+      color: #000;
+      font-family: $base-font-family;
+      font-weight: 700;
+    }
+  }
+}

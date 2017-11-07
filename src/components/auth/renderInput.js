@@ -1,12 +1,12 @@
 import React from 'react';
 
-export const renderInput = ({ label, ...field, meta: { touched, error } }) => (
-    <fieldset className="form-group">
-        <label>{label}</label>
+export const renderInput = ({ placeholder, ...field, meta: { touched, error } }) => (
+    <div className="auth-body-field">
         <input
             {...field.input}
             type={field.type ? field.type : 'text'}
-            className="form-control"/>
+            placeholder={placeholder}
+            className="auth-body-input"/>
         {touched && (error && <span className="field-error">{error}</span>)}
-    </fieldset>
+    </div>
 );
