@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Header from 'Components/common/Header';
 import LoginPage from 'Screens/Login';
@@ -14,7 +14,7 @@ const Routes = () => (
         <Header />
         <main className="main-content">
             <Switch>
-                <Route exact path='/' component={() => <div>Main Page</div>} />
+                <Redirect exact from="/" to="/posts" />
                 <Route path='/login' component={LoginPage} />
                 <Route path='/posts/:id' component={PostPage} />
                 <Route path='/posts' component={PostsPage} />
