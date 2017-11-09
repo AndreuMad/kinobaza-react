@@ -1,4 +1,5 @@
 import React from 'react';
+import PostCommentsForm from 'Components/posts/PostCommentsForm';
 import PostCommentItem from 'Components/posts/PostCommentItem';
 
 const PostComments = ({ comments }) => {
@@ -10,19 +11,22 @@ const PostComments = ({ comments }) => {
                         <div className="col-inner">
                             <h3 className="post-comments-title">Коментарі</h3>
 
-                            {comments.map((comment) => {
-                                const { author, date, text, response } = comment;
+                            <div className="post-comments-form">
+                                <PostCommentsForm />
+                            </div>
 
-                                return (
-                                    <PostCommentItem
-                                        key={`${author}/${date}`}
-                                        author={author}
-                                        date={date}
-                                        text={text}
-                                        response={response}
-                                    />
-                                );
-                            })}
+                            <div className="post-comments-wrap">
+                                {comments ?
+                                    comments.map(({ author, date, text, response } ) => (
+                                        <PostCommentItem
+                                            key={`${author}/${date}`}
+                                            author={author}
+                                            date={date}
+                                            text={text}
+                                            response={response}
+                                        />
+                                    )) : null}
+                            </div>
                         </div>
                     </div>
                 </div>

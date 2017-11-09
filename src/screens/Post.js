@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import { fetchPost } from 'Actions/posts-actions';
+import {fetchPost} from 'Actions/posts-actions';
 
 import PostComments from 'Components/posts/PostComments';
 
@@ -64,7 +64,8 @@ class Post extends Component {
                                         <div className="row">
                                             <div className="col s-10 m-11">
                                                 <div className="col-inner">
-                                                    <p className="post-body-text" dangerouslySetInnerHTML={{__html: this.props.post.textArticle}} />
+                                                    <p className="post-body-text"
+                                                       dangerouslySetInnerHTML={{__html: this.props.post.textArticle}}/>
                                                 </div>
                                             </div>
                                             <div className="col m-1">
@@ -86,8 +87,7 @@ class Post extends Component {
                             </div>
                         </div>
                     </section>
-                    {this.props.post.comments ?
-                        <PostComments comments={this.props.post.comments} /> : null}
+                    <PostComments />
                 </article> : null
 
         )
@@ -99,9 +99,13 @@ Post.propTypes = {
     fetchPost: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({
+                             posts: {post},
+                             auth: {id: userId}
+                         }) => {
     return {
-        post: state.posts.post
+        post,
+        userId
     }
 };
 
