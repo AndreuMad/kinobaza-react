@@ -2,7 +2,7 @@ import React from 'react';
 import PostCommentsForm from 'Components/posts/PostCommentsForm';
 import PostCommentItem from 'Components/posts/PostCommentItem';
 
-const PostComments = ({ comments }) => {
+const PostComments = ({ userId, postId, comments, postComment }) => {
     return (
         <section className="post-comments">
             <div className="container">
@@ -12,18 +12,21 @@ const PostComments = ({ comments }) => {
                             <h3 className="post-comments-title">Коментарі</h3>
 
                             <div className="post-comments-form">
-                                <PostCommentsForm />
+                                <PostCommentsForm
+                                    userId={userId}
+                                    postId={postId}
+                                    postComment={postComment}
+                                />
                             </div>
 
                             <div className="post-comments-wrap">
                                 {comments ?
-                                    comments.map(({ author, date, text, response } ) => (
+                                    comments.map(({ _id, user, date, text }) => (
                                         <PostCommentItem
-                                            key={`${author}/${date}`}
-                                            author={author}
+                                            key={`comment_${_id}`}
+                                            user={user}
                                             date={date}
                                             text={text}
-                                            response={response}
                                         />
                                     )) : null}
                             </div>

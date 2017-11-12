@@ -3,7 +3,8 @@ import {
     FETCH_POSTS_SUCCESS,
     CLEAR_POSTS,
     FETCH_ARTICLE_POST_SUCCESS,
-    FETCH_POST_SUCCESS
+    FETCH_POST_SUCCESS,
+    POST_COMMENT_SUCCESS
 } from 'Constants/actions';
 
 const defaultPostsState = {
@@ -12,6 +13,7 @@ const defaultPostsState = {
     articlePost: null,
     fetchPostsStatus: true,
     post: null,
+    comments: []
 };
 
 export const postsReducer = (state = defaultPostsState, action) => {
@@ -45,13 +47,22 @@ export const postsReducer = (state = defaultPostsState, action) => {
         case FETCH_ARTICLE_POST_SUCCESS:
             return {
                 ...state,
-                articlePost: action.articlePost
+                articlePost: action.post
             };
 
         case FETCH_POST_SUCCESS:
             return {
                 ...state,
-                post: action.post
+                post: action.post,
+                comments: action.comments
+            };
+        case POST_COMMENT_SUCCESS:
+            return {
+                ...state,
+                comments: [
+                    action.comment,
+                    ...state.comments
+                ]
             };
 
         default:

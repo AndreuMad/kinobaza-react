@@ -70,8 +70,8 @@ export const fetchPost = (id) => {
     return (dispatch) => {
 
         return Axios.get(`${apiUrl}/posts/${id}`)
-            .then(response => {
-                dispatch(fetchPostSuccess(response.data));
+            .then(({ data: { post, comments } }) => {
+                dispatch(fetchPostSuccess(post, comments));
             })
             .catch(error => {
                 throw(error);
@@ -79,11 +79,12 @@ export const fetchPost = (id) => {
     }
 };
 
-export const fetchPostSuccess = (post) => {
+export const fetchPostSuccess = (post, comments) => {
 
     return {
         type: FETCH_POST_SUCCESS,
-        post
+        post,
+        comments
     }
 };
 
@@ -91,8 +92,8 @@ export const fetchArticlePost = (id) => {
     return (dispatch) => {
 
         return Axios.get(`${apiUrl}/posts/${id}`)
-            .then(response => {
-                dispatch(fetchArticlePostSuccess(response.data));
+            .then(({ data: { post } }) => {
+                dispatch(fetchArticlePostSuccess(post));
             })
             .catch(error => {
                 throw(error);
@@ -100,10 +101,10 @@ export const fetchArticlePost = (id) => {
     }
 };
 
-export const fetchArticlePostSuccess = (articlePost) => {
+export const fetchArticlePostSuccess = (post) => {
 
     return {
         type: FETCH_ARTICLE_POST_SUCCESS,
-        articlePost
+        post
     }
 };

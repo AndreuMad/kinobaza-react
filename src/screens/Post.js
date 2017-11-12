@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {fetchPost} from 'Actions/posts-actions';
+import {postComment} from 'Actions/comments-actions';
 
 import PostComments from 'Components/posts/PostComments';
 
@@ -16,9 +17,10 @@ class Post extends Component {
     }
 
     render() {
+        const { post } = this.props;
 
         return (
-            this.props.post ?
+            post ?
                 <article className="post-page">
                     <section
                         className="introduction"
@@ -87,7 +89,12 @@ class Post extends Component {
                             </div>
                         </div>
                     </section>
-                    <PostComments />
+                    <PostComments
+                        postId={this.props.post._id}
+                        userId={this.props.userId}
+                        comments={this.props.comments}
+                        postComment={this.props.postComment}
+                    />
                 </article> : null
 
         )
@@ -101,17 +108,20 @@ Post.propTypes = {
 
 const mapStateToProps = ({
                              posts: {post},
+                             posts: {comments},
                              auth: {id: userId}
                          }) => {
     return {
         post,
+        comments,
         userId
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchPost: (id) => dispatch(fetchPost(id))
+        fetchPost: (id) => dispatch(fetchPost(id)),
+        postComment: (params) => dispatch(postComment(params))
     }
 };
 

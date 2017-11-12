@@ -1,4 +1,4 @@
-import axios from 'axios';
+import Axios from 'axios';
 
 import {
     AUTH_USER,
@@ -13,7 +13,7 @@ export const signinUser = ({ email, password }, history) => {
     return (dispatch) => {
 
         // Submit email/password to the server
-        axios.post(`${apiUrl}/signin`, { email, password })
+        Axios.post(`${apiUrl}/signin`, { email, password })
             .then(response => {
                 // If request is good...
                 // - Update state to indicate user is authenticated
@@ -39,9 +39,10 @@ export const signinUser = ({ email, password }, history) => {
 
 export const signWithToken = (token) => {
     return (dispatch) => {
-        axios.get(`${apiUrl}/signin`, {
+
+        Axios.get(`${apiUrl}/signin`, {
             headers: {
-                Authorization: token
+                authorization: token
             }
         })
             .then(response => {
@@ -63,7 +64,7 @@ export const signupUser = ({ email, name, password }, history) => {
 
     return (dispatch) => {
 
-        axios.post(`${apiUrl}/signup`, { email, name, password })
+        Axios.post(`${apiUrl}/signup`, { email, name, password })
             .then(response => {
                 dispatch({
                     type: AUTH_USER,
