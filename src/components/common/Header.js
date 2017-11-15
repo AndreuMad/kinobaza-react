@@ -5,12 +5,13 @@ import { Link, NavLink, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import classNames from 'classnames';
 
+import AuthController from 'Components/common/AuthController';
+
 import { signWithToken, signoutUser } from 'Actions/auth-actions';
 
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.renderUserBlock = this.renderUserBlock.bind(this);
         this.handleScroll = _.debounce(this.handleScroll.bind(this), 15);
         this.state = {
             sticky: false
@@ -35,36 +36,6 @@ class Header extends Component {
         }
     }
 
-    renderUserBlock() {
-        const {
-            authenticated,
-            userName,
-            signoutUser
-        } = this.props;
-
-        if(authenticated) {
-            return ([
-                <span
-                    key="headerUsername"
-                    className="username"
-                >{userName}</span>,
-                <button
-                    key="headerSignoutUser"
-                    className="btn"
-                    onClick={signoutUser}
-                >Sign out</button>
-            ])
-        } else {
-            return (
-                <Link
-                    key="headerLoginBtn"
-                    to="/login/sign-in"
-                    className="btn gradient-purple login-btn"
-                >увійти</Link>
-            );
-        }
-    }
-
     handleScroll() {
         const { sticky } = this.state;
 
@@ -86,8 +57,10 @@ class Header extends Component {
 
     render() {
         const {
-            renderUserBlock
-        } = this;
+            userName,
+            signoutUser
+        } = this.props;
+
         const {
             sticky
         } = this.state;
@@ -104,7 +77,34 @@ class Header extends Component {
                         <div className="row">
                             <div className="col m-4">
                                 <div className="col-inner header-control-item">
-                                    {renderUserBlock()}
+                                    <AuthController
+                                        component={
+                                            <div>
+                                                <span
+                                                    key="headerUsername"
+                                                    className="username"
+                                                >{userName}</span>,
+                                                <button
+                                                    key="headerSignoutUser"
+                                                    className="btn"
+                                                    onClick={signoutUser}
+                                                >Sign out</button>
+                                                <Link
+                                                    to="/settings/profile"
+                                                    className="btn blue"
+                                                >
+                                                    Редагувати
+                                                </Link>
+                                            </div>
+                                        }
+                                        placeholder={
+                                            <Link
+                                                key="headerLoginBtn"
+                                                to="/login/sign-in"
+                                                className="btn gradient-purple login-btn"
+                                            >увійти</Link>
+                                        }
+                                    />
                                 </div>
                             </div>
                             <div className="col m-4">
@@ -195,12 +195,9 @@ Header.propTypes = {
     signoutUser: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ auth: { authenticated, name } }) => (
-    {
-        authenticated: authenticated,
-        userName: name
-    }
-);
+const mapStateToProps = ({ auth: { name: userName } }) => ({
+    userName
+});
 
 const mapDispatchToProps = (dispatch) => ({
     signWithToken: (token) => dispatch(signWithToken(token)),

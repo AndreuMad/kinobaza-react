@@ -25,6 +25,8 @@
 // @import 'general/table'; // uncomment if needed to use(not default template)
 
 // Modules
+@import 'modules/form-components/upload-file';
+
 @import 'modules/header';
 @import 'modules/pagination';
 @import 'modules/content';
@@ -37,6 +39,7 @@
 @import 'modules/posts';
 @import 'modules/titles';
 @import 'modules/reviews';
+@import 'modules/settings';
 
 // State
 @import 'state/state';

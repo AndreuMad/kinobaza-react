@@ -1,4 +1,6 @@
 import React from 'react';
+
+import AuthController from 'Components/common/AuthController';
 import PostCommentsForm from 'Components/posts/PostCommentsForm';
 import PostCommentItem from 'Components/posts/PostCommentItem';
 
@@ -12,19 +14,27 @@ const PostComments = ({ userId, postId, comments, postComment }) => {
                             <h3 className="post-comments-title">Коментарі</h3>
 
                             <div className="post-comments-form">
-                                <PostCommentsForm
-                                    userId={userId}
-                                    postId={postId}
-                                    postComment={postComment}
+                                <AuthController
+                                    component={
+                                        <PostCommentsForm
+                                            userId={userId}
+                                            postId={postId}
+                                            postComment={postComment}
+                                        />
+                                    }
+                                    placeholder={
+                                        <span>Увійдіть на сайт, щоб залишати коментарі</span>
+                                    }
                                 />
                             </div>
 
                             <div className="post-comments-wrap">
                                 {comments ?
-                                    comments.map(({ _id, user, date, text }) => (
+                                    comments.map(({ _id, user: { id: userId, name: userName }, date, text }) => (
                                         <PostCommentItem
                                             key={`comment_${_id}`}
-                                            user={user}
+                                            userId={userId}
+                                            userName={userName}
                                             date={date}
                                             text={text}
                                         />
