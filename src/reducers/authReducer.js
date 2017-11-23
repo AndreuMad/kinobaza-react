@@ -4,7 +4,14 @@ import {
     AUTH_ERROR
 } from 'Constants/actions';
 
-export const authReducer = (state = {}, action) => {
+const defaultState = {
+    authenticated: false,
+    id: null,
+    name: null,
+    error: null
+};
+
+export const authReducer = (state = defaultState, action) => {
     switch(action.type) {
         case AUTH_USER:
             return {
