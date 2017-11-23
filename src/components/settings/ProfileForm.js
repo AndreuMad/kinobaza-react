@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 
-import ImageUpload from 'Components/formComponents/ImageUpload';
+import AuthInfo from 'Components/HOC/AuthInfo';
+import ImageUpload from 'Components/formComponents/reduxForm/ImageUpload';
+import InputField from 'Components/formComponents/reduxForm/InputField';
 
 class ProfileForm extends Component {
+    constructor(props) {
+        super(props);
+    }
 
     handleProfileSubmit(values) {
         console.log(values);
@@ -13,6 +18,7 @@ class ProfileForm extends Component {
         const {
             handleProfileSubmit,
             props: {
+                userName,
                 handleSubmit
             }
         } = this;
@@ -31,7 +37,12 @@ class ProfileForm extends Component {
                 />
                 <hr/>
                 <h3>Ім'я профілю</h3>
-                <p></p>
+                <Field
+                    component={InputField}
+                    type="text"
+                    name="name"
+                    defaultValue={userName}
+                />
                 <button>Send</button>
             </form>
         );

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import ProfileForm from 'Components/settings/ProfileForm'
 
-class ProfilePage extends Component {
+class SettingsPage extends Component {
     constructor(props) {
         super(props);
 
@@ -21,7 +21,9 @@ class ProfilePage extends Component {
         return (
             <section className="settings-page">
                 <div className="container">
-                    <ProfileForm />
+                    <ProfileForm
+                        userName={userName}
+                    />
                 </div>
             </section>
         )
@@ -32,4 +34,4 @@ const mapStateToProps = ({ auth: { name: userName } }) => ({
     userName
 });
 
-export default connect(mapStateToProps)(ProfilePage);
+export default connect(mapStateToProps)(SettingsPage);
