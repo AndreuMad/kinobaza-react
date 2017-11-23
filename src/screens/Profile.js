@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import ImageUpload from 'Components/formComponents/ImageUpload';
 
-class SettingsPage extends Component {
+class ProfilePage extends Component {
     constructor(props) {
         super(props);
 
@@ -42,4 +42,4 @@ const mapStateToProps = ({ auth: { name: userName } }) => ({
     userName
 });
 
-export default connect(mapStateToProps)(SettingsPage);
+export default connect(mapStateToProps)(ProfilePage);

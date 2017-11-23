@@ -8,7 +8,7 @@ import PostPage from 'Screens/Post';
 import TitlesPage from 'Screens/Titles';
 import PersonsPage from 'Screens/Persons';
 import ReviewsPage from 'Screens/Reviews';
-import SettingsPage from 'Screens/Settings';
+import ProfilePage from 'Screens/Profile';
 
 const Routes = () => (
     <div>
@@ -22,7 +22,7 @@ const Routes = () => (
                 <Route path='/titles' component={TitlesPage} />
                 <Route path='/persons' component={PersonsPage} />
                 <Route path='/reviews' component={ReviewsPage} />
-                <Route path='/settings/profile' component={SettingsPage} />
+                <Route path='/profile' component={ProfilePage} />
             </Switch>
         </main>
     </div>
