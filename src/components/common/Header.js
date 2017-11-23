@@ -5,7 +5,7 @@ import { Link, NavLink, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import classNames from 'classnames';
 
-import AuthController from 'Components/common/AuthController';
+import AuthController from 'Components/HOC/AuthController';
 
 import { signWithToken, signoutUser } from 'Actions/auth-actions';
 

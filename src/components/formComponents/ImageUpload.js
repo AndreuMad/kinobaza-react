@@ -15,7 +15,11 @@ class ImageUpload extends Component {
     handleImageChange(event) {
         event.preventDefault();
 
-        const { onChange } = this.props;
+        const {
+            input: {
+                onChange
+            }
+        } = this.props;
         const reader = new FileReader();
         const file = event.target.files[0];
 
@@ -35,8 +39,10 @@ class ImageUpload extends Component {
                 imageUrl
             },
             props: {
-                name,
-                label
+                label,
+                input: {
+                    name
+                }
             }
         } = this;
 

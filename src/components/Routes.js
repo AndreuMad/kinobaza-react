@@ -22,7 +22,7 @@ const Routes = () => (
                 <Route path='/titles' component={TitlesPage} />
                 <Route path='/persons' component={PersonsPage} />
                 <Route path='/reviews' component={ReviewsPage} />
-                <Route path='/settings/profile' component={SettingsPage} />
+                <Route path='/profile' component={SettingsPage} />
             </Switch>
         </main>
     </div>

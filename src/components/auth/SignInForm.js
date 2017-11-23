@@ -39,12 +39,13 @@ class SignIn extends Component {
     render() {
         const {
             handleFormSubmit,
-            renderAlert
+            renderAlert,
+            props: {
+                handleSubmit
+            }
         } = this;
-        const { handleSubmit } = this.props;
 
         return (
-
             <form
                 className="login-form"
                 onSubmit={handleSubmit(handleFormSubmit)}

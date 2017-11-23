@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AuthController from 'Components/common/AuthController';
+import AuthController from 'Components/HOC/AuthController';
 import PostCommentsForm from 'Components/posts/PostCommentsForm';
 import PostCommentItem from 'Components/posts/PostCommentItem';
 
