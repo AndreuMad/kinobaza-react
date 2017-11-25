@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import {
@@ -26,10 +26,10 @@ class PostsPage extends Component {
     }
 
     componentDidMount() {
-        this.fetchPosts({ skip: 0, limit: 8 }, true);
+        this.fetchPosts({skip: 0, limit: 8}, true);
     }
 
-    componentWillReceiveProps({ posts }) {
+    componentWillReceiveProps({posts}) {
         this.setState({
             postsCurrentCount: posts.length + 1
         });
@@ -44,16 +44,16 @@ class PostsPage extends Component {
         this.props.clearPosts();
     }
 
-    fetchPosts({ skip, limit }, shouldFetchArticle) {
+    fetchPosts({skip, limit}, shouldFetchArticle) {
         const {
             fetchPosts
         } = this.props;
         let query = {};
 
-        if(skip) {
+        if (skip) {
             query.skip = skip;
         }
-        if(limit) {
+        if (limit) {
             query.limit = limit;
         }
 
@@ -85,7 +85,7 @@ class PostsPage extends Component {
             shouldLoadPosts
         } = this.state;
 
-        if(postsCurrentCount === postsTotalCount) {
+        if (postsCurrentCount === postsTotalCount) {
             this.setState({
                 shouldLoadPosts: false
             }, () => window.removeEventListener('scroll', this.handlePostsLoad));
@@ -93,9 +93,9 @@ class PostsPage extends Component {
             return;
         }
 
-        if(shouldLoadPosts && fetchPostsStatus) {
-            if(pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
-                fetchPosts({ skip: postsCurrentCount, limit: 3 });
+        if (shouldLoadPosts && fetchPostsStatus) {
+            if (pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
+                fetchPosts({skip: postsCurrentCount, limit: 3});
             }
         }
     }
@@ -139,25 +139,27 @@ class PostsPage extends Component {
                         }
                         {
                             posts.length ?
-                                posts.map(({ _id, image, title, date }, index) => (
-                                    <div key={`post_${_id}`} className="col m-4">
-                                        <div className="col-inner">
-                                            <CardRegular
-                                                id={_id}
-                                                image={image}
-                                                title={title}
-                                                date={date}
-                                            />
+                                posts.map(({_id, image, title, date}, index) => (
+                                        <div key={`post_${_id}`} className="col m-4">
+                                            <div className="col-inner">
+                                                <CardRegular
+                                                    id={_id}
+                                                    image={image}
+                                                    title={title}
+                                                    date={date}
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            ) : null
+                                    )
+                                ) : null
                         }
                     </div>
                     <div className="load-more-section">
                         <div className="btn-group align-center">
                             {
-                                !shouldLoadPosts ? <button className="btn gradient-purple" onClick={handleLoadButton}>Load more</button> : null
+                                !shouldLoadPosts ?
+                                    <button className="btn gradient-purple" onClick={handleLoadButton}>Load
+                                        more</button> : null
                             }
                         </div>
                     </div>
@@ -176,7 +178,7 @@ PostsPage.propTypes = {
     clearPosts: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ posts }) => {
+const mapStateToProps = ({posts}) => {
     return {
         posts: posts.posts,
         postsTotalCount: posts.postsTotalCount,
@@ -185,11 +187,9 @@ const mapStateToProps = ({ posts }) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchPosts: (props, fetchArticlePost) => dispatch(fetchPosts(props, fetchArticlePost)),
-        clearPosts: () => dispatch(clearPosts())
-    };
-};
+const mapDispatchToProps = (dispatch) => ({
+    fetchPosts: (props, fetchArticlePost) => dispatch(fetchPosts(props, fetchArticlePost)),
+    clearPosts: () => dispatch(clearPosts())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsPage);
