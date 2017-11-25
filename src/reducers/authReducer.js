@@ -1,24 +1,42 @@
 import {
     AUTH_USER,
     UNAUTH_USER,
+    AUTH_STATUS,
     AUTH_ERROR
 } from 'Constants/actions';
 
 const defaultState = {
     authenticated: false,
+    status: true,
     id: null,
     name: null,
+    dateOfBirth: null,
     error: null
 };
 
 export const authReducer = (state = defaultState, action) => {
     switch(action.type) {
+        case AUTH_STATUS:
+            return {
+                ...state,
+                status: action.status
+            };
+
         case AUTH_USER:
+            const {
+                data: {
+                    id,
+                    name,
+                    dateOfBirth
+                }
+            } = action;
+
             return {
                 ...state,
                 authenticated: true,
-                id: action.data.id,
-                name: action.data.name,
+                id: id,
+                name: name,
+                dateOfBirth: dateOfBirth,
                 error: null
             };
             break;
@@ -32,7 +50,7 @@ export const authReducer = (state = defaultState, action) => {
         case AUTH_ERROR:
             return {
                 ...state,
-                error: action.payload
+                error: action.error
             };
     }
     return state;

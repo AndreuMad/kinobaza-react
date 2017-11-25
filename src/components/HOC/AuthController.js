@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { element } from 'prop-types';
 import {connect} from 'react-redux';
 
 const AuthController = ({
@@ -11,9 +11,11 @@ const AuthController = ({
 );
 
 AuthController.propTypes = {
-    component: PropTypes.element.isRequired,
-    placeholder: PropTypes.element
+    component: element.isRequired,
+    placeholder: element
 };
+
+
 
 const mapStateToProps = ({auth: {authenticated}}) => ({
     authenticated

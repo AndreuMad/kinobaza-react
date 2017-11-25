@@ -3,29 +3,26 @@ import Axios from 'axios';
 import {
     AUTH_USER,
     UNAUTH_USER,
+    AUTH_STATUS,
     AUTH_ERROR
 } from 'Constants/actions';
 
-import { apiUrl } from 'Constants/urls';
+import {apiUrl} from 'Constants/urls';
 
-export const signinUser = ({ email, password }, history) => {
+export const signInUser = ({email, password}, history) => {
 
     return (dispatch) => {
 
+        dispatch(authStatus(false));
         // Submit email/password to the server
-        Axios.post(`${apiUrl}/signin`, { email, password })
-            .then(response => {
+        Axios.post(`${apiUrl}/signin`, {email, password})
+            .then(({data: {id, name, dateOfBirth, token}}) => {
                 // If request is good...
                 // - Update state to indicate user is authenticated
-                dispatch({
-                    type: AUTH_USER,
-                    data: {
-                        id: response.data.id,
-                        name: response.data.name
-                    }
-                });
+                dispatch(authSuccess({id, name, dateOfBirth}));
+                dispatch(authStatus(true));
                 // - Save the JWT token
-                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('token', token);
                 // - redirect to the route /feature''
                 history.push('/feature');
             })
@@ -40,58 +37,64 @@ export const signinUser = ({ email, password }, history) => {
 export const signWithToken = (token) => {
     return (dispatch) => {
 
+        dispatch(authStatus(false));
+
         Axios.get(`${apiUrl}/signin`, {
             headers: {
                 authorization: token
             }
         })
-            .then(response => {
-                dispatch({
-                    type: AUTH_USER,
-                    data: {
-                        id: response.data.id,
-                        name: response.data.name
-                    }
-                });
+            .then(({data: {id, name, dateOfBirth}}) => {
+                dispatch(authSuccess({id, name, dateOfBirth}));
+                dispatch(authStatus(true));
             })
             .catch(error => {
+                dispatch(authStatus(true));
                 throw(error);
             });
     }
 };
 
-export const signupUser = ({ email, name, password }, history) => {
-
+export const signUpUser = ({email, name, password}, history) => {
     return (dispatch) => {
 
-        Axios.post(`${apiUrl}/signup`, { email, name, password })
-            .then(response => {
-                dispatch({
-                    type: AUTH_USER,
-                    data: {
-                        id: response.data.id,
-                        name: response.data.name
-                    }
-                });
-                localStorage.setItem('token', response.data.token);
+        Axios.post(`${apiUrl}/signup`, {email, name, password})
+            .then(({data: {id, name, dateOfBirth, token}}) => {
+                dispatch(authSuccess({id, name, dateOfBirth}));
+                localStorage.setItem('token', token);
                 history.push('/feature');
             })
             .catch(error => {
                 dispatch(authError(error.response.data.error));
+                dispatch(authStatus(true));
             })
 
     }
 };
 
+export const authSuccess = ({id, name, dateOfBirth}) => ({
+    type: AUTH_USER,
+    data: {
+        id,
+        name,
+        dateOfBirth
+    }
+});
+
+export const authStatus = (status) => ({
+    type: AUTH_STATUS,
+    status
+});
+
 export const authError = (error) => {
     return {
         type: AUTH_ERROR,
-        payload: error
+        error
     }
 };
 
-export const signoutUser = () => {
+export const signOutUser = () => {
     localStorage.removeItem('token');
 
-    return { type: UNAUTH_USER };
+    return {type: UNAUTH_USER};
 };

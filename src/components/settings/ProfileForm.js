@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
+import React, {Component} from 'react';
+import {reduxForm, Field} from 'redux-form';
 
-import AuthInfo from 'Components/HOC/AuthInfo';
 import ImageUpload from 'Components/formComponents/reduxForm/ImageUpload';
 import InputField from 'Components/formComponents/reduxForm/InputField';
+import DateField from 'Components/formComponents/reduxForm/DateField';
 
 class ProfileForm extends Component {
     constructor(props) {
@@ -18,14 +18,13 @@ class ProfileForm extends Component {
         const {
             handleProfileSubmit,
             props: {
-                userName,
                 handleSubmit
             }
         } = this;
 
         return (
             <form
-                onSubmit={handleSubmit(handleProfileSubmit)}
+                onSubmit={event => event.preventDefault()}
             >
                 <h1>Редагувати профіль</h1>
                 <hr/>
@@ -41,12 +40,17 @@ class ProfileForm extends Component {
                     component={InputField}
                     type="text"
                     name="name"
-                    defaultValue={userName}
                 />
-                <button>Send</button>
+                <Field
+                    component={DateField}
+                    name="dateOfBirth"
+                />
+                <button
+                    onClick={handleSubmit(handleProfileSubmit)}
+                >Send</button>
             </form>
         );
     }
 }
 
-export default reduxForm({ form: 'profile' })(ProfileForm);
+export default reduxForm({form: 'profile'})(ProfileForm);

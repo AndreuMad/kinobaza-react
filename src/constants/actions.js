@@ -1,5 +1,6 @@
 export const AUTH_USER = 'auth_user';
 export const UNAUTH_USER = 'unauth_user';
+export const AUTH_STATUS = 'AUTH_STATUS';
 export const AUTH_ERROR = 'auth_error';
 
 export const DEFINE_NIGHT_MODE = 'DEFINE_NIGHT_MODE';

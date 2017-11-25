@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { bool, string, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import _ from 'lodash';
@@ -7,7 +7,7 @@ import classNames from 'classnames';
 
 import AuthController from 'Components/HOC/AuthController';
 
-import { signWithToken, signoutUser } from 'Actions/auth-actions';
+import { signWithToken, signOutUser } from 'Actions/auth-actions';
 
 class Header extends Component {
     constructor(props) {
@@ -58,7 +58,7 @@ class Header extends Component {
     render() {
         const {
             userName,
-            signoutUser
+            signOutUser
         } = this.props;
 
         const {
@@ -87,10 +87,10 @@ class Header extends Component {
                                                 <button
                                                     key="headerSignoutUser"
                                                     className="btn"
-                                                    onClick={signoutUser}
+                                                    onClick={signOutUser}
                                                 >Sign out</button>
                                                 <Link
-                                                    to="/settings/profile"
+                                                    to="/profile"
                                                     className="btn blue"
                                                 >
                                                     Редагувати
@@ -189,10 +189,10 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-    authenticated: PropTypes.bool,
-    userName: PropTypes.string,
-    signWithToken: PropTypes.func.isRequired,
-    signoutUser: PropTypes.func.isRequired
+    authenticated: bool,
+    userName: string,
+    signWithToken: func.isRequired,
+    signOutUser: func.isRequired
 };
 
 const mapStateToProps = ({ auth: { name: userName } }) => ({
@@ -201,7 +201,7 @@ const mapStateToProps = ({ auth: { name: userName } }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     signWithToken: (token) => dispatch(signWithToken(token)),
-    signoutUser: () => dispatch(signoutUser())
+    signOutUser: () => dispatch(signOutUser())
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

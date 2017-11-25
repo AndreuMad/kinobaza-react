@@ -1,34 +1,45 @@
 import React from 'react';
-import { string, func, shape } from 'prop-types';
+import {string, func, bool, shape} from 'prop-types';
 
 const InputField = ({
+                        ...field,
                         type,
+                        className,
+                        errorClassName,
+                        labelClassName,
                         placeholder,
-                        defaultValue,
-                        input: {
-                            name,
-                            onChange
+                        initialValue,
+                        meta: {
+                            touched,
+                            error
                         }
                     }) => (
-    <label>
+    <label className={labelClassName}>
         <input
+            {...field.input}
+            className={className}
             type={type}
-            name={name}
             placeholder={placeholder}
-            defaultValue={defaultValue}
-            onChange={({ target: { value } }) => onChange(value)}
         />
+        {(touched && error) && <span className={errorClassName}>{error}</span>}
     </label>
 );
 
 InputField.propTypes = {
     type: string,
+    className: string,
+    errorClassName: string,
+    labelClassName: string,
     placeholder: string,
-    input:  shape({
+    input: shape({
         name: string.isRequired,
         onChange: func
     }),
-    initialValue: string
+    defaultValue: string,
+    meta: shape({
+        touched: bool,
+        error: string
+    })
 };
 
 InputField.defaultProps = {

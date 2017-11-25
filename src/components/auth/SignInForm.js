@@ -1,46 +1,38 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import InputField from 'Components/formComponents/reduxForm/InputField';
+
+import { string, func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 
-import { signinUser } from 'Actions/auth-actions'
-import { renderInput } from 'Components/auth/renderInput';
+import { signInUser } from 'Actions/auth-actions'
+
+import { emailPattern } from 'Constants/validatePatterns';
 
 class SignIn extends Component {
     constructor(props) {
         super(props);
 
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
-        this.renderAlert = this.renderAlert.bind(this);
     }
 
     handleFormSubmit({ email, password }) {
-        const { signinUser, history } = this.props;
+        const {
+            signInUser,
+            history
+        } = this.props;
 
-        signinUser(
+        signInUser(
             { email, password },
             history
         );
     }
 
-    renderAlert() {
-        const { errorMessage } = this.props;
-
-        if(errorMessage) {
-            return (
-                <div className="alert alert-danger">
-                    <strong>Oops! </strong>
-                    {errorMessage}
-                </div>
-            );
-        }
-    }
-
     render() {
         const {
             handleFormSubmit,
-            renderAlert,
             props: {
+                errorMessage,
                 handleSubmit
             }
         } = this;
@@ -51,20 +43,27 @@ class SignIn extends Component {
                 onSubmit={handleSubmit(handleFormSubmit)}
             >
                 <Field
+                    component={InputField}
                     name="email"
-                    component={renderInput}
+                    className="auth-body-input"
+                    errorClassName="field-error"
+                    labelClassName="auth-body-field"
                     placeholder="Логін"
-                    type="text"
-                    label="Email"
+                    type="email"
                 />
                 <Field
+                    component={InputField}
                     name="password"
-                    component={renderInput}
+                    className="auth-body-input"
+                    errorClassName="field-error"
+                    labelClassName="auth-body-field"
                     placeholder="Пароль"
                     type="password"
-                    label="Password"
                 />
-                {renderAlert()}
+                {errorMessage ?
+                    <div className="alert alert-danger">
+                        <strong>Oops! </strong>{errorMessage}
+                    </div> : null}
                 <div className="btn-group auth-body-control">
                     <button className="btn auth-body-button">Sign in</button>
                 </div>
@@ -73,10 +72,26 @@ class SignIn extends Component {
     }
 }
 
+const validate = ({ email, password }) => {
+    let errors = {};
+
+    if(!email) {
+        errors.email = 'Please, enter an email';
+    } else if(!emailPattern.test(email)) {
+        errors.email = 'Please, enter a valid email';
+    }
+
+    if(!password) {
+        errors.password = 'Please, enter password';
+    }
+
+    return errors;
+};
+
 SignIn.propTypes = {
-    errorMessage: PropTypes.string,
-    signinUser: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired
+    errorMessage: string,
+    signInUser: func.isRequired,
+    history: object.isRequired
 };
 
 const mapStateToProps = ({ auth: { error } }) => ({
@@ -84,10 +99,11 @@ const mapStateToProps = ({ auth: { error } }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    signinUser: (values, history) => dispatch(signinUser(values, history))
+    signInUser: (values, history) => dispatch(signInUser(values, history))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)
 (reduxForm({
-    form: 'signIn'
+    form: 'signIn',
+    validate
 })(SignIn));

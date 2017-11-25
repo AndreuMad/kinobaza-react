@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import InputField from 'Components/formComponents/reduxForm/InputField';
+
+import { string, func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { signupUser } from 'Actions/auth-actions';
+import { signUpUser } from 'Actions/auth-actions';
 
-import { renderInput } from 'Components/auth/renderInput';
+import { emailPattern } from 'Constants/validatePatterns';
 
 class SignUp extends Component {
     constructor(props) {
@@ -29,11 +31,11 @@ class SignUp extends Component {
 
     handleFormSubmit({ email, name, password }) {
         const {
-            signupUser,
+            signUpUser,
             history
         } = this.props;
 
-        signupUser(
+        signUpUser(
             { email, name, password },
             history
         );
@@ -49,32 +51,40 @@ class SignUp extends Component {
         return (
             <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <Field
+                    component={InputField}
                     name="email"
-                    component={renderInput}
+                    className="auth-body-input"
+                    errorClassName="field-error"
+                    labelClassName="auth-body-field"
                     placeholder="Емеіл"
-                    type="text"
-                    label="Email"
+                    type="email"
                 />
                 <Field
+                    component={InputField}
                     name="name"
-                    component={renderInput}
+                    className="auth-body-input"
+                    errorClassName="field-error"
+                    labelClassName="auth-body-field"
                     placeholder="Ім'я"
                     type="text"
-                    label="Name"
                 />
                 <Field
+                    component={InputField}
                     name="password"
-                    component={renderInput}
+                    className="auth-body-input"
+                    errorClassName="field-error"
+                    labelClassName="auth-body-field"
                     placeholder="Пароль"
                     type="password"
-                    label="Password"
                 />
                 <Field
+                    component={InputField}
                     name="passwordConfirm"
-                    component={renderInput}
+                    className="auth-body-input"
+                    errorClassName="field-error"
+                    labelClassName="auth-body-field"
                     placeholder="Повторіть пароль"
                     type="password"
-                    label="Confirm Password"
                 />
                 {renderAlert()}
                 <div className="btn-group auth-body-control">
@@ -85,18 +95,12 @@ class SignUp extends Component {
     }
 }
 
-const validate = (values) => {
-    const {
-        email,
-        name,
-        password,
-        passwordConfirm
-    } = values;
-    const errors = {};
+const validate = ({ email, name, password, passwordConfirm }) => {
+    let errors = {};
 
-    if(!values.email) {
+    if(!email) {
         errors.email = 'Please, enter an email';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+    } else if (!emailPattern.test(email)) {
         errors.email = 'Please, enter a valid email';
     }
 
@@ -118,9 +122,9 @@ const validate = (values) => {
 };
 
 SignUp.propTypes = {
-    errorMessage: PropTypes.string,
-    signupUser: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired
+    errorMessage: string,
+    signUpUser: func.isRequired,
+    history: object.isRequired
 };
 
 const mapStateToProps = ({ auth: { error } }) => ({
@@ -128,7 +132,7 @@ const mapStateToProps = ({ auth: { error } }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    signupUser: (values, history) => dispatch(signupUser(values, history))
+    signUpUser: (values, history) => dispatch(signUpUser(values, history))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)

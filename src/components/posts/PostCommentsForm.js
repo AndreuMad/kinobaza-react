@@ -54,6 +54,4 @@ const validate = ({ comment }) => {
 
 
 
-const mapDispatchToProps = null;
-
 export default reduxForm({ form: 'postComment', validate })(PostCommentForm);
