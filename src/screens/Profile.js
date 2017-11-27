@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import AuthController from 'Components/HOC/AuthController';
 import ProfileForm from 'Components/settings/ProfileForm'
 
 import {editUser} from 'Actions/auth-actions'
@@ -34,17 +33,12 @@ class ProfilePage extends Component {
         return (
             <section className="settings-page">
                 <div className="container">
-                    <AuthController
-                        component={
-                            <ProfileForm
-                                initialValues={{
-                                    name: userName,
-                                    dateOfBirth
-                                }}
-                                handleUserEdit={handleUserEdit}
-                            />
-                        }
-                        placeholder={<span>Будь-ласка, залогіньтесь</span>}
+                    <ProfileForm
+                        initialValues={{
+                            name: userName,
+                            dateOfBirth
+                        }}
+                        handleUserEdit={handleUserEdit}
                     />
                 </div>
             </section>

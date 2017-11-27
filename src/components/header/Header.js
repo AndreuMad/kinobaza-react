@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { bool, string, func } from 'prop-types';
-import { connect } from 'react-redux';
-import { Link, NavLink, withRouter } from 'react-router-dom';
+import React, {Component} from 'react';
+import {bool, string, func} from 'prop-types';
+import {connect} from 'react-redux';
+import {NavLink, withRouter} from 'react-router-dom';
 import _ from 'lodash';
 import classNames from 'classnames';
 
-import AuthController from 'Components/HOC/AuthController';
+import HeaderUserBlock from './headerUserBlock';
 
-import { signWithToken, signOutUser } from 'Actions/auth-actions';
+import {signWithToken, signOutUser} from 'Actions/auth-actions';
 
 class Header extends Component {
     constructor(props) {
@@ -28,26 +28,26 @@ class Header extends Component {
     }
 
     singWithToken() {
-        const { signWithToken } = this.props;
+        const {signWithToken} = this.props;
         const token = localStorage.getItem('token');
 
-        if(token) {
+        if (token) {
             signWithToken(token);
         }
     }
 
     handleScroll() {
-        const { sticky } = this.state;
+        const {sticky} = this.state;
 
-        if(window.pageYOffset > 0) {
+        if (window.pageYOffset > 0) {
 
-            if(sticky === false) {
+            if (sticky === false) {
                 this.setState({
                     sticky: true
                 });
             }
         } else {
-            if(sticky === true) {
+            if (sticky === true) {
                 this.setState({
                     sticky: false
                 });
@@ -69,7 +69,7 @@ class Header extends Component {
             <header
                 className={classNames(
                     "main-header",
-                    { "sticky": sticky }
+                    {"sticky": sticky}
                 )}
             >
                 <div className="container-full">
@@ -77,33 +77,9 @@ class Header extends Component {
                         <div className="row">
                             <div className="col m-4">
                                 <div className="col-inner header-control-item">
-                                    <AuthController
-                                        component={
-                                            <div>
-                                                <span
-                                                    key="headerUsername"
-                                                    className="username"
-                                                >{userName}</span>,
-                                                <button
-                                                    key="headerSignoutUser"
-                                                    className="btn"
-                                                    onClick={signOutUser}
-                                                >Sign out</button>
-                                                <Link
-                                                    to="/profile"
-                                                    className="btn blue"
-                                                >
-                                                    Редагувати
-                                                </Link>
-                                            </div>
-                                        }
-                                        placeholder={
-                                            <Link
-                                                key="headerLoginBtn"
-                                                to="/login/sign-in"
-                                                className="btn gradient-purple login-btn"
-                                            >увійти</Link>
-                                        }
+                                    <HeaderUserBlock
+                                        userName={userName}
+                                        signOutUser={signOutUser}
                                     />
                                 </div>
                             </div>
@@ -122,10 +98,10 @@ class Header extends Component {
                                 <div className="col-inner header-control-item end-xs">
                                     <form className="header-search">
                                         <label className="header-search-field">
-                                            <input type="text" className="header-search-input" />
+                                            <input type="text" className="header-search-input"/>
                                             <span
                                                 key="headerSearchIndicator"
-                                                className="header-search-indicator" />
+                                                className="header-search-indicator"/>
                                         </label>
                                     </form>
                                 </div>
@@ -195,7 +171,7 @@ Header.propTypes = {
     signOutUser: func.isRequired
 };
 
-const mapStateToProps = ({ auth: { name: userName } }) => ({
+const mapStateToProps = ({auth: {name: userName}}) => ({
     userName
 });
 
