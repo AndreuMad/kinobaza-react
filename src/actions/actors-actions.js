@@ -12,7 +12,7 @@ import {
     REMOVE_ACTOR_LIKE
 } from 'Constants/actions';
 
-import { apiUrl } from 'Constants/urls';
+import {apiUrl} from 'Constants/urls';
 
 export const fetchActorsStatus = (status) => {
     return {
@@ -30,12 +30,12 @@ export const fetchActors = (params, appendActors) => {
             params
         })
             .then(response => {
-                const { total, actors, likes } = response.data;
+                const {total, actors, likes} = response.data;
 
-                if(appendActors) {
-                    dispatch(fetchUpActorsSuccess({ actors, likes }))
+                if (appendActors) {
+                    dispatch(fetchUpActorsSuccess({actors, likes}))
                 } else {
-                    dispatch(fetchActorsSuccess({ total, actors, likes }))
+                    dispatch(fetchActorsSuccess({total, actors, likes}))
                 }
 
                 dispatch(fetchActorsStatus(true));
@@ -46,7 +46,7 @@ export const fetchActors = (params, appendActors) => {
     }
 };
 
-export const fetchActorsSuccess = ({ total, actors, likes }) => {
+export const fetchActorsSuccess = ({total, actors, likes}) => {
     return {
         type: FETCH_ACTORS_SUCCESS,
         actorsData: {
@@ -57,7 +57,7 @@ export const fetchActorsSuccess = ({ total, actors, likes }) => {
     }
 };
 
-export const fetchUpActorsSuccess = ({ actors, likes }) => {
+export const fetchUpActorsSuccess = ({actors, likes}) => {
     return {
         type: FETCH_UP_ACTORS_SUCCESS,
         actorsData: {
@@ -73,25 +73,23 @@ export const clearActors = () => {
     }
 };
 
-export const changeActorsQuery = (params) => {
-    return {
-        type: CHANGE_ACTORS_QUERY,
-        params
-    }
-};
+export const changeActorsQuery = (params) => ({
+    type: CHANGE_ACTORS_QUERY,
+    params
+});
 
-export const likeActor = ({ userId, actorId }) => {
+export const likeActor = ({userId, actorId}) => {
     return (dispatch) => {
 
         dispatch(likeActorStatus(false));
 
-        return Axios.post(`${apiUrl}/actors/like`, { userId, actorId })
+        return Axios.post(`${apiUrl}/actors/like`, {userId, actorId})
             .then((response) => {
-                const { action, actorId } = response.data;
+                const {action, actorId} = response.data;
 
-                if(action === 'saved') {
+                if (action === 'saved') {
                     dispatch(saveActorLike(actorId));
-                } else if(action === 'removed') {
+                } else if (action === 'removed') {
                     dispatch(removeActorLike(actorId));
                 }
 

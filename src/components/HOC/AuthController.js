@@ -1,36 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {bool, element} from 'prop-types';
 import {connect} from 'react-redux';
 
-function AuthController(Component, Placeholder) {
+const mapStateToProps = ({auth: {status, authenticated, id: userId }}) => ({
+    status,
+    authenticated,
+    userId
+});
 
-    class AuthControllerWrap extends Component {
+const hoc = (Component, Loader, Placeholder = Component) => connect(mapStateToProps)(props => {
+    const { status, authenticated } = props;
 
-        render() {
-            const {
-                status,
-                authenticated
-            } = this.props;
-
-            if (!status) {
-                return <span>Зачекайте.</span>
-            } else {
-                return authenticated ? <Component {...this.props} /> : <Placeholder />;
-            }
-        }
+    if (!status) {
+        return <Loader />;
+    } else {
+        return authenticated ? <Component {...props} /> : <Placeholder {...props} />;
     }
+});
 
-    const mapStateToProps = ({auth: {status, authenticated}}) => ({
-        status,
-        authenticated
-    });
 
-    AuthControllerWrap.propTypes = {
-        status: bool,
-        authenticated: bool
-    };
-
-    return connect(mapStateToProps)(AuthControllerWrap);
-}
-
-export default AuthController;
+export default hoc;

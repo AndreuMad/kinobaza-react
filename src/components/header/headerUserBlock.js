@@ -3,33 +3,33 @@ import AuthController from 'Components/HOC/AuthController';
 
 import {Link} from 'react-router-dom';
 
-class UserBlock extends Component {
+const UserBlock = ({userName, signOutUser}) => {
 
-    render() {
-        const {userName, signOutUser} = this.props;
+    return (
+        <div>
+            <span
+                key="headerUsername"
+                className="username"
+            >{userName}</span>
+            <button
+                key="headerSignoutUser"
+                className="btn"
+                onClick={signOutUser}
+            >Sign out
+            </button>
+            <Link
+                to="/profile"
+                className="btn blue"
+            >
+                Редагувати
+            </Link>
+        </div>
+    );
+};
 
-        return (
-            <div>
-                <span
-                    key="headerUsername"
-                    className="username"
-                >{userName}</span>
-                <button
-                    key="headerSignoutUser"
-                    className="btn"
-                    onClick={signOutUser}
-                >Sign out
-                </button>
-                <Link
-                    to="/profile"
-                    className="btn blue"
-                >
-                    Редагувати
-                </Link>
-            </div>
-        );
-    }
-}
+const Loader = () => (
+    <span>Перевірка даних...</span>
+);
 
 const LoginButton = () => (
     <div>
@@ -41,4 +41,4 @@ const LoginButton = () => (
     </div>
 );
 
-export default AuthController(UserBlock, LoginButton);
+export default AuthController(UserBlock, Loader, LoginButton);

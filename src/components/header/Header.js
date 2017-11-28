@@ -7,7 +7,7 @@ import classNames from 'classnames';
 
 import HeaderUserBlock from './headerUserBlock';
 
-import {signWithToken, signOutUser} from 'Actions/auth-actions';
+import {signOutUser} from 'Actions/auth-actions';
 
 class Header extends Component {
     constructor(props) {
@@ -20,20 +20,10 @@ class Header extends Component {
 
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
-        this.singWithToken();
     }
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll);
-    }
-
-    singWithToken() {
-        const {signWithToken} = this.props;
-        const token = localStorage.getItem('token');
-
-        if (token) {
-            signWithToken(token);
-        }
     }
 
     handleScroll() {

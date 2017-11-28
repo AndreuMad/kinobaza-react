@@ -8,18 +8,16 @@ import {
     FETCH_POST_SUCCESS
 } from 'Constants/actions';
 
-import { apiUrl } from 'Constants/urls';
+import {apiUrl} from 'Constants/urls';
 
 
-export const fetchPostsStatus = (status) => {
-    return {
-        type: FETCH_POSTS_STATUS,
-        status
-    }
-};
+export const fetchPostsStatus = (status) => ({
+    type: FETCH_POSTS_STATUS,
+    status
+});
 
-export const fetchPosts = (params, shouldFetchArticle) => {
-    return (dispatch) => {
+export const fetchPosts = (params, shouldFetchArticle) => (
+    dispatch => {
 
         dispatch(fetchPostsStatus(false));
 
@@ -29,18 +27,18 @@ export const fetchPosts = (params, shouldFetchArticle) => {
             }
         })
             .then(response => {
-                let { data } = response;
-                let { posts, count } = data;
+                let {data} = response;
+                let {posts, count} = data;
 
-                if(shouldFetchArticle) {
+                if (shouldFetchArticle) {
                     const articleItem = posts.filter(item => item.important);
                     const articleItemId = articleItem.length ? articleItem[0]._id : posts[0]._id;
                     dispatch(fetchArticlePost(articleItemId));
                     posts = posts.filter(item => item._id !== articleItemId);
                 }
 
-                if(posts.length) {
-                    dispatch(fetchPostsSuccess({ posts, count }));
+                if (posts.length) {
+                    dispatch(fetchPostsSuccess({posts, count}));
                 }
                 dispatch(fetchPostsStatus(true));
             })
@@ -48,29 +46,25 @@ export const fetchPosts = (params, shouldFetchArticle) => {
                 throw(error);
             });
     }
-};
+);
 
-export const fetchPostsSuccess = ({ posts, count }) => {
-    return {
-        type: FETCH_POSTS_SUCCESS,
-        postsData: {
-            posts,
-            count
-        }
+export const fetchPostsSuccess = ({posts, count}) => ({
+    type: FETCH_POSTS_SUCCESS,
+    postsData: {
+        posts,
+        count
     }
-};
+});
 
-export const clearPosts = () => {
-    return {
-        type: CLEAR_POSTS
-    }
-};
+export const clearPosts = () => ({
+    type: CLEAR_POSTS
+});
 
 export const fetchPost = (id) => {
     return (dispatch) => {
 
         return Axios.get(`${apiUrl}/posts/${id}`)
-            .then(({ data: { post, comments } }) => {
+            .then(({data: {post, comments}}) => {
                 dispatch(fetchPostSuccess(post, comments));
             })
             .catch(error => {
@@ -79,27 +73,23 @@ export const fetchPost = (id) => {
     }
 };
 
-export const fetchPostSuccess = (post, comments) => {
+export const fetchPostSuccess = (post, comments) => ({
+    type: FETCH_POST_SUCCESS,
+    post,
+    comments
+});
 
-    return {
-        type: FETCH_POST_SUCCESS,
-        post,
-        comments
-    }
-};
-
-export const fetchArticlePost = (id) => {
-    return (dispatch) => {
-
+export const fetchArticlePost = (id) => (
+    (dispatch) => {
         return Axios.get(`${apiUrl}/posts/${id}`)
-            .then(({ data: { post } }) => {
+            .then(({data: {post}}) => {
                 dispatch(fetchArticlePostSuccess(post));
             })
             .catch(error => {
                 throw(error);
             })
     }
-};
+);
 
 export const fetchArticlePostSuccess = (post) => {
 

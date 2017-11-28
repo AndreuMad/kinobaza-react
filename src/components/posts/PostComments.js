@@ -1,10 +1,10 @@
 import React from 'react';
 
-import AuthController from 'Components/HOC/AuthController';
 import PostCommentsForm from 'Components/posts/PostCommentsForm';
 import PostCommentItem from 'Components/posts/PostCommentItem';
 
 const PostComments = ({ userId, postId, comments, postComment }) => {
+
     return (
         <section className="post-comments">
             <div className="container">
@@ -14,22 +14,15 @@ const PostComments = ({ userId, postId, comments, postComment }) => {
                             <h3 className="post-comments-title">Коментарі</h3>
 
                             <div className="post-comments-form">
-                                <AuthController
-                                    component={
-                                        <PostCommentsForm
-                                            userId={userId}
-                                            postId={postId}
-                                            postComment={postComment}
-                                        />
-                                    }
-                                    placeholder={
-                                        <span>Увійдіть на сайт, щоб залишати коментарі</span>
-                                    }
+                                <PostCommentsForm
+                                    userId={userId}
+                                    postId={postId}
+                                    postComment={postComment}
                                 />
                             </div>
 
                             <div className="post-comments-wrap">
-                                {comments ?
+                                {comments.length ?
                                     comments.map(({ _id, user: { id: userId, name: userName }, date, text }) => (
                                         <PostCommentItem
                                             key={`comment_${_id}`}

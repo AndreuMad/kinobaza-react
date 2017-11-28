@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {string, func, bool} from 'prop-types';
+import {connect} from 'react-redux';
+
+import AuthController from 'Components/HOC/AuthController';
 
 import RenderInputField from 'Components/formComponents/InputField';
 
@@ -32,38 +34,16 @@ class ActorsForm extends Component {
         this.handleFetchActors();
     };
 
-    componentWillReceiveProps({ userId: nextUserId }) {
-        const {
-            userId: currentUserId
-        } = this.props;
-
-        if(nextUserId !== currentUserId) {
-            this.setState({
-                actorsParams: {
-                    ...this.state.actorsParams,
-                    userId: nextUserId
-                }
-            }, () => {
-                const { handleFetchActors } = this;
-                const { changeActorsQuery } = this.props;
-                const { actorsParams } = this.state;
-
-                changeActorsQuery(actorsParams);
-                handleFetchActors();
-            });
-        }
-    }
-
     handleFormChange(name, payload) {
         this.setState({
             actorsParams: {
                 ...this.state.actorsParams,
-                ...{ [name]: payload }
+                ...{[name]: payload}
             }
         }, () => {
-            const { handleFetchActors } = this;
-            const { changeActorsQuery } = this.props;
-            const { actorsParams } = this.state;
+            const {handleFetchActors} = this;
+            const {changeActorsQuery} = this.props;
+            const {actorsParams} = this.state;
 
             changeActorsQuery(actorsParams);
             handleFetchActors();
@@ -72,12 +52,18 @@ class ActorsForm extends Component {
 
     handleFetchActors() {
         const {
-            fetchActorsStatus,
-            fetchActors
-        } = this.props;
+            props: {
+                fetchActorsStatus,
+                fetchActors
+            },
+            state: {
+                actorsParams
+            }
+        } = this;
 
-        if(fetchActorsStatus) {
-            const { actorsParams } = this.state;
+        console.log('Actors params', this.state.actorsParams);
+
+        if (fetchActorsStatus) {
             fetchActors(actorsParams);
         }
     }
@@ -104,23 +90,23 @@ class ActorsForm extends Component {
     }
 }
 
+const Loader = () => (
+    <span>Перевірка даних...</span>
+);
+
 ActorsForm.propTypes = {
-    userId: PropTypes.string,
-    fetchActors: PropTypes.func.isRequired,
-    changeActorsQuery: PropTypes.func.isRequired,
-    fetchActorsStatus: PropTypes.bool.isRequired
+    fetchActors: func.isRequired,
+    changeActorsQuery: func.isRequired,
+    fetchActorsStatus: bool.isRequired
 };
 
-const mapStateToProps = (state) => {
-    return {
-        userId: state.auth.id,
-        fetchActorsStatus: state.actors.fetchActorsStatus
-    };
-};
+const mapStateToProps = ({actors: {fetchActorsStatus}}) => ({
+    fetchActorsStatus
+});
 
 const mapDispatchToProps = (dispatch) => ({
     fetchActors: (params) => dispatch(fetchActors(params)),
     changeActorsQuery: (params) => dispatch(changeActorsQuery(params))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActorsForm);
+export default AuthController(connect(mapStateToProps, mapDispatchToProps)(ActorsForm), Loader);

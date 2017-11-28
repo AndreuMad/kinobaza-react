@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import { string, bool, func, arrayOf, number, object } from 'prop-types';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
@@ -49,6 +49,7 @@ class PersonsPage extends Component {
     fetchUpActors() {
         const {
             actorsQuery,
+            userId,
             fetchUpActors
         } = this.props;
 
@@ -58,6 +59,7 @@ class PersonsPage extends Component {
 
         fetchUpActors({
             ...actorsQuery,
+            userId,
             skip: actorsCurrentCount
         });
     }
@@ -162,15 +164,15 @@ class PersonsPage extends Component {
 }
 
 PersonsPage.propTypes = {
-    userId: PropTypes.string,
-    actors: PropTypes.arrayOf(PropTypes.object),
-    actorsTotalCount: PropTypes.number.isRequired,
-    actorsQuery: PropTypes.object,
-    fetchActorsStatus: PropTypes.bool.isRequired,
-    fetchUpActors: PropTypes.func.isRequired,
-    clearActors: PropTypes.func.isRequired,
-    likeActor: PropTypes.func.isRequired,
-    likeActorStatus: PropTypes.bool.isRequired
+    userId: string,
+    actors: arrayOf(object),
+    actorsTotalCount: number.isRequired,
+    actorsQuery: object,
+    fetchActorsStatus: bool.isRequired,
+    fetchUpActors: func.isRequired,
+    clearActors: func.isRequired,
+    likeActor: func.isRequired,
+    likeActorStatus: bool.isRequired
 };
 
 const mapStateToProps = ({
