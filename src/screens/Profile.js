@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import {string, number, func} from 'prop-types';
 import {connect} from 'react-redux';
 
 import ProfileForm from 'Components/settings/ProfileForm'
@@ -13,12 +13,13 @@ class ProfilePage extends Component {
         this.handleUserEdit = this.handleUserEdit.bind(this);
     }
 
-    handleUserEdit({name, dateOfBirth}) {
+    handleUserEdit({name, photo, dateOfBirth}) {
         const {
+            userId,
             editUser
         } = this.props;
 
-        editUser({name, dateOfBirth});
+        editUser({userId, name, photo, dateOfBirth});
     }
 
     render() {
@@ -46,13 +47,20 @@ class ProfilePage extends Component {
     }
 }
 
-const mapStateToProps = ({auth: {name: userName, dateOfBirth}}) => ({
+ProfilePage.propTypes = {
+    userName: string,
+    dateOfBirth: number,
+    editUser: func
+};
+
+const mapStateToProps = ({auth: {name: userName, id: userId, dateOfBirth}}) => ({
+    userId,
     userName,
     dateOfBirth
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    editUser: ({name, dateOfBirth}) => dispatch(editUser({name, dateOfBirth}))
+    editUser: ({userId, name, photo, dateOfBirth}) => dispatch(editUser({userId, name, photo, dateOfBirth}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

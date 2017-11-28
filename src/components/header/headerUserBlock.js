@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AuthController from 'Components/HOC/AuthController';
 
 import {Link} from 'react-router-dom';

@@ -1,4 +1,5 @@
 import React from 'react';
+import {func} from 'prop-types';
 import {reduxForm, Field} from 'redux-form';
 
 import AuthController from 'Components/HOC/AuthController';
@@ -39,5 +40,10 @@ const ProfileForm = ({handleSubmit, handleUserEdit}) => (
 const Placeholder = () => (
     <span>Будь-ласка, залогіньтесь</span>
 );
+
+ProfileForm.propTypes = {
+    handleSubmit: func,
+    handleUserEdit: func
+};
 
 export default AuthController(reduxForm({form: 'profile'})(ProfileForm), Placeholder);
