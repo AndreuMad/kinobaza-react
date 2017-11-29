@@ -75,13 +75,19 @@ export const signUpUser = ({email, name, password}, history) => {
 export const editUser = ({ userId, name, photo, dateOfBirth }) => {
     return (dispatch) => {
         const token = localStorage.getItem('token');
+        const data = new FormData;
+        data.append('userId', userId);
+        data.append('name', name);
+        data.append('photo', photo);
+        data.append('dateOfBirth', dateOfBirth);
 
         Axios.post(
             `${apiUrl}/editUser`,
-            { userId, name, photo, dateOfBirth },
+            data,
             {
                 headers: {
-                    authorization: token
+                    authorization: token,
+                    'Content-Type': 'multipart/form-data'
                 }
             }
         )

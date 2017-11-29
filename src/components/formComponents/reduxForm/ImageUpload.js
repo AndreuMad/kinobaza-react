@@ -20,6 +20,7 @@ class ImageUpload extends Component {
                 onChange
             }
         } = this.props;
+
         const reader = new FileReader();
         const file = event.target.files[0];
 
@@ -27,7 +28,7 @@ class ImageUpload extends Component {
             this.setState({
                 file,
                 imageUrl: reader.result
-            }, () => onChange(reader.result));
+            }, () => onChange(file));
         };
         reader.readAsDataURL(file);
     }
