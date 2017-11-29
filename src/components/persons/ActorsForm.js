@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {string, func, bool} from 'prop-types';
 import {connect} from 'react-redux';
 
-import AuthController from 'Components/HOC/AuthController';
+import AuthController from 'Components/hoc/AuthController';
 
 import RenderInputField from 'Components/formComponents/InputField';
 
@@ -61,8 +61,6 @@ class ActorsForm extends Component {
             }
         } = this;
 
-        console.log('Actors params', this.state.actorsParams);
-
         if (fetchActorsStatus) {
             fetchActors(actorsParams);
         }
@@ -95,9 +93,11 @@ const Loader = () => (
 );
 
 ActorsForm.propTypes = {
+    authenticated: bool,
+    userId: string,
+    fetchActorsStatus: bool.isRequired,
     fetchActors: func.isRequired,
-    changeActorsQuery: func.isRequired,
-    fetchActorsStatus: bool.isRequired
+    changeActorsQuery: func.isRequired
 };
 
 const mapStateToProps = ({actors: {fetchActorsStatus}}) => ({

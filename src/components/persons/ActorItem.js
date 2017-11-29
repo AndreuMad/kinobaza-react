@@ -1,4 +1,5 @@
 import React from 'react';
+import {string, number, arrayOf, bool, func, shape} from 'prop-types';
 
 import moment from 'moment';
 import 'NodeModules/moment/locale/uk';
@@ -66,5 +67,33 @@ const ActorItem = ({
         </div>
     </div>
 );
+
+ActorItem.propTypes = {
+    _id: string,
+    image: shape({
+        url: string
+    }),
+    name: shape({
+        ukr: string,
+        en: string
+    }),
+    dateOfBirth: number,
+    zodiacSign: string,
+    titlesNumber: number,
+    birthLocation: string,
+    titles: arrayOf(shape({
+        _id: string,
+        image: shape({
+            url: string
+        }),
+        name: shape({
+            en: string,
+            ukr: string
+        }),
+        year: number
+    })),
+    liked: bool,
+    handleActorLike: func
+};
 
 export default ActorItem;

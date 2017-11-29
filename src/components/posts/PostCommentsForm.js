@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import {string, func} from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
-import {connect} from 'react-redux';
 
-import AuthController from 'Components/HOC/AuthController';
+import AuthController from 'Components/hoc/AuthController';
 
 import { textareaComponent } from 'Components/formComponents/reduxForm/textareaComponent';
 
@@ -44,6 +43,12 @@ class PostCommentForm extends Component {
     }
 }
 
+PostCommentForm.propTypes = {
+    postId: string,
+    userId: string,
+    handleSubmit: func
+};
+
 const Placeholder = () => (
     <span>Увійдіть на сайт, щоб залишати коментарі</span>
 );
@@ -57,7 +62,5 @@ const validate = ({ comment }) => {
 
     return errors;
 };
-
-
 
 export default AuthController(reduxForm({ form: 'postComment', validate })(PostCommentForm), Placeholder);

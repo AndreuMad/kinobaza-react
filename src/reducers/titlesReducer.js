@@ -2,18 +2,12 @@ import {
     FETCH_TITLES_STATUS,
     FETCH_TITLES_SUCCESS,
     FETCH_UP_TITLES_SUCCESS,
-    CLEAR_TITLES,
-    CHANGE_TITLES_QUERY
+    CLEAR_TITLES
 } from 'Constants/actions';
-
-import {
-    titlesDefaultParams
-} from 'Constants/searchParams';
 
 const defaultTitlesState = {
     titles: [],
     titlesTotalCount: 0,
-    titlesQuery: titlesDefaultParams,
     fetchTitlesStatus: true
 };
 
@@ -48,15 +42,6 @@ export const titlesReducer = (state = defaultTitlesState, action) => {
                 ...state,
                 titles: [],
                 titlesTotalCount: 0
-            };
-
-        case CHANGE_TITLES_QUERY:
-            return {
-                ...state,
-                titlesQuery: {
-                    ...state.titlesQuery,
-                    ...action.params
-                }
             };
 
         default:

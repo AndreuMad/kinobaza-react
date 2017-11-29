@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {string, number, shape} from 'prop-types';
 
 const ActorsTitle = ({ _id, image: { url: imageUrl }, name: { ukr: nameUkr, en: nameEn } }) => (
     <div className="actors-title">
@@ -12,14 +12,15 @@ const ActorsTitle = ({ _id, image: { url: imageUrl }, name: { ukr: nameUkr, en: 
 );
 
 ActorsTitle.propTypes = {
-    _id: PropTypes.string,
-    image: PropTypes.shape({
-        url: PropTypes.string
+    _id: string,
+    image: shape({
+        url: string
     }),
-    name: PropTypes.shape({
-        en: PropTypes.string,
-        ukr: PropTypes.string
-    })
+    name: shape({
+        en: string,
+        ukr: string
+    }),
+    year: number
 };
 
 export default ActorsTitle;

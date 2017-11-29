@@ -9,7 +9,10 @@ const mapStateToProps = ({auth: {status, authenticated, id: userId }}) => ({
 });
 
 const hoc = (Component, Loader, Placeholder = Component) => connect(mapStateToProps)(props => {
-    const { status, authenticated } = props;
+    const {
+        status,
+        authenticated
+    } = props;
 
     if (!status) {
         return <Loader />;

@@ -2,7 +2,7 @@ import React from 'react';
 import {func} from 'prop-types';
 import {reduxForm, Field} from 'redux-form';
 
-import AuthController from 'Components/HOC/AuthController';
+import AuthController from 'Components/hoc/AuthController';
 import ImageUpload from 'Components/formComponents/reduxForm/ImageUpload';
 import InputField from 'Components/formComponents/reduxForm/InputField';
 import DateField from 'Components/formComponents/reduxForm/DateField';

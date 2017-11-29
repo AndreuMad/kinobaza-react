@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import {string, number, arrayOf, func, shape} from 'prop-types';
 import { connect } from 'react-redux';
 
 import ReviewItem from 'Components/Reviews/ReviewItem';
@@ -29,6 +29,7 @@ class ReviewsPage extends Component {
                         {
                             reviews.length ?
                                 reviews.map(({
+                                                _id,
                                                 author: {
                                                     id: authorId,
                                                     name: authorName
@@ -44,12 +45,13 @@ class ReviewsPage extends Component {
                                                 score
                                              }) => (
                                     <ReviewItem
+                                        key={`review${_id}`}
+                                        authorName={authorName}
+                                        authorId={authorId}
                                         titleNameUkr={titleNameUkr}
                                         titleNameEn={titleNameEn}
                                         titleImageUrl={titleImageUrl}
                                         titleYear={titleYear}
-                                        authorId={authorId}
-                                        authorName={authorName}
                                         isPositive={isPositive}
                                         date={date}
                                         text={text}
@@ -81,10 +83,35 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 ReviewsPage.propTypes = {
-    userId: PropTypes.string,
-    reviewsTotalCount: PropTypes.number,
-    reviews: PropTypes.array,
-    fetchReviews: PropTypes.func
+    userId: string,
+    reviewsTotalCount: number,
+    reviews: arrayOf(shape({
+        _id: string,
+        author: shape({
+            _id: string,
+            name: string
+        }),
+        date: number,
+        isPositive: number,
+        likes: shape({
+            negative: number,
+            positive: number
+        }),
+        score: number,
+        text: string,
+        title: shape({
+            _id: string,
+            image: shape({
+                url: string
+            }),
+            name: shape({
+                en: string,
+                ukr: string
+            }),
+            year: number
+        })
+    })),
+    fetchReviews: func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReviewsPage);

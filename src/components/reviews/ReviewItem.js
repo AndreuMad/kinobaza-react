@@ -1,18 +1,19 @@
 import React from 'react';
 import classNames from 'classnames';
+import {string, number} from 'prop-types';
 
 import moment from 'moment';
 import 'NodeModules/moment/locale/uk';
 
 const ReviewItem = ({
+                        authorName,
+                        date,
+                        isPositive,
                         titleNameUkr,
                         titleNameEn,
                         titleImageUrl,
                         titleYear,
                         authorId,
-                        authorName,
-                        isPositive,
-                        date,
                         text,
                         score
                     }) => (
@@ -57,5 +58,18 @@ const ReviewItem = ({
         </div>
     </article>
 );
+
+ReviewItem.propTypes = {
+    authorName: string,
+    authorId: string,
+    date: number,
+    isPositive: number,
+    score: number,
+    text: string,
+    titleImageUrl: string,
+    titleNameEn: string,
+    titleNameUkr: string,
+    titleYear: number
+};
 
 export default ReviewItem;

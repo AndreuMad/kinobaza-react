@@ -5,7 +5,6 @@ import {
     FETCH_TITLES_SUCCESS,
     FETCH_UP_TITLES_SUCCESS,
     CLEAR_TITLES,
-    CHANGE_TITLES_QUERY,
     FETCH_TITLE_SUCCESS
 } from 'Constants/actions'
 
@@ -67,13 +66,6 @@ export const fetchUpTitlesSuccess = (titles) => {
 export const clearTitles = () => {
     return {
         type: CLEAR_TITLES
-    }
-};
-
-export const changeTitlesQuery = (params) => {
-    return {
-        type: CHANGE_TITLES_QUERY,
-        params
     }
 };
 

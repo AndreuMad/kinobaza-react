@@ -1,15 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {string, number, func} from 'prop-types';
 
 import Rating from 'react-rating';
 
-const Title = ({ _id, titleEn, titleUkr, imageUrl, year, averageScore, imdbScore, text, userRating, handleTitleRate }) => (
+const Title = ({_id, titleEn, titleUkr, imageUrl, year, averageScore, imdbScore, text, userRating, handleTitleRate}) => (
     <article className="title-item" key={`title${_id}`}>
         <div className="row">
             <div className="col m-5">
                 <div className="col-inner">
                     <figure>
-                        <img src={imageUrl} alt={titleUkr} title={titleUkr} />
+                        <img src={imageUrl} alt={titleUkr} title={titleUkr}/>
                     </figure>
                 </div>
             </div>
@@ -46,14 +46,16 @@ const Title = ({ _id, titleEn, titleUkr, imageUrl, year, averageScore, imdbScore
 );
 
 Title.propTypes = {
-    _id: PropTypes.string.isRequired,
-    titleEn: PropTypes.string,
-    titleUkr: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string,
-    year: PropTypes.number,
-    averageScore: PropTypes.number,
-    imdbScore: PropTypes.number,
-    text: PropTypes.string.isRequired
+    _id: string.isRequired,
+    averageScore: number,
+    handleTitleRate: func,
+    imageUrl: string,
+    imdbScore: number,
+    text: string.isRequired,
+    titleEn: string,
+    titleUkr: string.isRequired,
+    userRating: number,
+    year: number,
 };
 
 export default Title;

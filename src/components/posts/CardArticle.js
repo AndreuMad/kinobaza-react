@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {string, number, object, shape} from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import moment from 'moment';
@@ -50,14 +50,13 @@ const CardArticle = ({ id, image: { url: imageUrl }, title, text, date }) => (
 );
 
 CardArticle.propTypes = {
-    id: PropTypes.string.isRequired,
-    image: PropTypes.shape({
-        url: PropTypes.string.isRequired
+    id: string.isRequired,
+    image: shape({
+        url: string.isRequired
     }),
-    title: PropTypes.string.isRequired,
-    date: PropTypes.number,
-    text: PropTypes.string.isRequired,
-    shared: PropTypes.object
+    title: string.isRequired,
+    date: number,
+    text: string.isRequired
 };
 
 export default CardArticle;
