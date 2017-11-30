@@ -64,7 +64,7 @@ class ImageUpload extends Component {
                         </div> : null
                 }
             </div>
-        )
+        );
     }
 }
 
