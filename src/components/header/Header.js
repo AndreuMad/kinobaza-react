@@ -46,10 +46,7 @@ class Header extends Component {
     }
 
     render() {
-        const {
-            userName,
-            signOutUser
-        } = this.props;
+        const {signOutUser} = this.props;
 
         const {
             sticky
@@ -68,7 +65,6 @@ class Header extends Component {
                             <div className="col m-4">
                                 <div className="col-inner header-control-item">
                                     <HeaderUserBlock
-                                        userName={userName}
                                         signOutUser={signOutUser}
                                     />
                                 </div>
@@ -157,17 +153,11 @@ class Header extends Component {
 Header.propTypes = {
     authenticated: bool,
     userName: string,
-    signWithToken: func.isRequired,
     signOutUser: func.isRequired
 };
 
-const mapStateToProps = ({auth: {name: userName}}) => ({
-    userName
-});
-
 const mapDispatchToProps = (dispatch) => ({
-    signWithToken: (token) => dispatch(signWithToken(token)),
     signOutUser: () => dispatch(signOutUser())
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+export default withRouter(connect(null, mapDispatchToProps)(Header));

@@ -2,16 +2,21 @@ import {
     AUTH_USER,
     UNAUTH_USER,
     AUTH_STATUS,
-    AUTH_ERROR
+    AUTH_ERROR,
+    CHANGE_USER_DATA
 } from 'Constants/actions';
 
 const defaultState = {
     authenticated: false,
     status: true,
-    id: null,
-    name: null,
-    dateOfBirth: null,
-    error: null
+    error: null,
+    user: {
+        _id: null,
+        avatar: null,
+        email: null,
+        name: null,
+        dateOfBirth: null
+    }
 };
 
 export const authReducer = (state = defaultState, action) => {
@@ -21,25 +26,16 @@ export const authReducer = (state = defaultState, action) => {
                 ...state,
                 status: action.status
             };
+            break;
 
         case AUTH_USER:
-            const {
-                data: {
-                    id,
-                    name,
-                    dateOfBirth
-                }
-            } = action;
-
             return {
                 ...state,
                 authenticated: true,
-                id: id,
-                name: name,
-                dateOfBirth: dateOfBirth,
                 error: null
             };
             break;
+
         case UNAUTH_USER:
             return {
                 ...state,
@@ -47,11 +43,23 @@ export const authReducer = (state = defaultState, action) => {
                 error: null
             };
             break;
+
         case AUTH_ERROR:
             return {
                 ...state,
                 error: action.error
             };
+            break;
+
+        case CHANGE_USER_DATA:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    ...action.data
+                }
+            };
+            break;
     }
     return state;
 };

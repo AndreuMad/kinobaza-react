@@ -1,11 +1,15 @@
 import Axios from 'axios';
 
+import {
+    CHANGE_USER_DATA
+} from 'Constants/actions';
+
 import {apiUrl} from 'Constants/urls';
 
-export const editUser = ({ userId, name, dateOfBirth }) => {
+export const editUser = ({ _id, name, dateOfBirth }) => {
     return (dispatch) => {
         const token = localStorage.getItem('token');
-        let data = {userId};
+        let data = {_id};
 
         if(name) {
             data.name = name;
@@ -57,6 +61,6 @@ export const loadAvatar = ({userId, photo}) => {
 };
 
 export const changeUserData = (data) => ({
-    type: 'CHANGE_USER_DATA',
+    type: CHANGE_USER_DATA,
     data
 });

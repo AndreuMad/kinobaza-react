@@ -2,10 +2,10 @@ import React from 'react';
 import {bool, element} from 'prop-types';
 import {connect} from 'react-redux';
 
-const mapStateToProps = ({auth: {status, authenticated, id: userId }}) => ({
+const mapStateToProps = ({auth: {status, authenticated, user}}) => ({
     status,
     authenticated,
-    userId
+    user
 });
 
 const hoc = (Component, Loader, Placeholder = Component) => connect(mapStateToProps)(props => {

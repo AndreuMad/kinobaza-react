@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import {string, number, bool, func, shape} from 'prop-types';
 import {connect} from 'react-redux';
 
 import {fetchPost} from 'Actions/posts-actions';
@@ -17,7 +17,12 @@ class Post extends Component {
     }
 
     render() {
-        const { post } = this.props;
+        const {
+            post,
+            comments,
+            userId,
+            postComment
+        } = this.props;
 
         return (
             post ?
@@ -36,12 +41,12 @@ class Post extends Component {
                                         <figure
                                             className="introduction-illustration"
                                             style={{
-                                                backgroundImage: `url('${this.props.post.image.url}'`
+                                                backgroundImage: `url('${post.image.url}'`
                                             }}
                                         >
                                         </figure>
-                                        <h1 className="introduction-title">{this.props.post.title}</h1>
-                                        <p className="introduction-date">{this.props.post.date}</p>
+                                        <h1 className="introduction-title">{post.title}</h1>
+                                        <p className="introduction-date">{post.date}</p>
                                         <div className="introduction-info">
                                             <div className="info-block views">
                                                 <p className="info-block-number">500</p>
@@ -67,7 +72,7 @@ class Post extends Component {
                                             <div className="col s-10 m-11">
                                                 <div className="col-inner">
                                                     <p className="post-body-text"
-                                                       dangerouslySetInnerHTML={{__html: this.props.post.textArticle}}/>
+                                                       dangerouslySetInnerHTML={{__html: post.textArticle}}/>
                                                 </div>
                                             </div>
                                             <div className="col m-1">
@@ -90,10 +95,10 @@ class Post extends Component {
                         </div>
                     </section>
                     <PostComments
-                        postId={this.props.post._id}
-                        userId={this.props.userId}
-                        comments={this.props.comments}
-                        postComment={this.props.postComment}
+                        postId={post._id}
+                        userId={userId}
+                        comments={comments}
+                        postComment={postComment}
                     />
                 </article> : null
 
@@ -102,21 +107,30 @@ class Post extends Component {
 }
 
 Post.propTypes = {
-    post: PropTypes.object,
-    fetchPost: PropTypes.func.isRequired
+    post: shape({
+        _id: string,
+        date: number,
+        image: shape({
+            url: string
+        }),
+        important: bool,
+        text: string,
+        textArticle: string,
+        title: string
+    }),
+    userId: string,
+    fetchPost: func.isRequired,
+    postComment: func
 };
 
 const mapStateToProps = ({
-                             posts: {post},
-                             posts: {comments},
-                             auth: {id: userId}
-                         }) => {
-    return {
-        post,
-        comments,
-        userId
-    }
-};
+                             posts: {post, comments},
+                             auth: {user: {_id: userId}}
+                         }) => ({
+    post,
+    comments,
+    userId
+});
 
 const mapDispatchToProps = (dispatch) => {
     return {

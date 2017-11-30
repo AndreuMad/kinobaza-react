@@ -21,27 +21,33 @@ class ProfilePage extends Component {
 
     handleAvatarEdit({photo}) {
         const {
-            userId,
+            user: {
+                _id
+            },
             loadAvatar
         } = this.props;
 
-        loadAvatar({userId, photo});
+        loadAvatar({_id, photo});
     }
 
     handleUserEdit({name, dateOfBirth}) {
         const {
-            userId,
+            user: {
+                _id
+            },
             editUser
         } = this.props;
 
-        editUser({userId, name, dateOfBirth});
+        editUser({_id, name, dateOfBirth});
     }
 
     render() {
         const {
             props: {
-                userName,
-                dateOfBirth
+                user: {
+                    name,
+                    dateOfBirth
+                }
             },
             handleAvatarEdit,
             handleUserEdit
@@ -58,7 +64,7 @@ class ProfilePage extends Component {
                     <hr/>
                     <ProfileForm
                         initialValues={{
-                            name: userName,
+                            name: name,
                             dateOfBirth
                         }}
                         handleUserEdit={handleUserEdit}
@@ -81,15 +87,9 @@ ProfilePage.propTypes = {
     loadAvatar: func
 };
 
-const mapStateToProps = ({auth: {name: userName, id: userId, dateOfBirth}}) => ({
-    userId,
-    userName,
-    dateOfBirth
-});
-
 const mapDispatchToProps = (dispatch) => ({
-    editUser: ({userId, name, dateOfBirth}) => dispatch(editUser({userId, name, dateOfBirth})),
-    loadAvatar: ({userId, photo}) => dispatch(loadAvatar({userId, photo}))
+    editUser: ({_id, name, dateOfBirth}) => dispatch(editUser({_id, name, dateOfBirth})),
+    loadAvatar: ({_id, photo}) => dispatch(loadAvatar({_id, photo}))
 });
 
-export default AuthController(connect(mapStateToProps, mapDispatchToProps)(ProfilePage), Placeholder);
+export default AuthController(connect(null, mapDispatchToProps)(ProfilePage), Placeholder);

@@ -5,12 +5,12 @@ import AuthController from 'Components/hoc/AuthController';
 
 import {Link} from 'react-router-dom';
 
-const UserBlock = ({userName, signOutUser}) => (
+const UserBlock = ({user: {name}, signOutUser}) => (
     <div>
         <span
             key="headerUsername"
             className="username"
-        >{userName}</span>
+        >{name}</span>
         <button
             key="headerSignoutUser"
             className="btn"

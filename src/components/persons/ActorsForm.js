@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {string, func, bool} from 'prop-types';
+import {string, func, bool, shape} from 'prop-types';
 import {connect} from 'react-redux';
 
 import AuthController from 'Components/hoc/AuthController';
@@ -94,7 +94,9 @@ const Loader = () => (
 
 ActorsForm.propTypes = {
     authenticated: bool,
-    userId: string,
+    user: shape({
+        _id: string
+    }),
     fetchActorsStatus: bool.isRequired,
     fetchActors: func.isRequired,
     changeActorsQuery: func.isRequired
