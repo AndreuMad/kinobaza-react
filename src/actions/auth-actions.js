@@ -72,32 +72,6 @@ export const signUpUser = ({email, name, password}, history) => {
     }
 };
 
-export const editUser = ({ userId, name, photo, dateOfBirth }) => {
-    return (dispatch) => {
-        const token = localStorage.getItem('token');
-        const data = new FormData;
-        data.append('userId', userId);
-        data.append('name', name);
-        data.append('photo', photo);
-        data.append('dateOfBirth', dateOfBirth);
-
-        Axios.post(
-            `${apiUrl}/editUser`,
-            data,
-            {
-                headers: {
-                    authorization: token,
-                    'Content-Type': 'multipart/form-data'
-                }
-            }
-        )
-            .then(() => console.log('success'))
-            .catch(error => {
-                throw(error);
-            });
-    }
-};
-
 export const authSuccess = ({id, name, dateOfBirth}) => ({
     type: AUTH_USER,
     data: {

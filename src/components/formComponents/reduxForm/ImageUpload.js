@@ -5,7 +5,7 @@ class ImageUpload extends Component {
         super(props);
 
         this.state = {
-            file: '',
+            file: null,
             imageUrl: ''
         };
 
@@ -18,7 +18,8 @@ class ImageUpload extends Component {
         const {
             input: {
                 onChange
-            }
+            },
+            handleLoadStatus
         } = this.props;
 
         const reader = new FileReader();
@@ -28,7 +29,10 @@ class ImageUpload extends Component {
             this.setState({
                 file,
                 imageUrl: reader.result
-            }, () => onChange(file));
+            }, () => {
+                handleLoadStatus(true);
+                onChange(file);
+            });
         };
         reader.readAsDataURL(file);
     }

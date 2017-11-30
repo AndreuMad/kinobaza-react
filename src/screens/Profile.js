@@ -2,24 +2,39 @@ import React, {Component} from 'react';
 import {string, number, func} from 'prop-types';
 import {connect} from 'react-redux';
 
-import ProfileForm from 'Components/settings/ProfileForm'
+import AuthController from 'Components/hoc/AuthController';
+import AvatarForm from 'Components/settings/AvatarForm';
+import ProfileForm from 'Components/settings/ProfileForm';
 
-import {editUser} from 'Actions/auth-actions'
+import {
+    editUser,
+    loadAvatar
+} from 'Actions/user-actions'
 
 class ProfilePage extends Component {
     constructor(props) {
         super(props);
 
+        this.handleAvatarEdit = this.handleAvatarEdit.bind(this);
         this.handleUserEdit = this.handleUserEdit.bind(this);
     }
 
-    handleUserEdit({name, photo, dateOfBirth}) {
+    handleAvatarEdit({photo}) {
+        const {
+            userId,
+            loadAvatar
+        } = this.props;
+
+        loadAvatar({userId, photo});
+    }
+
+    handleUserEdit({name, dateOfBirth}) {
         const {
             userId,
             editUser
         } = this.props;
 
-        editUser({userId, name, photo, dateOfBirth});
+        editUser({userId, name, dateOfBirth});
     }
 
     render() {
@@ -28,12 +43,19 @@ class ProfilePage extends Component {
                 userName,
                 dateOfBirth
             },
+            handleAvatarEdit,
             handleUserEdit
         } = this;
 
         return (
             <section className="settings-page">
                 <div className="container">
+                    <h1>Редагувати профіль</h1>
+                    <hr/>
+                    <AvatarForm
+                        handleAvatarEdit={handleAvatarEdit}
+                    />
+                    <hr/>
                     <ProfileForm
                         initialValues={{
                             name: userName,
@@ -47,10 +69,16 @@ class ProfilePage extends Component {
     }
 }
 
+const Placeholder = () => (
+    <span>Будь-ласка, залогіньтесь</span>
+);
+
 ProfilePage.propTypes = {
+    userId: string,
     userName: string,
     dateOfBirth: number,
-    editUser: func
+    editUser: func,
+    loadAvatar: func
 };
 
 const mapStateToProps = ({auth: {name: userName, id: userId, dateOfBirth}}) => ({
@@ -60,7 +88,8 @@ const mapStateToProps = ({auth: {name: userName, id: userId, dateOfBirth}}) => (
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    editUser: ({userId, name, photo, dateOfBirth}) => dispatch(editUser({userId, name, photo, dateOfBirth}))
+    editUser: ({userId, name, dateOfBirth}) => dispatch(editUser({userId, name, dateOfBirth})),
+    loadAvatar: ({userId, photo}) => dispatch(loadAvatar({userId, photo}))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
+export default AuthController(connect(mapStateToProps, mapDispatchToProps)(ProfilePage), Placeholder);
