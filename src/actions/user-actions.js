@@ -35,11 +35,11 @@ export const editUser = ({ _id, name, dateOfBirth }) => {
     }
 };
 
-export const loadAvatar = ({userId, photo}) => {
+export const loadAvatar = ({_id, photo}) => {
     return (dispatch) => {
         const token = localStorage.getItem('token');
         const data = new FormData;
-        data.append('userId', userId);
+        data.append('_id', _id);
         data.append('photo', photo);
 
         Axios.post(
