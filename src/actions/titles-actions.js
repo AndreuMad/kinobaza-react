@@ -1,82 +1,71 @@
 import Axios from 'axios';
 
 import {
-    FETCH_TITLES_STATUS,
-    FETCH_TITLES_SUCCESS,
-    FETCH_UP_TITLES_SUCCESS,
-    CLEAR_TITLES,
-    FETCH_TITLE_SUCCESS
+  FETCH_TITLES_STATUS,
+  FETCH_TITLES_SUCCESS,
+  FETCH_UP_TITLES_SUCCESS,
+  CLEAR_TITLES,
+  FETCH_TITLE_SUCCESS
 } from 'Constants/actions'
 
 import { apiUrl } from 'Constants/urls';
 
-export const fetchTitlesStatus = (status) => {
-    return {
-        type: FETCH_TITLES_STATUS,
-        status
-    }
-};
+export const fetchTitlesStatus = status => ({
+  type: FETCH_TITLES_STATUS,
+  status
+});
 
-export const fetchTitles = (params, appendTitles) => {
-    return (dispatch) => {
+export const fetchTitlesSuccess = ({ count, titles }) => ({
+  type: FETCH_TITLES_SUCCESS,
+  titlesData: {
+    count,
+    titles
+  }
+});
 
-        dispatch(fetchTitlesStatus(false));
+export const fetchUpTitlesSuccess = titles => ({
+  type: FETCH_UP_TITLES_SUCCESS,
+  titlesData: {
+    titles
+  }
+});
 
-        return Axios.get(`${apiUrl}/titles`, {
-            params: {
-                ...params
-            }
-        })
-            .then(response => {
-                const { count, titles } = response.data;
+export const clearTitles = () => ({
+  type: CLEAR_TITLES
+});
 
-                if(appendTitles) {
-                    dispatch(fetchUpTitlesSuccess(titles));
-                } else {
-                    dispatch(fetchTitlesSuccess({ count, titles }));
-                }
+export const fetchTitles = (params, appendTitles) => (
+  (dispatch) => {
+    dispatch(fetchTitlesStatus(false));
 
-                dispatch(fetchTitlesStatus(true));
-            })
-            .catch(error => {
-                throw(error);
-            });
-    }
-};
+    return Axios.get(`${apiUrl}/titles`, {
+      params: {
+        ...params
+      }
+    })
+      .then((response) => {
+        const { count, titles } = response.data;
 
-export const fetchTitlesSuccess = ({ count, titles }) => {
-    return {
-        type: FETCH_TITLES_SUCCESS,
-        titlesData: {
-            count,
-            titles
+        if (appendTitles) {
+          dispatch(fetchUpTitlesSuccess(titles));
+        } else {
+          dispatch(fetchTitlesSuccess({ count, titles }));
         }
-    }
-};
 
-export const fetchUpTitlesSuccess = (titles) => {
-    return {
-        type: FETCH_UP_TITLES_SUCCESS,
-        titlesData: {
-            titles
-        }
-    }
-};
+        dispatch(fetchTitlesStatus(true));
+      })
+      .catch((error) => {
+        throw (error);
+      });
+  });
 
-export const clearTitles = () => {
-    return {
-        type: CLEAR_TITLES
-    }
-};
+export const setTitleRating = (userId, titleId, rating) => (
+  dispatch => (
+    Axios.post(`${apiUrl}/titles/rate`, { userId, titleId, rating })
+      .then((response) => {
 
-export const setTitleRating = (userId, titleId, rating) => {
-    return (dispatch) => {
-        return Axios.post(`${apiUrl}/titles/rate`, { userId, titleId, rating })
-            .then((response) => {
-
-            })
-            .catch(error => {
-                throw(error);
-            });
-    }
-};
+      })
+      .catch((error) => {
+        throw (error);
+      }))
+);

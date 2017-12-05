@@ -10,100 +10,101 @@ import { signInUser } from 'Actions/auth-actions'
 import { emailPattern } from 'Constants/validatePatterns';
 
 class SignIn extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    }
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
 
-    handleFormSubmit({ email, password }) {
-        const {
-            signInUser,
-            history
-        } = this.props;
+  handleFormSubmit({ email, password }) {
+    const {
+      signInUser,
+      history
+    } = this.props;
 
-        signInUser(
-            { email, password },
-            history
-        );
-    }
+    signInUser(
+      { email, password },
+      history
+    );
+  }
 
-    render() {
-        const {
-            handleFormSubmit,
-            props: {
-                errorMessage,
-                handleSubmit
-            }
-        } = this;
+  render() {
+    const {
+      handleFormSubmit,
+      props: {
+        errorMessage,
+        handleSubmit
+      }
+    } = this;
 
-        return (
-            <form
-                className="login-form"
-                onSubmit={handleSubmit(handleFormSubmit)}
-            >
-                <Field
-                    component={InputField}
-                    name="email"
-                    className="auth-body-input"
-                    errorClassName="field-error"
-                    labelClassName="auth-body-field"
-                    placeholder="Логін"
-                    type="email"
-                />
-                <Field
-                    component={InputField}
-                    name="password"
-                    className="auth-body-input"
-                    errorClassName="field-error"
-                    labelClassName="auth-body-field"
-                    placeholder="Пароль"
-                    type="password"
-                />
-                {errorMessage ?
-                    <div className="alert alert-danger">
-                        <strong>Oops! </strong>{errorMessage}
-                    </div> : null}
-                <div className="btn-group auth-body-control">
-                    <button className="btn auth-body-button">Sign in</button>
-                </div>
-            </form>
-        );
-    }
+    return (
+      <form
+        className="login-form"
+        onSubmit={handleSubmit(handleFormSubmit)}
+      >
+        <Field
+          component={InputField}
+          name="email"
+          className="auth-body-input"
+          errorClassName="field-error"
+          labelClassName="auth-body-field"
+          placeholder="Логін"
+          type="email"
+        />
+        <Field
+          component={InputField}
+          name="password"
+          className="auth-body-input"
+          errorClassName="field-error"
+          labelClassName="auth-body-field"
+          placeholder="Пароль"
+          type="password"
+        />
+        {errorMessage ?
+          <div className="alert alert-danger">
+            <strong>Oops! </strong>{errorMessage}
+          </div> : null}
+        <div className="btn-group auth-body-control">
+          <button className="btn auth-body-button">Sign in</button>
+        </div>
+      </form>
+    );
+  }
 }
 
 const validate = ({ email, password }) => {
-    let errors = {};
+  const errors = {};
 
-    if(!email) {
-        errors.email = 'Please, enter an email';
-    } else if(!emailPattern.test(email)) {
-        errors.email = 'Please, enter a valid email';
-    }
+  if (!email) {
+    errors.email = 'Please, enter an email';
+  } else if (!emailPattern.test(email)) {
+    errors.email = 'Please, enter a valid email';
+  }
 
-    if(!password) {
-        errors.password = 'Please, enter password';
-    }
+  if (!password) {
+    errors.password = 'Please, enter password';
+  }
 
-    return errors;
+  return errors;
 };
 
 SignIn.propTypes = {
-    errorMessage: string,
-    signInUser: func.isRequired,
-    history: object.isRequired
+  handleSubmit: func.isRequired,
+  errorMessage: string,
+  signInUser: func.isRequired,
+  history: object.isRequired
+};
+
+SignIn.defaultProps = {
+  errorMessage: ''
 };
 
 const mapStateToProps = ({ auth: { error } }) => ({
-    errorMessage: error
+  errorMessage: error
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    signInUser: (values, history) => dispatch(signInUser(values, history))
+const mapDispatchToProps = dispatch => ({
+  signInUser: (values, history) => dispatch(signInUser(values, history))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)
-(reduxForm({
-    form: 'signIn',
-    validate
-})(SignIn));
+export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({ form: 'signIn', validate })(SignIn));
