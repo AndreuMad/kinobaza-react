@@ -13,3 +13,17 @@ export const apiSignToken = token => (
       throw (error);
     })
 );
+
+export const apiSignIn = ({ email, password }) => (
+  Axios.post(`${apiUrl}/signin`, { email, password })
+    .then(({ data }) => data)
+    .catch((error) => {
+      throw (error);
+    }));
+
+export const apiSignUp = ({ email, name, password }) => (
+  Axios.post(`${apiUrl}/signup`, { email, name, password })
+    .then(({ data }) => data)
+    .catch((error) => {
+      throw (error);
+    }));

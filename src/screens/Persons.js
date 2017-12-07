@@ -93,7 +93,7 @@ class PersonsPage extends Component {
     } = this.props;
 
     if (likeActorStatus) {
-      callLikeActor(userId, actorId);
+      callLikeActor({ userId, actorId });
     }
   }
 
@@ -145,8 +145,7 @@ class PersonsPage extends Component {
                         liked={liked}
                         handleActorLike={handleActorLike}
                       />
-                    )
-                  }) : <span>Нічого не знайдено</span>
+                    )}) : <span>Нічого не знайдено</span>
                 }
               </div>
             </div>
@@ -175,16 +174,16 @@ PersonsPage.propTypes = {
 };
 
 const mapStateToProps = ({
-                           auth: { id: userId },
-                           actors: {
-                             actors,
-                             actorsTotalCount,
-                             actorsLikes,
-                             actorsQuery,
-                             fetchActorsStatus,
-                             likeActorStatus
-                           }
-                         }) => ({
+  auth: { user: { _id: userId } },
+  actors: {
+    actors,
+    actorsTotalCount,
+    actorsLikes,
+    actorsQuery,
+    fetchActorsStatus,
+    likeActorStatus
+  }
+}) => ({
   userId,
   actors,
   actorsTotalCount,
@@ -197,7 +196,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch => ({
   fetchUpActors: props => dispatch(callFetchActors(props, true)),
   clearActors: () => dispatch(clearActors()),
-  callLikeActor: (userId, actorId) => dispatch(callLikeActor({ userId, actorId }))
+  callLikeActor: ({ userId, actorId }) => dispatch(callLikeActor({ userId, actorId }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonsPage);

@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {bool, string, func} from 'prop-types';
-import {connect} from 'react-redux';
-import {NavLink, withRouter} from 'react-router-dom';
+import React, { Component } from 'react';
+import { bool, string, func } from 'prop-types';
+import { connect } from 'react-redux';
+import { NavLink, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import classNames from 'classnames';
 
 import HeaderUserBlock from './headerUserBlock';
 
-import {signOutUser} from 'Actions/auth-actions';
+import { callUserSignOut } from 'Actions/auth-actions';
 
 import logoImage from 'Images/icons/logo-film.png';
 
@@ -29,7 +29,7 @@ class Header extends Component {
   }
 
   handleScroll() {
-    const {sticky} = this.state;
+    const { sticky } = this.state;
 
     if (window.pageYOffset > 0) {
 
@@ -48,7 +48,7 @@ class Header extends Component {
   }
 
   render() {
-    const {signOutUser} = this.props;
+    const { callUserSignOut } = this.props;
 
     const {
       sticky
@@ -57,8 +57,8 @@ class Header extends Component {
     return (
       <header
         className={classNames(
-          "main-header",
-          {"sticky": sticky}
+          'main-header',
+          { 'sticky': sticky }
         )}
       >
         <div className="container-full">
@@ -67,7 +67,7 @@ class Header extends Component {
               <div className="col m-4">
                 <div className="col-inner header-control-item">
                   <HeaderUserBlock
-                    signOutUser={signOutUser}
+                    callUserSignOut={callUserSignOut}
                   />
                 </div>
               </div>
@@ -155,11 +155,11 @@ class Header extends Component {
 Header.propTypes = {
   authenticated: bool,
   userName: string,
-  signOutUser: func.isRequired
+  callUserSignOut: func.isRequired
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  signOutUser: () => dispatch(signOutUser())
+const mapDispatchToProps = dispatch => ({
+  callUserSignOut: () => dispatch(callUserSignOut())
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(Header));

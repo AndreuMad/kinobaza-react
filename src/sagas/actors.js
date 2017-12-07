@@ -22,7 +22,7 @@ import {
   CALL_ACTOR_LIKE
 } from 'Constants/actions';
 
-function* fetchActors(params, appendActors) {
+function* fetchActors({ params, appendActors }) {
   try {
     yield put(fetchActorsStatus(false));
 
@@ -44,12 +44,12 @@ function* likeActor({ userId, actorId }) {
   try {
     yield put(likeActorStatus(false));
 
-    const { action, id } = yield call(apiLikeActor, { userId, actorId });
+    const { action, actorId: resActorId } = yield call(apiLikeActor, { userId, actorId });
 
     if (action === 'saved') {
-      yield put(saveActorLike(id));
+      yield put(saveActorLike(resActorId));
     } else if (action === 'removed') {
-      yield put(removeActorLike(id));
+      yield put(removeActorLike(resActorId));
     }
 
     yield put(likeActorStatus(true));

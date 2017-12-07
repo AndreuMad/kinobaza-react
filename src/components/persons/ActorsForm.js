@@ -24,8 +24,7 @@ class ActorsForm extends Component {
 
     this.state = {
       actorsParams: {
-        ...actorsDefaultParams,
-        userId: this.props.userId
+        ...actorsDefaultParams
       }
     };
   }
@@ -53,6 +52,9 @@ class ActorsForm extends Component {
   handleFetchActors() {
     const {
       props: {
+        user: {
+          _id
+        },
         fetchActorsStatus,
         callFetchActors
       },
@@ -61,10 +63,11 @@ class ActorsForm extends Component {
       }
     } = this;
 
-    console.log('fetch');
-
     if (fetchActorsStatus) {
-      callFetchActors(actorsParams);
+      callFetchActors({
+        ...actorsParams,
+        userId: _id
+      });
     }
   }
 

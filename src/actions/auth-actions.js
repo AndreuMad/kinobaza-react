@@ -6,7 +6,9 @@ import {
   UNAUTH_USER,
   AUTH_STATUS,
   AUTH_ERROR,
-  CHANGE_USER_DATA
+  CHANGE_USER_DATA,
+  CALL_USER_SIGN_IN,
+  CALL_USER_SIGN_OUT
 } from 'Constants/actions';
 
 import { apiUrl } from 'Constants/urls';
@@ -35,51 +37,19 @@ export const changeUserData = data => ({
   data
 });
 
-export const signOutUser = () => {
-  localStorage.removeItem('token');
+export const callUserSignIn = ({ email, password, history }) => ({
+  type: CALL_USER_SIGN_IN,
+  email,
+  password,
+  history
+});
 
-  return { type: UNAUTH_USER };
-};
+export const callUserSignOut = () => ({
+  type: CALL_USER_SIGN_OUT
+});
 
-export const signInUser = ({ email, password }, history) => (
-  (dispatch) => {
-    dispatch(authStatus(false));
-    // Submit email/password to the server
-    Axios.post(`${apiUrl}/signin`, { email, password })
-      .then(({ data: { user, token } }) => {
-        // If request is good...
-        // - Update state to indicate user is authenticated
-        dispatch(authSuccess());
-        dispatch(changeUserData(user));
-        dispatch(authStatus(true));
-        // - Save the JWT token
-        localStorage.setItem('token', token);
-        // - redirect to the route /feature''
-        history.push('/feature');
-      })
-      .catch(() => {
-        // If request is bad...
-        // - Show an error to the user
-        dispatch(authError('Bad Login Info'));
-      });
-  });
+export const userSignOut = () => ({
+  type: UNAUTH_USER
+});
 
-export const signUpUser = ({ email, name, password }, history) => (
-  (dispatch) => {
-    dispatch(authStatus(false));
 
-    Axios.post(`${apiUrl}/signup`, { email, name, password })
-      .then(({ data: { user, token } }) => {
-        dispatch(authSuccess());
-        dispatch(changeUserData(user));
-        dispatch(authStatus(true));
-        localStorage.setItem('token', token);
-        history.push('/feature');
-      })
-      .catch((error) => {
-        dispatch(authError(error.response.data.error));
-        dispatch(authStatus(true));
-
-        throw (error);
-      });
-  });

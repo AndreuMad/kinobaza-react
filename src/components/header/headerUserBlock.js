@@ -1,48 +1,56 @@
 import React from 'react';
-import {string, func} from 'prop-types';
+import { string, func, shape } from 'prop-types';
 
 import AuthController from 'Components/hoc/AuthController';
 
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const UserBlock = ({user: {name}, signOutUser}) => (
-    <div>
+const UserBlock = ({ user: { name }, callUserSignOut }) => (
+  <div>
         <span
-            key="headerUsername"
-            className="username"
+          key="headerUsername"
+          className="username"
         >{name}</span>
-        <button
-            key="headerSignoutUser"
-            className="btn"
-            onClick={signOutUser}
-        >Sign out
-        </button>
-        <Link
-            to="/profile"
-            className="btn blue"
-        >
-            Редагувати
-        </Link>
-    </div>
+    <button
+      key="headerSignoutUser"
+      className="btn"
+      onClick={callUserSignOut}
+    >Sign out
+    </button>
+    <Link
+      to="/profile"
+      className="btn blue"
+    >
+      Редагувати
+    </Link>
+  </div>
 );
 
 const Loader = () => (
-    <span>Перевірка даних...</span>
+  <span>Перевірка даних...</span>
 );
 
 const LoginButton = () => (
-    <div>
-        <Link
-            key="headerLoginBtn"
-            to="/login/sign-in"
-            className="btn gradient-purple login-btn"
-        >увійти</Link>
-    </div>
+  <div>
+    <Link
+      key="headerLoginBtn"
+      to="/login/sign-in"
+      className="btn gradient-purple login-btn"
+    >увійти</Link>
+  </div>
 );
 
 UserBlock.propTypes = {
-    userName: string,
-    signOutUser: func
+  user: shape({
+    name: string
+  }),
+  callUserSignOut: func.isRequired
+};
+
+UserBlock.defaultProps = {
+  user: {
+    name: ''
+  }
 };
 
 export default AuthController(UserBlock, Loader, LoginButton);

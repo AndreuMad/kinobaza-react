@@ -4,6 +4,9 @@ export const UNAUTH_USER = 'UNAUTH_USER';
 export const AUTH_STATUS = 'AUTH_STATUS';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const CHANGE_USER_DATA = 'CHANGE_USER_DATA';
+export const CALL_USER_SIGN_OUT = 'CALL_USER_SIGN_OUT';
+export const CALL_USER_SIGN_IN = 'CALL_USER_SIGN_IN';
+export const CALL_USER_SIGN_UP = 'CALL_USER_SIGN_UP';
 
 export const DEFINE_NIGHT_MODE = 'DEFINE_NIGHT_MODE';
 

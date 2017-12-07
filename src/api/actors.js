@@ -12,7 +12,7 @@ export const apiFetchActors = ({ params, appendActors }) => (
 
 export const apiLikeActor = ({ userId, actorId }) => (
   Axios.post(`${apiUrl}/actors/like`, { userId, actorId })
-    .then(data => data)
+    .then(({ data }) => data)
     .catch((error) => {
       throw (error);
     }));
