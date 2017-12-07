@@ -72,10 +72,12 @@ const config = {
   resolve: {
     alias: {
       Actions: path.resolve(srcPath, 'actions'),
+      Api: path.resolve(srcPath, 'api'),
       Screens: path.resolve(srcPath, 'screens'),
       Components: path.resolve(srcPath, 'components'),
       Constants: path.resolve(srcPath, 'constants'),
       Images: path.resolve(srcPath, 'public/img'),
+      Sagas: path.resolve(srcPath, 'sagas'),
       Reducers: path.resolve(srcPath, 'reducers'),
       Utilities: path.resolve(srcPath, 'utilities'),
       NodeModules: path.resolve(__dirname, 'node_modules')

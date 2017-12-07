@@ -1,15 +1,20 @@
 import Axios from 'axios';
 
-import { changeUserData } from 'Actions/user-actions';
-
 import {
+  CALL_AUTH_TOKEN,
   AUTH_USER,
   UNAUTH_USER,
   AUTH_STATUS,
-  AUTH_ERROR
+  AUTH_ERROR,
+  CHANGE_USER_DATA
 } from 'Constants/actions';
 
 import { apiUrl } from 'Constants/urls';
+
+export const authTokenRequest = token => ({
+  type: CALL_AUTH_TOKEN,
+  token
+});
 
 export const authSuccess = () => ({
   type: AUTH_USER
@@ -23,6 +28,11 @@ export const authStatus = status => ({
 export const authError = error => ({
   type: AUTH_ERROR,
   error
+});
+
+export const changeUserData = data => ({
+  type: CHANGE_USER_DATA,
+  data
 });
 
 export const signOutUser = () => {
@@ -51,26 +61,6 @@ export const signInUser = ({ email, password }, history) => (
         // If request is bad...
         // - Show an error to the user
         dispatch(authError('Bad Login Info'));
-      });
-  });
-
-export const signWithToken = token => (
-  (dispatch) => {
-    dispatch(authStatus(false));
-
-    Axios.get(`${apiUrl}/signin`, {
-      headers: {
-        authorization: token
-      }
-    })
-      .then(({ data }) => {
-        dispatch(authSuccess());
-        dispatch(changeUserData(data));
-        dispatch(authStatus(true));
-      })
-      .catch((error) => {
-        dispatch(authStatus(true));
-        throw (error);
       });
   });
 
