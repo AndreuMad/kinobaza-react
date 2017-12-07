@@ -6,11 +6,6 @@ import {
 
 import { apiUrl } from 'Constants/urls';
 
-export const changeUserData = data => ({
-  type: CHANGE_USER_DATA,
-  data
-});
-
 export const editUser = ({ _id, name, dateOfBirth }) => (
   (dispatch) => {
     const token = localStorage.getItem('token');

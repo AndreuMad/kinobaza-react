@@ -1,26 +1,31 @@
 import React from 'react';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import configureStore from './store/configureStore';
+import createSagaMiddleware from 'redux-saga';
 import { BrowserRouter } from 'react-router-dom';
 
 import Routes from 'Components/Routes';
+import rootReducer from 'Reducers';
+import rootSaga from 'Sagas';
 
-import {signWithToken} from 'Actions/auth-actions';
+import { authTokenRequest } from 'Actions/auth-actions';
 
-const store = configureStore();
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+sagaMiddleware.run(rootSaga);
 
 const token = localStorage.getItem('token');
 
 if (token) {
-    store.dispatch(signWithToken(token));
+  store.dispatch(authTokenRequest(token));
 }
 
 const App = (
-    <Provider store={store}>
-        <BrowserRouter>
-            <Routes />
-        </BrowserRouter>
-    </Provider>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
+  </Provider>
 );
 
 export default App;

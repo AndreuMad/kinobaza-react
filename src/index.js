@@ -1,5 +1,5 @@
-if(module.hot) {
-    module.hot.accept();
+if (module.hot) {
+  module.hot.accept();
 }
 
 import React from 'react';
@@ -9,7 +9,7 @@ import App from './app';
 import './public/scss/main.scss';
 
 ReactDOM.render(
-    App,
-    document.getElementById('app')
+  App,
+  document.getElementById('app')
 );
 
