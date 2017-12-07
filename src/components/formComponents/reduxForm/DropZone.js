@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { string, func, shape } from 'prop-types';
 import Dropzone from 'react-dropzone';
 
 class DropZoneCustom extends Component {
@@ -6,7 +7,6 @@ class DropZoneCustom extends Component {
     super(props);
 
     this.state = {
-      file: null,
       imageUrl: ''
     };
 
@@ -26,14 +26,13 @@ class DropZoneCustom extends Component {
 
     reader.onloadend = () => {
       this.setState({
-        file,
         imageUrl: reader.result
       }, () => {
         handleLoadStatus(true);
-        onChange(file);
       });
     };
     reader.readAsDataURL(file);
+    onChange(file);
   }
 
   render() {
@@ -61,12 +60,27 @@ class DropZoneCustom extends Component {
         {
           imageUrl || avatar ?
             <div className="image-preview">
-              <img src={imageUrl || `http://localhost:8081/${avatar}`} alt="image" />
+              <img src={imageUrl || `http://localhost:8081/${avatar}`} alt="User Avatar" />
             </div> : null
         }
       </div>
     );
   }
 }
+
+DropZoneCustom.propTypes = {
+  input: shape({
+    name: string.isRequired,
+    onChange: func.isRequired
+  }),
+  handleLoadStatus: func.isRequired,
+  label: string,
+  avatar: string
+};
+
+DropZoneCustom.defaultProps = {
+  label: '',
+  avatar: ''
+};
 
 export default DropZoneCustom;

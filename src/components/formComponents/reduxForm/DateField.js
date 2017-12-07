@@ -1,4 +1,5 @@
 import React from 'react';
+import { string, number, func, shape } from 'prop-types';
 import DatePicker from 'react-datepicker';
 
 import moment from 'moment';
@@ -10,9 +11,21 @@ const CustomInput = ({ className, value, onClick }) => (
     className={className}
     onClick={onClick}
   >
-    {value || 'Вкажіть дату Вашого народження'}
+    {value}
   </button>
 );
+
+CustomInput.propTypes = {
+  className: string,
+  value: string,
+  onClick: func
+};
+
+CustomInput.defaultProps = {
+  className: '',
+  value: 'Вкажіть дату Вашого народження',
+  onClick: () => false
+};
 
 const DateField = ({
   input: {
@@ -22,8 +35,7 @@ const DateField = ({
   className,
   labelClassName,
   inputClassName,
-  placeholder,
-  initialValue
+  placeholder
 }) => (
   <label className={labelClassName}>
     <DatePicker
@@ -33,5 +45,26 @@ const DateField = ({
     />
   </label>
 );
+
+DateField.propTypes = {
+  input: shape({
+    onChange: func.isRequired,
+    value: number
+  }),
+  className: string,
+  labelClassName: string,
+  inputClassName: string,
+  placeholder: string
+};
+
+DateField.defaultProps = {
+  input: {
+    value: null
+  },
+  className: '',
+  labelClassName: '',
+  inputClassName: '',
+  placeholder: ''
+};
 
 export default DateField;
