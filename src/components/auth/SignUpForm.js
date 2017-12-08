@@ -4,7 +4,7 @@ import InputField from 'Components/formComponents/reduxForm/InputField';
 import { string, func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { signUpUser } from 'Actions/auth-actions';
+import { callUserSignUp } from 'Actions/auth-actions';
 
 import { emailPattern } from 'Constants/validatePatterns';
 
@@ -31,11 +31,11 @@ class SignUp extends Component {
 
   handleFormSubmit({ email, name, password }) {
     const {
-      signUpUser,
+      callUserSignUp,
       history
     } = this.props;
 
-    signUpUser(
+    callUserSignUp(
       { email, name, password },
       history
     );
@@ -128,7 +128,7 @@ const validate = ({
 
 SignUp.propTypes = {
   errorMessage: string,
-  signUpUser: func.isRequired,
+  callUserSignUp: func.isRequired,
   handleSubmit: func.isRequired,
   history: object.isRequired
 };
@@ -142,7 +142,7 @@ const mapStateToProps = ({ auth: { error } }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signUpUser: (values, history) => dispatch(signUpUser(values, history))
+  callUserSignUp: (values, history) => dispatch(callUserSignUp(values, history))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({ form: 'signUp', validate })(SignUp));

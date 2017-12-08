@@ -1,5 +1,3 @@
-import Axios from 'axios';
-
 import {
   CALL_AUTH_TOKEN,
   AUTH_USER,
@@ -8,7 +6,8 @@ import {
   AUTH_ERROR,
   CHANGE_USER_DATA,
   CALL_USER_SIGN_IN,
-  CALL_USER_SIGN_OUT
+  CALL_USER_SIGN_OUT,
+  CALL_USER_SIGN_UP
 } from 'Constants/actions';
 
 import { apiUrl } from 'Constants/urls';
@@ -32,15 +31,21 @@ export const authError = error => ({
   error
 });
 
-export const changeUserData = data => ({
+export const changeUserData = user => ({
   type: CHANGE_USER_DATA,
-  data
+  user
 });
 
 export const callUserSignIn = ({ email, password, history }) => ({
   type: CALL_USER_SIGN_IN,
   email,
   password,
+  history
+});
+
+export const callUserSignUp = (values, history) => ({
+  type: CALL_USER_SIGN_UP,
+  values,
   history
 });
 
@@ -51,5 +56,3 @@ export const callUserSignOut = () => ({
 export const userSignOut = () => ({
   type: UNAUTH_USER
 });
-
-

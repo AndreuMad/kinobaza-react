@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import 'regenerator-runtime/runtime';
 import { call, put, takeLatest } from 'redux-saga/effects';
 
@@ -51,7 +50,9 @@ function* userSignIn({ email, password, history }) {
   }
 }
 
-function* userSignUp({ email, name, password }, history) {
+function* userSignUp({ values: { email, name, password }, history }) {
+  console.log(email, name, password);
+
   try {
     yield put(authStatus(false));
     const { user, token } = yield call(apiSignUp, { email, name, password });
