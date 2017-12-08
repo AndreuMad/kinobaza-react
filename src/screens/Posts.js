@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import {
-  callFetchPosts,
-  clearPosts
+  callFetchPosts
 } from 'Actions/posts-actions';
 
 import CardRegular from 'Components/posts/CardRegular';
@@ -17,47 +16,34 @@ class PostsPage extends Component {
 
     this.handlePostsLoad = _.debounce(this.handlePostsLoad.bind(this), 200);
     this.handleLoadButton = this.handleLoadButton.bind(this);
-    this.fetchPosts = this.fetchPosts.bind(this);
 
     this.state = {
-      postsCurrentCount: 0,
+      allPostsLoaded: false,
       shouldLoadPosts: false
     };
   }
 
   componentDidMount() {
-    this.fetchPosts({ skip: 0, limit: 8 }, true);
+    this.props.callFetchPosts({ skip: 0, limit: 8 }, false, true);
   }
 
-  componentWillReceiveProps({ posts }) {
-    this.setState({
-      postsCurrentCount: posts.length + 1
-    });
-  }
+  componentWillReceiveProps({ posts: nextPosts }) {
+    const { postsTotalCount } = this.props;
+    const postsCurrentCount = nextPosts.length + 1;
+    const shouldLoad = postsCurrentCount < postsTotalCount;
 
-  shouldComponentUpdate(nextProps) {
-    return !(this.props.posts.length === nextProps.posts.length && this.props.articlePost);
+    if (!shouldLoad) {
+      this.setState({
+        allPostsLoaded: true,
+        shouldLoadPosts: false
+      });
+
+      window.removeEventListener('scroll', this.handlePostsLoad);
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handlePostsLoad);
-    this.props.clearPosts();
-  }
-
-  fetchPosts({ skip, limit }, shouldFetchArticle) {
-    const {
-      callFetchPosts
-    } = this.props;
-    let query = {};
-
-    if (skip) {
-      query.skip = skip;
-    }
-    if (limit) {
-      query.limit = limit;
-    }
-
-    callFetchPosts(query, shouldFetchArticle);
   }
 
   handleLoadButton() {
@@ -71,48 +57,35 @@ class PostsPage extends Component {
 
   handlePostsLoad() {
     const {
-      pageNode,
-      fetchPosts
+      props: {
+        fetchPostsStatus,
+        callFetchPosts
+      },
+      state: {
+        shouldLoadPosts
+      },
+      pageNode
     } = this;
-
-    const {
-      postsTotalCount,
-      fetchPostsStatus
-    } = this.props;
-
-    const {
-      postsCurrentCount,
-      shouldLoadPosts
-    } = this.state;
-
-    if (postsCurrentCount === postsTotalCount) {
-      this.setState({
-        shouldLoadPosts: false
-      }, () => window.removeEventListener('scroll', this.handlePostsLoad));
-
-      return;
-    }
 
     if (shouldLoadPosts && fetchPostsStatus) {
       if (pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
-        fetchPosts({ skip: postsCurrentCount, limit: 3 });
+        callFetchPosts({ limit: 3 }, true);
       }
     }
   }
 
   render() {
     const {
+      props: {
+        posts,
+        articlePost
+      },
+      state: {
+        allPostsLoaded,
+        shouldLoadPosts
+      },
       handleLoadButton
     } = this;
-
-    const {
-      posts,
-      articlePost
-    } = this.props;
-
-    const {
-      shouldLoadPosts
-    } = this.state;
 
     return (
       <article
@@ -157,9 +130,13 @@ class PostsPage extends Component {
           <div className="load-more-section">
             <div className="btn-group align-center">
               {
-                !shouldLoadPosts ?
-                  <button className="btn gradient-purple" onClick={handleLoadButton}>Load
-                    more</button> : null
+                !shouldLoadPosts && !allPostsLoaded ?
+                  <button
+                    className="btn gradient-purple"
+                    onClick={handleLoadButton}
+                  >
+                    Load more
+                  </button> : null
               }
             </div>
           </div>
@@ -175,21 +152,17 @@ PostsPage.propTypes = {
   articlePost: PropTypes.object,
   fetchPostsStatus: PropTypes.bool.isRequired,
   callFetchPosts: PropTypes.func.isRequired,
-  clearPosts: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ posts }) => {
-  return {
-    posts: posts.posts,
-    postsTotalCount: posts.postsTotalCount,
-    articlePost: posts.articlePost,
-    fetchPostsStatus: posts.fetchPostsStatus
-  };
-};
+const mapStateToProps = ({ posts }) => ({
+  posts: posts.posts,
+  postsTotalCount: posts.postsTotalCount,
+  articlePost: posts.articlePost,
+  fetchPostsStatus: posts.fetchPostsStatus
+});
 
 const mapDispatchToProps = dispatch => ({
-  callFetchPosts: (props, fetchArticlePost) => dispatch(callFetchPosts(props, fetchArticlePost)),
-  clearPosts: () => dispatch(clearPosts())
+  callFetchPosts: (props, shouldAppend, shouldFetchArticle) => dispatch(callFetchPosts(props, shouldAppend, shouldFetchArticle)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsPage);

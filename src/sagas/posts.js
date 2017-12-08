@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 
 import {
   apiFetchPosts,
@@ -10,6 +10,7 @@ import {
 import {
   fetchPostsStatus,
   fetchPostsSuccess,
+  fetchUpPostsSuccess,
   fetchArticlePostSuccess,
   fetchPostSuccess
 } from 'Actions/posts-actions';
@@ -19,11 +20,17 @@ import {
   CALL_FETCH_POST
 } from 'Constants/actions';
 
-function* fetchPosts({ params, shouldFetchArticle }) {
+function* fetchPosts({ params, shouldAppend, shouldFetchArticle }) {
   try {
+    const query = yield select(({
+      posts: { posts }
+    }) => ({
+      ...params,
+      skip: shouldAppend ? posts.length + 1 : 0
+    }));
+
     yield put(fetchPostsStatus(false));
-    const data = yield call(apiFetchPosts, params);
-    let { posts, count } = data;
+    let { posts, count } = yield call(apiFetchPosts, query);
     let articlePost;
 
     if (shouldFetchArticle) {
@@ -31,11 +38,14 @@ function* fetchPosts({ params, shouldFetchArticle }) {
       const articlePostId = articleItem.length ? articleItem[0]._id : posts[0]._id;
       articlePost = yield call(apiFetchArticlePost, articlePostId);
       posts = posts.filter(item => item._id !== articlePostId);
+
+      yield put(fetchArticlePostSuccess(articlePost));
     }
 
-    if (posts.length) {
-      yield put(fetchArticlePostSuccess(articlePost));
+    if (!shouldAppend) {
       yield put(fetchPostsSuccess({ posts, count }));
+    } else {
+      yield put(fetchUpPostsSuccess({ posts }));
     }
 
     yield put(fetchPostsStatus(true));
