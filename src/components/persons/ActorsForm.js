@@ -1,119 +1,25 @@
-import React, { Component } from 'react';
-import { string, func, bool, shape } from 'prop-types';
-import { connect } from 'react-redux';
-
-import AuthController from 'Components/hoc/AuthController';
+import React from 'react';
+import { func } from 'prop-types';
 
 import RenderInputField from 'Components/formComponents/InputField';
 
-import {
-  callFetchActors,
-  changeActorsQuery
-} from 'Actions/actors-actions';
-
-import {
-  actorsDefaultParams
-} from 'Constants/searchParams';
-
-class ActorsForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleFormChange = this.handleFormChange.bind(this);
-    this.handleFetchActors = this.handleFetchActors.bind(this);
-
-    this.state = {
-      actorsParams: {
-        ...actorsDefaultParams
-      }
-    };
-  }
-
-  componentDidMount() {
-    this.handleFetchActors();
-  }
-
-  handleFormChange(name, payload) {
-    this.setState({
-      actorsParams: {
-        ...this.state.actorsParams,
-        ...{ [name]: payload }
-      }
-    }, () => {
-      const { handleFetchActors } = this;
-      const { changeActorsQuery } = this.props;
-      const { actorsParams } = this.state;
-
-      changeActorsQuery(actorsParams);
-      handleFetchActors();
-    });
-  }
-
-  handleFetchActors() {
-    const {
-      props: {
-        user: {
-          _id
-        },
-        fetchActorsStatus,
-        callFetchActors
-      },
-      state: {
-        actorsParams
-      }
-    } = this;
-
-    if (fetchActorsStatus) {
-      callFetchActors({
-        ...actorsParams,
-        userId: _id
-      });
-    }
-  }
-
-  render() {
-    const {
-      handleFormChange
-    } = this;
-
-    return (
-      <div className="actors-filter-wrap">
-        <form>
-          <div className="filter-item">
-            <RenderInputField
-              type="text"
-              name="name"
-              placeholder="Ім'я"
-              onFieldChange={handleFormChange}
-            />
-          </div>
-        </form>
+const ActorsForm = ({ handleQueryChange }) => (
+  <div className="actors-filter-wrap">
+    <form>
+      <div className="filter-item">
+        <RenderInputField
+          type="text"
+          name="name"
+          placeholder="Ім'я"
+          onFieldChange={handleQueryChange}
+        />
       </div>
-    );
-  }
-}
-
-const Loader = () => (
-  <span>Перевірка даних...</span>
+    </form>
+  </div>
 );
 
 ActorsForm.propTypes = {
-  authenticated: bool,
-  user: shape({
-    _id: string
-  }),
-  fetchActorsStatus: bool.isRequired,
-  callFetchActors: func.isRequired,
-  changeActorsQuery: func.isRequired
+  handleQueryChange: func.isRequired
 };
 
-const mapStateToProps = ({ actors: { fetchActorsStatus } }) => ({
-  fetchActorsStatus
-});
-
-const mapDispatchToProps = dispatch => ({
-  callFetchActors: params => dispatch(callFetchActors(params)),
-  changeActorsQuery: params => dispatch(changeActorsQuery(params))
-});
-
-export default AuthController(connect(mapStateToProps, mapDispatchToProps)(ActorsForm), Loader);
+export default ActorsForm;

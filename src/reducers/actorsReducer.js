@@ -33,9 +33,9 @@ export const actorsReducer = (state = defaultActorsState, action) => {
     case FETCH_ACTORS_SUCCESS:
       return {
         ...state,
-        actors: action.actorsData.actors,
-        actorsTotalCount: action.actorsData.total,
-        actorsLikes: action.actorsData.likes
+        actors: action.data.actors,
+        actorsTotalCount: action.data.total,
+        actorsLikes: action.data.likes
       };
 
     case FETCH_UP_ACTORS_SUCCESS:
@@ -43,11 +43,11 @@ export const actorsReducer = (state = defaultActorsState, action) => {
         ...state,
         actors: [
           ...state.actors,
-          ...action.actorsData.actors
+          ...action.data.actors
         ],
         actorsLikes: [
           ...state.actorsLikes,
-          ...action.actorsData.likes
+          ...action.data.likes
         ]
       };
 
@@ -63,7 +63,7 @@ export const actorsReducer = (state = defaultActorsState, action) => {
         ...state,
         actorsQuery: {
           ...state.actorsQuery,
-          ...action.params
+          ...action.query
         }
       };
 

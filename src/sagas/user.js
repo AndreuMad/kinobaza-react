@@ -51,8 +51,6 @@ function* userSignIn({ email, password, history }) {
 }
 
 function* userSignUp({ values: { email, name, password }, history }) {
-  console.log(email, name, password);
-
   try {
     yield put(authStatus(false));
     const { user, token } = yield call(apiSignUp, { email, name, password });
