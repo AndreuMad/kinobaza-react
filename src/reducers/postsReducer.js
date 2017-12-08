@@ -18,7 +18,6 @@ const defaultPostsState = {
 };
 
 export const postsReducer = (state = defaultPostsState, action) => {
-
   switch (action.type) {
     case FETCH_POSTS_STATUS:
       return {
