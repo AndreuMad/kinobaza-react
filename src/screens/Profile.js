@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {string, number, func} from 'prop-types';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { string, number, func } from 'prop-types';
+import { connect } from 'react-redux';
 
 import AuthController from 'Components/hoc/AuthController';
 import AvatarForm from 'Components/settings/AvatarForm';
@@ -19,7 +19,7 @@ class ProfilePage extends Component {
     this.handleUserEdit = this.handleUserEdit.bind(this);
   }
 
-  handleAvatarEdit({photo}) {
+  handleAvatarEdit({ photo }) {
     const {
       user: {
         _id
@@ -27,10 +27,10 @@ class ProfilePage extends Component {
       loadAvatar
     } = this.props;
 
-    loadAvatar({_id, photo});
+    loadAvatar({ _id, photo });
   }
 
-  handleUserEdit({name, dateOfBirth}) {
+  handleUserEdit({ name, dateOfBirth }) {
     const {
       user: {
         _id
@@ -38,7 +38,7 @@ class ProfilePage extends Component {
       editUser
     } = this.props;
 
-    editUser({_id, name, dateOfBirth});
+    editUser({ _id, name, dateOfBirth });
   }
 
   render() {
@@ -74,7 +74,7 @@ class ProfilePage extends Component {
           />
         </div>
       </section>
-    )
+    );
   }
 }
 
@@ -91,8 +91,8 @@ ProfilePage.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  editUser: ({_id, name, dateOfBirth}) => dispatch(editUser({_id, name, dateOfBirth})),
-  loadAvatar: ({_id, photo}) => dispatch(loadAvatar({_id, photo}))
+  editUser: ({ _id, name, dateOfBirth }) => dispatch(editUser({ _id, name, dateOfBirth })),
+  loadAvatar: ({ _id, photo }) => dispatch(loadAvatar({ _id, photo }))
 });
 
 export default AuthController(connect(null, mapDispatchToProps)(ProfilePage), Placeholder);

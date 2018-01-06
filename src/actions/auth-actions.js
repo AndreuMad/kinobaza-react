@@ -51,5 +51,3 @@ export const callUserSignOut = () => ({
 export const userSignOut = () => ({
   type: UNAUTH_USER
 });
-
-
