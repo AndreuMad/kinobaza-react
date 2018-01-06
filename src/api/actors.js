@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { apiUrl } from 'Constants/urls';
 
-export const apiFetchActors = ({ params, appendActors }) => (
+export const apiFetchActors = params => (
   Axios.get(`${apiUrl}/actors`, {
     params
   })

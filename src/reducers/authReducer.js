@@ -56,7 +56,7 @@ export const authReducer = (state = defaultState, action) => {
         ...state,
         user: {
           ...state.user,
-          ...action.data
+          ...action.user
         }
       };
       break;

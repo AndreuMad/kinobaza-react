@@ -2,15 +2,17 @@ import {
   CALL_FETCH_POSTS,
   FETCH_POSTS_STATUS,
   FETCH_POSTS_SUCCESS,
+  FETCH_UP_POSTS_SUCCESS,
   FETCH_ARTICLE_POST_SUCCESS,
   CLEAR_POSTS,
   CALL_FETCH_POST,
   FETCH_POST_SUCCESS
 } from 'Constants/actions';
 
-export const callFetchPosts = (params, shouldFetchArticle) => ({
+export const callFetchPosts = (params, shouldAppend, shouldFetchArticle) => ({
   type: CALL_FETCH_POSTS,
   params,
+  shouldAppend,
   shouldFetchArticle
 });
 
@@ -21,19 +23,22 @@ export const fetchPostsStatus = status => ({
 
 export const fetchPostsSuccess = ({ posts, count }) => ({
   type: FETCH_POSTS_SUCCESS,
-  postsData: {
+  data: {
     posts,
     count
+  }
+});
+
+export const fetchUpPostsSuccess = ({ posts }) => ({
+  type: FETCH_UP_POSTS_SUCCESS,
+  data: {
+    posts
   }
 });
 
 export const fetchArticlePostSuccess = articlePost => ({
   type: FETCH_ARTICLE_POST_SUCCESS,
   articlePost
-});
-
-export const clearPosts = () => ({
-  type: CLEAR_POSTS
 });
 
 export const callFetchPost = id => ({

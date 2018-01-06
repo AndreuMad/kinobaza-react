@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { string, bool, func, arrayOf, number, object } from 'prop-types';
+import { string, bool, func, arrayOf, number, shape } from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+
+import AuthController from 'Components/hoc/AuthController';
 
 import ActorItem from 'Components/persons/ActorItem';
 import ActorsForm from 'Components/persons/ActorsForm';
@@ -9,6 +11,7 @@ import ActorsForm from 'Components/persons/ActorsForm';
 import {
   callFetchActors,
   callLikeActor,
+  callChangeActorsQuery,
   clearActors
 } from 'Actions/actors-actions';
 
@@ -17,16 +20,16 @@ class PersonsPage extends Component {
     super(props);
 
     this.handleActorsLoad = _.debounce(this.handleActorsLoad.bind(this));
-    this.fetchUpActors = this.fetchUpActors.bind(this);
+    this.handleQueryChange = this.handleQueryChange.bind(this);
     this.handleActorLike = this.handleActorLike.bind(this);
 
     this.state = {
-      actorsCurrentCount: 0,
       shouldLoadActors: true
     };
   }
 
   componentDidMount() {
+    this.props.callFetchActors();
     window.addEventListener('scroll', this.handleActorsLoad);
   }
 
@@ -34,11 +37,8 @@ class PersonsPage extends Component {
     const { actorsTotalCount } = this.props;
     const actorsCurrentCount = nextActors.length;
 
-    const actorsLoadStatus = actorsCurrentCount < actorsTotalCount;
-
     this.setState({
-      actorsCurrentCount,
-      shouldLoadActors: actorsLoadStatus
+      shouldLoadActors: actorsCurrentCount < actorsTotalCount
     });
   }
 
@@ -46,54 +46,37 @@ class PersonsPage extends Component {
     window.removeEventListener('scroll', this.handleActorsLoad);
   }
 
-  fetchUpActors() {
-    const {
-      actorsQuery,
-      userId,
-      fetchUpActors
-    } = this.props;
-
-    const {
-      actorsCurrentCount
-    } = this.state;
-
-    fetchUpActors({
-      ...actorsQuery,
-      userId,
-      skip: actorsCurrentCount
-    });
-  }
-
   handleActorsLoad() {
     const {
-      pageNode,
-      fetchUpActors
+      props: {
+        fetchActorsStatus,
+        callFetchActors
+      },
+      state: {
+        shouldLoadActors
+      },
+      pageNode
     } = this;
-
-    const {
-      fetchActorsStatus
-    } = this.props;
-
-    const {
-      shouldLoadActors
-    } = this.state;
 
     if (shouldLoadActors && fetchActorsStatus) {
       if (pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
-        fetchUpActors();
+        callFetchActors(true);
       }
     }
+  }
+
+  handleQueryChange(name, payload) {
+    this.props.callChangeActorsQuery({ [name]: payload });
   }
 
   handleActorLike(actorId) {
     const {
       likeActorStatus,
-      userId,
       callLikeActor
     } = this.props;
 
     if (likeActorStatus) {
-      callLikeActor({ userId, actorId });
+      callLikeActor({ actorId });
     }
   }
 
@@ -126,7 +109,7 @@ class PersonsPage extends Component {
                       titles,
                       dateOfBirth,
                       titlesNumber,
-                      zodiacSign,
+                      zodiacSign
                     } = actor;
 
                     const liked = actorsLikes.indexOf(_id) !== -1;
@@ -145,58 +128,83 @@ class PersonsPage extends Component {
                         liked={liked}
                         handleActorLike={handleActorLike}
                       />
-                    )}) : <span>Нічого не знайдено</span>
+                    );
+                  }) : <span>Нічого не знайдено</span>
                 }
               </div>
             </div>
             <div className="col m-4">
               <div className="col-inner">
-                <ActorsForm />
+                <ActorsForm handleQueryChange={this.handleQueryChange} />
               </div>
             </div>
           </div>
         </div>
       </article>
-    )
+    );
   }
 }
 
+const Loader = () => (
+  <span>Перевірка даних...</span>
+);
+
 PersonsPage.propTypes = {
-  userId: string,
-  actors: arrayOf(object),
+  actors: arrayOf(shape({
+    _id: string,
+    birthLocation: string,
+    dateOfBirth: number,
+    image: shape({
+      url: string
+    }),
+    likes: arrayOf(string),
+    name: shape({
+      en: string,
+      ukr: string
+    }),
+    titles: arrayOf(shape({
+      _id: string,
+      image: shape({
+        url: string
+      }),
+      name: shape({
+        en: string,
+        ukr: string
+      }),
+      year: number
+    })),
+    titlesNumber: number,
+    total: number,
+    zodiacSign: string
+  })),
   actorsTotalCount: number.isRequired,
-  actorsQuery: object,
   fetchActorsStatus: bool.isRequired,
-  fetchUpActors: func.isRequired,
-  clearActors: func.isRequired,
+  callFetchActors: func.isRequired,
+  callChangeActorsQuery: func.isRequired,
   callLikeActor: func.isRequired,
   likeActorStatus: bool.isRequired
 };
 
 const mapStateToProps = ({
-  auth: { user: { _id: userId } },
   actors: {
     actors,
     actorsTotalCount,
     actorsLikes,
-    actorsQuery,
     fetchActorsStatus,
     likeActorStatus
   }
 }) => ({
-  userId,
   actors,
   actorsTotalCount,
   actorsLikes,
-  actorsQuery,
   fetchActorsStatus,
   likeActorStatus
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchUpActors: props => dispatch(callFetchActors(props, true)),
-  clearActors: () => dispatch(clearActors()),
+  callFetchActors: shouldAppend => dispatch(callFetchActors(shouldAppend)),
+  callChangeActorsQuery: params => dispatch(callChangeActorsQuery(params)),
   callLikeActor: ({ userId, actorId }) => dispatch(callLikeActor({ userId, actorId }))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersonsPage);
+export default AuthController(connect(mapStateToProps, mapDispatchToProps)(PersonsPage), Loader);

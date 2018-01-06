@@ -1,6 +1,7 @@
 import {
   FETCH_POSTS_STATUS,
   FETCH_POSTS_SUCCESS,
+  FETCH_UP_POSTS_SUCCESS,
   CLEAR_POSTS,
   FETCH_ARTICLE_POST_SUCCESS,
   FETCH_POST_SUCCESS,
@@ -17,9 +18,7 @@ const defaultPostsState = {
 };
 
 export const postsReducer = (state = defaultPostsState, action) => {
-
   switch (action.type) {
-
     case FETCH_POSTS_STATUS:
       return {
         ...state,
@@ -29,11 +28,17 @@ export const postsReducer = (state = defaultPostsState, action) => {
     case FETCH_POSTS_SUCCESS:
       return {
         ...state,
+        posts: action.data.posts,
+        postsTotalCount: action.data.count
+      };
+
+    case FETCH_UP_POSTS_SUCCESS:
+      return {
+        ...state,
         posts: [
           ...state.posts,
-          ...action.postsData.posts
-        ],
-        postsTotalCount: action.postsData.count
+          ...action.data.posts
+        ]
       };
 
     case CLEAR_POSTS:

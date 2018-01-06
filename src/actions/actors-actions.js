@@ -5,6 +5,7 @@ import {
   FETCH_UP_ACTORS_SUCCESS,
   CLEAR_ACTORS,
   FETCH_ACTOR_SUCCESS,
+  CALL_CHANGE_ACTORS_QUERY,
   CHANGE_ACTORS_QUERY,
   CALL_ACTOR_LIKE,
   LIKE_ACTOR_STATUS,
@@ -12,10 +13,9 @@ import {
   REMOVE_ACTOR_LIKE
 } from 'Constants/actions';
 
-export const callFetchActors = (params, appendActors) => ({
+export const callFetchActors = shouldAppend => ({
   type: CALL_FETCH_ACTORS,
-  params,
-  appendActors
+  shouldAppend
 });
 
 export const fetchActorsStatus = status => ({
@@ -25,7 +25,7 @@ export const fetchActorsStatus = status => ({
 
 export const fetchActorsSuccess = ({ total, actors, likes }) => ({
   type: FETCH_ACTORS_SUCCESS,
-  actorsData: {
+  data: {
     total,
     actors,
     likes
@@ -34,7 +34,7 @@ export const fetchActorsSuccess = ({ total, actors, likes }) => ({
 
 export const fetchUpActorsSuccess = ({ actors, likes }) => ({
   type: FETCH_UP_ACTORS_SUCCESS,
-  actorsData: {
+  data: {
     actors,
     likes
   }
@@ -44,9 +44,14 @@ export const clearActors = () => ({
   type: CLEAR_ACTORS
 });
 
-export const changeActorsQuery = params => ({
+export const callChangeActorsQuery = query => ({
+  type: CALL_CHANGE_ACTORS_QUERY,
+  query
+});
+
+export const changeActorsQuery = query => ({
   type: CHANGE_ACTORS_QUERY,
-  params
+  query
 });
 
 export const callLikeActor = ({ userId, actorId }) => ({

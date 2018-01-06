@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 
 import {
   apiFetchActors,
@@ -19,16 +19,27 @@ import {
 
 import {
   CALL_FETCH_ACTORS,
-  CALL_ACTOR_LIKE
+  CALL_ACTOR_LIKE,
+  CALL_CHANGE_ACTORS_QUERY
 } from 'Constants/actions';
 
-function* fetchActors({ params, appendActors }) {
+function* fetchActors({ shouldAppend }) {
   try {
+    const query = yield select(({
+      auth: { user: { _id: userId } },
+      actors: { actors, actorsQuery }
+    }) => ({
+      ...actorsQuery,
+      skip: shouldAppend ? actors.length : 0,
+      limit: 3,
+      userId
+    }));
+
     yield put(fetchActorsStatus(false));
 
-    const { total, actors, likes } = yield call(apiFetchActors, { params, appendActors });
+    const { total, actors, likes } = yield call(apiFetchActors, query);
 
-    if (appendActors) {
+    if (shouldAppend) {
       yield put(fetchUpActorsSuccess({ actors, likes }));
     } else {
       yield put(fetchActorsSuccess({ total, actors, likes }));
@@ -40,8 +51,10 @@ function* fetchActors({ params, appendActors }) {
   }
 }
 
-function* likeActor({ userId, actorId }) {
+function* likeActor({ actorId }) {
   try {
+    const userId = yield select(({ auth: { user: { _id: userId } } }) => userId);
+
     yield put(likeActorStatus(false));
 
     const { action, actorId: resActorId } = yield call(apiLikeActor, { userId, actorId });
@@ -58,9 +71,19 @@ function* likeActor({ userId, actorId }) {
   }
 }
 
+function* changeQuery({ query }) {
+  try {
+    yield put(changeActorsQuery(query));
+    yield fetchActors({ shouldAppend: false });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function* watchActors() {
   yield takeLatest(CALL_FETCH_ACTORS, fetchActors);
   yield takeLatest(CALL_ACTOR_LIKE, likeActor);
+  yield takeLatest(CALL_CHANGE_ACTORS_QUERY, changeQuery);
 }
 
 export default watchActors;
