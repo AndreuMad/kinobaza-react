@@ -1,6 +1,7 @@
 import Axios from 'axios';
 
 import {
+  CALL_FETCH_TITLES,
   FETCH_TITLES_STATUS,
   FETCH_TITLES_SUCCESS,
   FETCH_UP_TITLES_SUCCESS,
@@ -13,6 +14,13 @@ import { apiUrl } from 'Constants/urls';
 export const fetchTitlesStatus = status => ({
   type: FETCH_TITLES_STATUS,
   status
+});
+
+export const callFetchTitles = appendTitles => ({
+  type: CALL_FETCH_TITLES,
+  payload: {
+    appendTitles
+  }
 });
 
 export const fetchTitlesSuccess = ({ count, titles }) => ({
@@ -33,31 +41,6 @@ export const fetchUpTitlesSuccess = titles => ({
 export const clearTitles = () => ({
   type: CLEAR_TITLES
 });
-
-export const fetchTitles = (params, appendTitles) => (
-  (dispatch) => {
-    dispatch(fetchTitlesStatus(false));
-
-    return Axios.get(`${apiUrl}/titles`, {
-      params: {
-        ...params
-      }
-    })
-      .then((response) => {
-        const { count, titles } = response.data;
-
-        if (appendTitles) {
-          dispatch(fetchUpTitlesSuccess(titles));
-        } else {
-          dispatch(fetchTitlesSuccess({ count, titles }));
-        }
-
-        dispatch(fetchTitlesStatus(true));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  });
 
 export const setTitleRating = (userId, titleId, rating) => (
   dispatch => (

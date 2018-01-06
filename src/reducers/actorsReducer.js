@@ -22,7 +22,6 @@ const defaultActorsState = {
 };
 
 export const actorsReducer = (state = defaultActorsState, action) => {
-
   switch (action.type) {
     case FETCH_ACTORS_STATUS:
       return {
