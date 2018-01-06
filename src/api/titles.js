@@ -11,7 +11,7 @@ export const apiFetchTitles = params => (
     })
 );
 
-export const apiSetRating = (userId, titleId, rating) => (
+export const apiSetTitleRating = ({ userId, titleId, rating }) => (
   Axios.post(`${apiUrl}/titles/rate`, { userId, titleId, rating })
     .then(response => response)
     .catch((error) => {

@@ -9,8 +9,7 @@ import TitlesForm from 'Components/titles/TitlesForm';
 
 import {
   callFetchTitles,
-  clearTitles,
-  setTitleRating
+  callSetTitleRating
 } from 'Actions/titles-actions';
 
 class TitlesPage extends Component {
@@ -41,10 +40,9 @@ class TitlesPage extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleTitlesLoad);
-    this.props.clearTitles();
   }
 
-  handleFetchTitles = () => {
+  handleFetchTitles = (shouldAppend) => {
     const {
       props: {
         fetchTitlesStatus,
@@ -53,11 +51,11 @@ class TitlesPage extends Component {
     } = this;
 
     if (fetchTitlesStatus) {
-      fetchTitles();
+      fetchTitles(shouldAppend);
     }
   };
 
-  handleQueryChange = (param, value) => {
+  handleQueryChange = ({ name, value }) => {
     const {
       handleFetchTitles,
       state: { query }
@@ -65,7 +63,7 @@ class TitlesPage extends Component {
 
     const nextQuery = {
       ...query,
-      ...{ [param]: value }
+      ...{ [name]: value }
     };
 
     this.setState({
@@ -75,54 +73,26 @@ class TitlesPage extends Component {
     });
   };
 
-  handleFetchUpTitles = () => {
-    const {
-      props: {
-        fetchTitlesStatus,
-        fetchUpTitles
-      },
-      state: {
-        query,
-        titlesCurrentCount
-      }
-    } = this;
-
-    if (fetchTitlesStatus) {
-      fetchUpTitles({
-        ...query,
-        skip: titlesCurrentCount
-      });
-    }
-  };
-
   handleTitlesLoad = () => {
     if (this.state.shouldLoadTitles) {
-
       if (this.pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
-
-        this.handleFetchUpTitles();
+        this.handleFetchTitles(true);
       }
     }
   };
 
-  handleTitleRate = (titleId, newRating) => {
-    const {
-      userId,
-      setTitleRating
-    } = this.props;
-
-    if (userId) {
-      setTitleRating(userId, titleId, newRating);
-    }
+  handleTitleRate = ({ titleId, newRating }) => {
+    this.props.setTitleRating({ titleId, newRating });
   };
 
   render() {
     const {
       handleQueryChange,
+      handleTitleRate,
       props: {
         titles,
         titlesQuery
-      },
+      }
     } = this;
 
     return (
@@ -157,10 +127,9 @@ class TitlesPage extends Component {
                         imdbScore={score.imdb}
                         text={text}
                         userRating={userRating ? userRating.rating : null}
-                        handleTitleRate={this.handleTitleRate}
+                        handleTitleRate={handleTitleRate}
                       />
-                    )
-                  ) : <span>Нічого не знайдено</span>}
+                    )) : <span>Нічого не знайдено</span>}
               </div>
             </div>
             <div className="col m-4">
@@ -188,7 +157,7 @@ const mapStateToProps = ({
     titlesTotalCount,
     titlesQuery,
     fetchTitlesStatus
-  },
+  }
 }) => ({
   titles,
   titlesTotalCount,
@@ -197,17 +166,15 @@ const mapStateToProps = ({
 });
 
 const mapDispatchToProps = dispatch => (bindActionCreators({
-  fetchTitles: query => callFetchTitles(query),
-  fetchUpTitles: query => callFetchTitles(query, true),
-  clearTitles: () => clearTitles(),
-  setTitleRating: (userId, titleId, newRating) => setTitleRating(userId, titleId, newRating)
+  fetchTitles: shouldAppend => callFetchTitles(shouldAppend),
+  setTitleRating: ({ userId, titleId, newRating }) => (
+    callSetTitleRating({ userId, titleId, newRating })
+  )
 }, dispatch));
 
 TitlesPage.propTypes = {
-  clearTitles: func.isRequired,
   fetchTitlesStatus: bool.isRequired,
   fetchTitles: func.isRequired,
-  fetchUpTitles: func.isRequired,
   setTitleRating: func.isRequired,
   titles: arrayOf(shape({
     _id: string,
@@ -241,7 +208,6 @@ TitlesPage.propTypes = {
     }),
     year: number
   })),
-  titlesQuery: object,
   titlesTotalCount: number.isRequired
 };
 

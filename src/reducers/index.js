@@ -9,11 +9,11 @@ import { titlesReducer } from 'Reducers/titlesReducer';
 import { reviewsReducer } from 'Reducers/reviewsReducer';
 
 export default combineReducers({
-    auth: authReducer,
-    app: appReducer,
-    actors: actorsReducer,
-    posts: postsReducer,
-    titles: titlesReducer,
-    form: formReducer,
-    reviews: reviewsReducer
+  auth: authReducer,
+  app: appReducer,
+  actors: actorsReducer,
+  posts: postsReducer,
+  titles: titlesReducer,
+  form: formReducer,
+  reviews: reviewsReducer
 });

@@ -3,17 +3,18 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 
 import {
   apiFetchTitles,
-  apiSetRating,
+  apiSetTitleRating
 } from 'Api/titles';
 
 import {
   fetchTitlesStatus,
   fetchTitlesSuccess,
-  fetchUpTitlesSuccess,
+  fetchUpTitlesSuccess
 } from 'Actions/titles-actions'
 
 import {
   CALL_FETCH_TITLES,
+  CALL_SET_TITLE_RATING
 } from 'Constants/actions';
 
 function* fetchTitles(action) {
@@ -36,7 +37,7 @@ function* fetchTitles(action) {
     if (shouldAppend) {
       yield put(fetchUpTitlesSuccess(titles));
     } else {
-      fetchTitlesSuccess({ count, titles });
+      yield put(fetchTitlesSuccess({ count, titles }));
     }
 
     yield put(fetchTitlesStatus(true));
@@ -45,8 +46,21 @@ function* fetchTitles(action) {
   }
 }
 
+function* setTitleRating(action) {
+  try {
+    const { titleId, rating } = action.payload;
+    const userId = yield select(({ auth: { user: { _id: userId } } }) => userId);
+
+    const response = yield call(apiSetTitleRating, { userId, titleId, rating });
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function* saga() {
   yield takeLatest(CALL_FETCH_TITLES, fetchTitles);
+  yield takeLatest(CALL_SET_TITLE_RATING, setTitleRating);
 }
 
 export default saga;
