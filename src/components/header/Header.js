@@ -14,7 +14,7 @@ import logoImage from 'Images/icons/logo-film.png';
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.handleScroll = _.debounce(this.handleScroll.bind(this), 15);
+    this.handleScroll = _.debounce(this.handleScroll, 15);
     this.state = {
       sticky: false
     };
@@ -28,7 +28,7 @@ class Header extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-  handleScroll() {
+  handleScroll = () => {
     const { sticky } = this.state;
 
     if (window.pageYOffset > 0) {
@@ -44,7 +44,7 @@ class Header extends Component {
         });
       }
     }
-  }
+  };
 
   render() {
     const { callUserSignOut } = this.props;

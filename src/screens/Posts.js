@@ -14,8 +14,7 @@ class PostsPage extends Component {
   constructor(props) {
     super(props);
 
-    this.handlePostsLoad = _.debounce(this.handlePostsLoad.bind(this), 200);
-    this.handleLoadButton = this.handleLoadButton.bind(this);
+    this.handlePostsLoad = _.debounce(this.handlePostsLoad, 200);
 
     this.state = {
       allPostsLoaded: false,
@@ -48,16 +47,16 @@ class PostsPage extends Component {
     window.removeEventListener('scroll', this.handlePostsLoad);
   }
 
-  handleLoadButton() {
+  handleLoadButton = () => {
     this.setState({
       shouldLoadPosts: true
     }, () => {
       window.addEventListener('scroll', this.handlePostsLoad);
       this.handlePostsLoad();
     });
-  }
+  };
 
-  handlePostsLoad() {
+  handlePostsLoad = () => {
     const {
       props: {
         fetchPostsStatus,
@@ -74,7 +73,7 @@ class PostsPage extends Component {
         callFetchPosts({ limit: 3 }, true);
       }
     }
-  }
+  };
 
   render() {
     const {

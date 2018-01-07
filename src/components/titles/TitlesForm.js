@@ -42,9 +42,7 @@ const TitlesForm = ({
       </div>
       <div className="filter-item">
         <div className="genres-wrap">
-          <Scrollbars style={{
-            height: '16rem'
-          }}>
+          <Scrollbars style={{ height: '16rem' }}>
             <RenderCheckboxGroup
               name="genre"
               options={[

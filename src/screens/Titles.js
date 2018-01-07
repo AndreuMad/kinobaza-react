@@ -81,8 +81,8 @@ class TitlesPage extends Component {
     }
   };
 
-  handleTitleRate = ({ titleId, newRating }) => {
-    this.props.setTitleRating({ titleId, newRating });
+  handleTitleRate = ({ titleId, rating }) => {
+    this.props.setTitleRating({ titleId, rating });
   };
 
   render() {
@@ -167,8 +167,8 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => (bindActionCreators({
   fetchTitles: shouldAppend => callFetchTitles(shouldAppend),
-  setTitleRating: ({ userId, titleId, newRating }) => (
-    callSetTitleRating({ userId, titleId, newRating })
+  setTitleRating: ({ userId, titleId, rating }) => (
+    callSetTitleRating({ userId, titleId, rating })
   )
 }, dispatch));
 

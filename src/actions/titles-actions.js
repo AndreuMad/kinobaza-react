@@ -12,37 +12,47 @@ import {
 
 import { apiUrl } from 'Constants/urls';
 
-export const fetchTitlesStatus = status => ({
-  type: FETCH_TITLES_STATUS,
-  status
-});
+export function fetchTitlesStatus(status) {
+  return {
+    type: FETCH_TITLES_STATUS,
+    status
+  };
+}
 
-export const callFetchTitles = shouldAppend => ({
-  type: CALL_FETCH_TITLES,
-  payload: {
-    shouldAppend
-  }
-});
+export function callFetchTitles(shouldAppend) {
+  return {
+    type: CALL_FETCH_TITLES,
+    payload: {
+      shouldAppend
+    }
+  };
+}
 
-export const fetchTitlesSuccess = ({ count, titles }) => ({
-  type: FETCH_TITLES_SUCCESS,
-  payload: {
-    count,
-    titles
-  }
-});
+export function fetchTitlesSuccess({ count, titles }) {
+  return {
+    type: FETCH_TITLES_SUCCESS,
+    payload: {
+      count,
+      titles
+    }
+  };
+}
 
-export const fetchUpTitlesSuccess = titles => ({
-  type: FETCH_UP_TITLES_SUCCESS,
-  titlesData: {
-    titles
-  }
-});
+export function fetchUpTitlesSuccess(titles) {
+  return {
+    type: FETCH_UP_TITLES_SUCCESS,
+    titlesData: {
+      titles
+    }
+  };
+}
 
-export const callSetTitleRating = ({ titleId, rating }) => ({
-  type: CALL_SET_TITLE_RATING,
-  payload: {
-    titleId,
-    rating
-  }
-});
+export function callSetTitleRating({ titleId, rating }) {
+  return {
+    type: CALL_SET_TITLE_RATING,
+    payload: {
+      titleId,
+      rating
+    }
+  };
+}

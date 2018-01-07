@@ -9,11 +9,9 @@ class DropZoneCustom extends Component {
     this.state = {
       imageUrl: ''
     };
-
-    this.handleLoad = this.handleLoad.bind(this);
   }
 
-  handleLoad(files) {
+  handleLoad = (files) => {
     const {
       input: {
         onChange

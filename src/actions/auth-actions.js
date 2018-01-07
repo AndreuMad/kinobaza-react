@@ -12,47 +12,64 @@ import {
 
 import { apiUrl } from 'Constants/urls';
 
-export const authTokenRequest = token => ({
-  type: CALL_AUTH_TOKEN,
-  token
-});
+export function authTokenRequest(token) {
+  return {
+    type: CALL_AUTH_TOKEN,
+    token
+  };
+}
+export function authSuccess() {
+  return {
+    type: AUTH_USER
+  };
+}
 
-export const authSuccess = () => ({
-  type: AUTH_USER
-});
+export function authStatus(status) {
+  return {
+    type: AUTH_STATUS,
+    status
+  };
+}
 
-export const authStatus = status => ({
-  type: AUTH_STATUS,
-  status
-});
+export function authError(error) {
+  return {
+    type: AUTH_ERROR,
+    error
+  };
+}
 
-export const authError = error => ({
-  type: AUTH_ERROR,
-  error
-});
+export function changeUserData(user) {
+  return {
+    type: CHANGE_USER_DATA,
+    user
+  };
+}
 
-export const changeUserData = user => ({
-  type: CHANGE_USER_DATA,
-  user
-});
+export function callUserSignIn({ email, password, history }) {
+  return {
+    type: CALL_USER_SIGN_IN,
+    email,
+    password,
+    history
+  };
+}
 
-export const callUserSignIn = ({ email, password, history }) => ({
-  type: CALL_USER_SIGN_IN,
-  email,
-  password,
-  history
-});
+export function callUserSignUp(values, history) {
+  return {
+    type: CALL_USER_SIGN_UP,
+    values,
+    history
+  };
+}
 
-export const callUserSignUp = (values, history) => ({
-  type: CALL_USER_SIGN_UP,
-  values,
-  history
-});
+export function callUserSignOut() {
+  return {
+    type: CALL_USER_SIGN_OUT
+  };
+}
 
-export const callUserSignOut = () => ({
-  type: CALL_USER_SIGN_OUT
-});
-
-export const userSignOut = () => ({
-  type: UNAUTH_USER
-});
+export function userSignOut() {
+  return {
+    type: UNAUTH_USER
+  };
+}

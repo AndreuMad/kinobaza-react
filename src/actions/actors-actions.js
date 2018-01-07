@@ -13,64 +13,86 @@ import {
   REMOVE_ACTOR_LIKE
 } from 'Constants/actions';
 
-export const callFetchActors = shouldAppend => ({
-  type: CALL_FETCH_ACTORS,
-  shouldAppend
-});
+export function callFetchActors(shouldAppend) {
+  return {
+    type: CALL_FETCH_ACTORS,
+    shouldAppend
+  };
+}
 
-export const fetchActorsStatus = status => ({
-  type: FETCH_ACTORS_STATUS,
-  status
-});
+export function fetchActorsStatus(status) {
+  return {
+    type: FETCH_ACTORS_STATUS,
+    status
+  };
+}
 
-export const fetchActorsSuccess = ({ total, actors, likes }) => ({
-  type: FETCH_ACTORS_SUCCESS,
-  data: {
-    total,
-    actors,
-    likes
-  }
-});
+export function fetchActorsSuccess({ total, actors, likes }) {
+  return {
+    type: FETCH_ACTORS_SUCCESS,
+    data: {
+      total,
+      actors,
+      likes
+    }
+  };
+}
 
-export const fetchUpActorsSuccess = ({ actors, likes }) => ({
-  type: FETCH_UP_ACTORS_SUCCESS,
-  data: {
-    actors,
-    likes
-  }
-});
+export function fetchUpActorsSuccess({ actors, likes }) {
+  return {
+    type: FETCH_UP_ACTORS_SUCCESS,
+    data: {
+      actors,
+      likes
+    }
+  };
+}
 
-export const clearActors = () => ({
-  type: CLEAR_ACTORS
-});
+export function clearActors() {
+  return {
+    type: CLEAR_ACTORS
+  };
+}
 
-export const callChangeActorsQuery = query => ({
-  type: CALL_CHANGE_ACTORS_QUERY,
-  query
-});
+export function callChangeActorsQuery(query) {
+  return {
+    type: CALL_CHANGE_ACTORS_QUERY,
+    query
+  };
+}
 
-export const changeActorsQuery = query => ({
-  type: CHANGE_ACTORS_QUERY,
-  query
-});
+export function changeActorsQuery(query) {
+  return {
+    type: CHANGE_ACTORS_QUERY,
+    query
+  };
+}
 
-export const callLikeActor = ({ userId, actorId }) => ({
-  type: CALL_ACTOR_LIKE,
-  userId,
-  actorId
-});
+export function callLikeActor({ userId, actorId }) {
+  return {
+    type: CALL_ACTOR_LIKE,
+    userId,
+    actorId
+  };
+}
 
-export const likeActorStatus = status => ({
-  type: LIKE_ACTOR_STATUS,
-  status
-});
+export function likeActorStatus(status) {
+  return {
+    type: LIKE_ACTOR_STATUS,
+    status
+  };
+}
 
-export const saveActorLike = actorId => ({
-  type: SAVE_ACTOR_LIKE,
-  actorId
-});
+export function saveActorLike(actorId) {
+  return {
+    type: SAVE_ACTOR_LIKE,
+    actorId
+  };
+}
 
-export const removeActorLike = actorId => ({
-  type: REMOVE_ACTOR_LIKE,
-  actorId
-});
+export function removeActorLike(actorId) {
+  return {
+    type: REMOVE_ACTOR_LIKE,
+    actorId
+  };
+}

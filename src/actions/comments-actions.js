@@ -2,10 +2,12 @@ import Axios from 'axios';
 import { apiUrl } from 'Constants/urls';
 import { POST_COMMENT_SUCCESS } from 'Constants/actions';
 
-export const postCommentSuccess = comment => ({
-  type: POST_COMMENT_SUCCESS,
-  comment
-});
+export function postCommentSuccess(comment) {
+  return {
+    type: POST_COMMENT_SUCCESS,
+    comment
+  };
+}
 
 export const postComment = ({ userId: user, postId: post, text }) => (
   (dispatch) => {

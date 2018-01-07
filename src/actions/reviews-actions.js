@@ -11,25 +11,31 @@ import {
 
 import { apiUrl } from 'Constants/urls';
 
-export const fetchReviewsStatus = status => ({
-  type: FETCH_REVIEWS_STATUS,
-  status
-});
+export function fetchReviewsStatus (status) {
+  return {
+    type: FETCH_REVIEWS_STATUS,
+    status
+  };
+}
 
-export const fetchReviewsSuccess = (total, reviews) => ({
-  type: FETCH_REVIEWS_SUCCESS,
-  reviewsData: {
-    total,
-    reviews
-  }
-});
+export function fetchReviewsSuccess(total, reviews) {
+  return {
+    type: FETCH_REVIEWS_SUCCESS,
+    reviewsData: {
+      total,
+      reviews
+    }
+  };
+}
 
-export const fetchUpReviewsSuccess = reviews => ({
-  type: FETCH_UP_REVIEWS_SUCCESS,
-  reviewsData: {
-    reviews
-  }
-});
+export function fetchUpReviewsSuccess (reviews) {
+  return {
+    type: FETCH_UP_REVIEWS_SUCCESS,
+    reviewsData: {
+      reviews
+    }
+  };
+}
 
 export const fetchReviews = (params, appendReviews) => (
   (dispatch) => {

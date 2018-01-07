@@ -8,14 +8,12 @@ class AvatarForm extends Component {
   constructor(props) {
     super(props);
 
-    this.handleLoadStatus = this.handleLoadStatus.bind(this);
-
     this.state = {
       imageLoaded: false
     };
   }
 
-  handleLoadStatus(status) {
+  handleLoadStatus = (status) => {
     this.setState({
       imageLoaded: status
     });

@@ -9,14 +9,7 @@ import { callUserSignUp } from 'Actions/auth-actions';
 import { emailPattern } from 'Constants/validatePatterns';
 
 class SignUp extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.renderAlert = this.renderAlert.bind(this);
-  }
-
-  renderAlert() {
+  renderAlert = () => {
     const { errorMessage } = this.props;
 
     if (errorMessage) {
@@ -29,7 +22,7 @@ class SignUp extends Component {
     }
   }
 
-  handleFormSubmit({ email, name, password }) {
+  handleFormSubmit = ({ email, name, password }) => {
     const {
       callUserSignUp,
       history

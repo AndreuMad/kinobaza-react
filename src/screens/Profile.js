@@ -12,14 +12,7 @@ import {
 } from 'Actions/user-actions'
 
 class ProfilePage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleAvatarEdit = this.handleAvatarEdit.bind(this);
-    this.handleUserEdit = this.handleUserEdit.bind(this);
-  }
-
-  handleAvatarEdit({ photo }) {
+  handleAvatarEdit = ({ photo }) => {
     const {
       user: {
         _id
@@ -28,9 +21,9 @@ class ProfilePage extends Component {
     } = this.props;
 
     loadAvatar({ _id, photo });
-  }
+  };
 
-  handleUserEdit({ name, dateOfBirth }) {
+  handleUserEdit = ({ name, dateOfBirth }) => {
     const {
       user: {
         _id
@@ -39,7 +32,7 @@ class ProfilePage extends Component {
     } = this.props;
 
     editUser({ _id, name, dateOfBirth });
-  }
+  };
 
   render() {
     const {

@@ -9,45 +9,59 @@ import {
   FETCH_POST_SUCCESS
 } from 'Constants/actions';
 
-export const callFetchPosts = (params, shouldAppend, shouldFetchArticle) => ({
-  type: CALL_FETCH_POSTS,
-  params,
-  shouldAppend,
-  shouldFetchArticle
-});
+export function callFetchPosts(params, shouldAppend, shouldFetchArticle) {
+  return {
+    type: CALL_FETCH_POSTS,
+    params,
+    shouldAppend,
+    shouldFetchArticle
+  };
+}
 
-export const fetchPostsStatus = status => ({
-  type: FETCH_POSTS_STATUS,
-  status
-});
+export function fetchPostsStatus(status) {
+  return {
+    type: FETCH_POSTS_STATUS,
+    status
+  };
+}
 
-export const fetchPostsSuccess = ({ posts, count }) => ({
-  type: FETCH_POSTS_SUCCESS,
-  data: {
-    posts,
-    count
-  }
-});
+export function fetchPostsSuccess({ posts, count }) {
+  return {
+    type: FETCH_POSTS_SUCCESS,
+    data: {
+      posts,
+      count
+    }
+  };
+}
 
-export const fetchUpPostsSuccess = ({ posts }) => ({
-  type: FETCH_UP_POSTS_SUCCESS,
-  data: {
-    posts
-  }
-});
+export function fetchUpPostsSuccess({ posts }) {
+  return {
+    type: FETCH_UP_POSTS_SUCCESS,
+    data: {
+      posts
+    }
+  };
+}
 
-export const fetchArticlePostSuccess = articlePost => ({
-  type: FETCH_ARTICLE_POST_SUCCESS,
-  articlePost
-});
+export function fetchArticlePostSuccess(articlePost) {
+  return {
+    type: FETCH_ARTICLE_POST_SUCCESS,
+    articlePost
+  };
+}
 
-export const callFetchPost = id => ({
-  type: CALL_FETCH_POST,
-  id
-});
+export function callFetchPost(id) {
+  return {
+    type: CALL_FETCH_POST,
+    id
+  };
+}
 
-export const fetchPostSuccess = ({ post, comments }) => ({
-  type: FETCH_POST_SUCCESS,
-  post,
-  comments
-});
+export function fetchPostSuccess({ post, comments }) {
+  return {
+    type: FETCH_POST_SUCCESS,
+    post,
+    comments
+  };
+}

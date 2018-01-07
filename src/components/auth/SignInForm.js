@@ -10,13 +10,7 @@ import { callUserSignIn } from 'Actions/auth-actions'
 import { emailPattern } from 'Constants/validatePatterns';
 
 class SignIn extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-  }
-
-  handleFormSubmit({ email, password }) {
+  handleFormSubmit = ({ email, password }) => {
     const {
       callUserSignIn,
       history

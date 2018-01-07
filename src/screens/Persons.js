@@ -19,9 +19,7 @@ class PersonsPage extends Component {
   constructor(props) {
     super(props);
 
-    this.handleActorsLoad = _.debounce(this.handleActorsLoad.bind(this));
-    this.handleQueryChange = this.handleQueryChange.bind(this);
-    this.handleActorLike = this.handleActorLike.bind(this);
+    this.handleActorsLoad = _.debounce(this.handleActorsLoad);
 
     this.state = {
       shouldLoadActors: true
@@ -46,7 +44,7 @@ class PersonsPage extends Component {
     window.removeEventListener('scroll', this.handleActorsLoad);
   }
 
-  handleActorsLoad() {
+  handleActorsLoad = () => {
     const {
       props: {
         fetchActorsStatus,
@@ -63,13 +61,13 @@ class PersonsPage extends Component {
         callFetchActors(true);
       }
     }
-  }
+  };
 
-  handleQueryChange(name, payload) {
+  handleQueryChange = (name, payload) => {
     this.props.callChangeActorsQuery({ [name]: payload });
-  }
+  };
 
-  handleActorLike(actorId) {
+  handleActorLike = (actorId) => {
     const {
       likeActorStatus,
       callLikeActor
@@ -78,7 +76,7 @@ class PersonsPage extends Component {
     if (likeActorStatus) {
       callLikeActor({ actorId });
     }
-  }
+  };
 
   render() {
     const {
