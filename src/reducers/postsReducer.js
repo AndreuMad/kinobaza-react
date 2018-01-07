@@ -17,18 +17,19 @@ const defaultPostsState = {
 };
 
 export const postsReducer = (state = defaultPostsState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case FETCH_POSTS_STATUS:
       return {
         ...state,
-        fetchPostsStatus: action.status
+        fetchPostsStatus: payload.status
       };
 
     case FETCH_POSTS_SUCCESS:
       return {
         ...state,
-        posts: action.data.posts,
-        postsTotalCount: action.data.count
+        posts: payload.posts,
+        postsTotalCount: payload.count
       };
 
     case FETCH_UP_POSTS_SUCCESS:
@@ -36,28 +37,28 @@ export const postsReducer = (state = defaultPostsState, action) => {
         ...state,
         posts: [
           ...state.posts,
-          ...action.data.posts
+          ...payload.posts
         ]
       };
 
     case FETCH_ARTICLE_POST_SUCCESS:
       return {
         ...state,
-        articlePost: action.articlePost
+        articlePost: payload.articlePost
       };
 
     case FETCH_POST_SUCCESS:
       return {
         ...state,
-        post: action.post,
-        comments: action.comments
+        post: payload.post,
+        comments: payload.comments
       };
     case POST_COMMENT_SUCCESS:
       return {
         ...state,
         comments: [
-          action.comment,
-          ...state.comments
+          ...state.comments,
+          payload.comment
         ]
       };
 

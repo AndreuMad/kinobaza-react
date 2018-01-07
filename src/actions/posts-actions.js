@@ -12,23 +12,27 @@ import {
 export function callFetchPosts(params, shouldAppend, shouldFetchArticle) {
   return {
     type: CALL_FETCH_POSTS,
-    params,
-    shouldAppend,
-    shouldFetchArticle
+    payload: {
+      params,
+      shouldAppend,
+      shouldFetchArticle
+    }
   };
 }
 
 export function fetchPostsStatus(status) {
   return {
     type: FETCH_POSTS_STATUS,
-    status
+    payload: {
+      status
+    }
   };
 }
 
 export function fetchPostsSuccess({ posts, count }) {
   return {
     type: FETCH_POSTS_SUCCESS,
-    data: {
+    payload: {
       posts,
       count
     }
@@ -38,7 +42,7 @@ export function fetchPostsSuccess({ posts, count }) {
 export function fetchUpPostsSuccess({ posts }) {
   return {
     type: FETCH_UP_POSTS_SUCCESS,
-    data: {
+    payload: {
       posts
     }
   };
@@ -47,21 +51,27 @@ export function fetchUpPostsSuccess({ posts }) {
 export function fetchArticlePostSuccess(articlePost) {
   return {
     type: FETCH_ARTICLE_POST_SUCCESS,
-    articlePost
+    payload: {
+      articlePost
+    }
   };
 }
 
 export function callFetchPost(id) {
   return {
     type: CALL_FETCH_POST,
-    id
+    payload: {
+      id
+    }
   };
 }
 
 export function fetchPostSuccess({ post, comments }) {
   return {
     type: FETCH_POST_SUCCESS,
-    post,
-    comments
+    payload: {
+      post,
+      comments
+    }
   };
 }

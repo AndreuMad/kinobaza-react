@@ -22,19 +22,20 @@ const defaultActorsState = {
 };
 
 export const actorsReducer = (state = defaultActorsState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case FETCH_ACTORS_STATUS:
       return {
         ...state,
-        fetchActorsStatus: action.status
+        fetchActorsStatus: payload.status
       };
 
     case FETCH_ACTORS_SUCCESS:
       return {
         ...state,
-        actors: action.data.actors,
-        actorsTotalCount: action.data.total,
-        actorsLikes: action.data.likes
+        actors: payload.actors,
+        actorsTotalCount: payload.total,
+        actorsLikes: payload.likes
       };
 
     case FETCH_UP_ACTORS_SUCCESS:
@@ -42,11 +43,11 @@ export const actorsReducer = (state = defaultActorsState, action) => {
         ...state,
         actors: [
           ...state.actors,
-          ...action.data.actors
+          ...payload.actors
         ],
         actorsLikes: [
           ...state.actorsLikes,
-          ...action.data.likes
+          ...payload.likes
         ]
       };
 
@@ -55,14 +56,14 @@ export const actorsReducer = (state = defaultActorsState, action) => {
         ...state,
         actorsQuery: {
           ...state.actorsQuery,
-          ...action.query
+          ...payload.query
         }
       };
 
     case LIKE_ACTOR_STATUS:
       return {
         ...state,
-        likeActorStatus: action.status
+        likeActorStatus: payload.status
       };
 
     case SAVE_ACTOR_LIKE:
@@ -70,14 +71,14 @@ export const actorsReducer = (state = defaultActorsState, action) => {
         ...state,
         actorsLikes: [
           ...state.actorsLikes,
-          action.actorId
+          payload.actorId
         ]
       };
 
     case REMOVE_ACTOR_LIKE:
       return {
         ...state,
-        actorsLikes: state.actorsLikes.filter(item => item !== action.actorId)
+        actorsLikes: state.actorsLikes.filter(item => item !== payload.actorId)
       };
 
     default:

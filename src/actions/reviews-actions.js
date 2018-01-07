@@ -11,27 +11,29 @@ import {
 
 import { apiUrl } from 'Constants/urls';
 
-export function fetchReviewsStatus (status) {
+export function fetchReviewsStatus(status) {
   return {
     type: FETCH_REVIEWS_STATUS,
-    status
+    payload: {
+      status
+    }
   };
 }
 
 export function fetchReviewsSuccess(total, reviews) {
   return {
     type: FETCH_REVIEWS_SUCCESS,
-    reviewsData: {
+    payload: {
       total,
       reviews
     }
   };
 }
 
-export function fetchUpReviewsSuccess (reviews) {
+export function fetchUpReviewsSuccess(reviews) {
   return {
     type: FETCH_UP_REVIEWS_SUCCESS,
-    reviewsData: {
+    payload: {
       reviews
     }
   };

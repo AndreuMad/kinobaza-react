@@ -23,8 +23,9 @@ import {
   CALL_CHANGE_ACTORS_QUERY
 } from 'Constants/actions';
 
-function* fetchActors({ shouldAppend }) {
+function* fetchActors(action) {
   try {
+    const { shouldAppend } = action.payload;
     const query = yield select(({
       auth: { user: { _id: userId } },
       actors: { actors, actorsQuery }
@@ -51,17 +52,18 @@ function* fetchActors({ shouldAppend }) {
   }
 }
 
-function* likeActor({ actorId }) {
+function* likeActor(action) {
   try {
+    const { actorId } = action.payload;
     const userId = yield select(({ auth: { user: { _id: userId } } }) => userId);
 
     yield put(likeActorStatus(false));
 
-    const { action, actorId: resActorId } = yield call(apiLikeActor, { userId, actorId });
+    const { actionType, actorId: resActorId } = yield call(apiLikeActor, { userId, actorId });
 
-    if (action === 'saved') {
+    if (actionType === 'saved') {
       yield put(saveActorLike(resActorId));
-    } else if (action === 'removed') {
+    } else if (actionType === 'removed') {
       yield put(removeActorLike(resActorId));
     }
 
@@ -71,8 +73,9 @@ function* likeActor({ actorId }) {
   }
 }
 
-function* changeQuery({ query }) {
+function* changeQuery(action) {
   try {
+    const { query } = action.payload;
     yield put(changeActorsQuery(query));
     yield fetchActors({ shouldAppend: false });
   } catch (error) {

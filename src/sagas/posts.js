@@ -20,8 +20,9 @@ import {
   CALL_FETCH_POST
 } from 'Constants/actions';
 
-function* fetchPosts({ params, shouldAppend, shouldFetchArticle }) {
+function* fetchPosts(action) {
   try {
+    const { params, shouldAppend, shouldFetchArticle } = action.payload;
     const query = yield select(({
       posts: { posts }
     }) => ({
@@ -54,8 +55,9 @@ function* fetchPosts({ params, shouldAppend, shouldFetchArticle }) {
   }
 }
 
-function* fetchPost({ id }) {
+function* fetchPost(action) {
   try {
+    const { id } = action.payload;
     const { post, comments } = yield call(apiFetchPost, id);
     yield put(fetchPostSuccess({ post, comments }));
   } catch (error) {
