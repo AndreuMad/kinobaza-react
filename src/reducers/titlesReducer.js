@@ -2,7 +2,7 @@ import {
   FETCH_TITLES_STATUS,
   FETCH_TITLES_SUCCESS,
   FETCH_UP_TITLES_SUCCESS,
-  CLEAR_TITLES
+  CHANGE_TITLES_QUERY
 } from 'Constants/actions';
 
 const defaultTitlesState = {
@@ -25,18 +25,20 @@ const defaultTitlesState = {
 };
 
 export const titlesReducer = (state = defaultTitlesState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case FETCH_TITLES_STATUS:
       return {
         ...state,
-        fetchTitlesStatus: action.status
+        fetchTitlesStatus: payload.status
       };
 
     case FETCH_TITLES_SUCCESS:
       return {
         ...state,
-        titles: action.payload.titles,
-        titlesTotalCount: action.payload.count
+        titles: payload.titles,
+        titlesTotalCount: payload.count
       };
 
     case FETCH_UP_TITLES_SUCCESS:
@@ -44,15 +46,17 @@ export const titlesReducer = (state = defaultTitlesState, action) => {
         ...state,
         titles: [
           ...state.titles,
-          ...action.titlesData.titles
+          ...payload.titles
         ]
       };
 
-    case CLEAR_TITLES:
+    case CHANGE_TITLES_QUERY:
       return {
         ...state,
-        titles: [],
-        titlesTotalCount: 0
+        titlesQuery: {
+          ...state.titlesQuery,
+          ...payload.query
+        }
       };
 
     default:

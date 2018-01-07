@@ -3,7 +3,7 @@ import {
   UNAUTH_USER,
   AUTH_STATUS,
   AUTH_ERROR,
-  CHANGE_USER_DATA
+  EDIT_USER_SUCCESS
 } from 'Constants/actions';
 
 const defaultState = {
@@ -20,13 +20,14 @@ const defaultState = {
 };
 
 export const authReducer = (state = defaultState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case AUTH_STATUS:
       return {
         ...state,
-        status: action.status
+        status: payload.status
       };
-      break;
 
     case AUTH_USER:
       return {
@@ -34,7 +35,6 @@ export const authReducer = (state = defaultState, action) => {
         authenticated: true,
         error: null
       };
-      break;
 
     case UNAUTH_USER:
       return {
@@ -42,25 +42,24 @@ export const authReducer = (state = defaultState, action) => {
         authenticated: false,
         error: null
       };
-      break;
 
     case AUTH_ERROR:
       return {
         ...state,
-        error: action.error
+        error: payload.error
       };
-      break;
 
-    case CHANGE_USER_DATA:
+    case EDIT_USER_SUCCESS:
       return {
         ...state,
         user: {
           ...state.user,
-          ...action.user
+          ...payload.user
         }
       };
-      break;
+
+    default:
+      return state;
   }
-  return state;
 };
 

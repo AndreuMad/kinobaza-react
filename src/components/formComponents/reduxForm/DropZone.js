@@ -31,7 +31,7 @@ class DropZoneCustom extends Component {
     };
     reader.readAsDataURL(file);
     onChange(file);
-  }
+  };
 
   render() {
     const {

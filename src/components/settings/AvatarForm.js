@@ -17,14 +17,13 @@ class AvatarForm extends Component {
     this.setState({
       imageLoaded: status
     });
-  }
+  };
 
   render() {
     const {
       props: {
         avatar,
-        handleSubmit,
-        handleAvatarEdit
+        handleSubmit
       },
       state: {
         imageLoaded
@@ -33,7 +32,7 @@ class AvatarForm extends Component {
     } = this;
 
     return (
-      <form onSubmit={event => event.preventDefault()}>
+      <form onSubmit={handleSubmit}>
         <h3>Аватарка</h3>
         <Field
           component={DropZoneCustom}
@@ -43,10 +42,7 @@ class AvatarForm extends Component {
           avatar={avatar}
         />
         {
-          imageLoaded ? <button
-            onClick={handleSubmit(handleAvatarEdit)}
-          >Send
-          </button> : null
+          imageLoaded && (<button>Send</button>)
         }
       </form>
     );

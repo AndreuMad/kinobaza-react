@@ -1,59 +1,39 @@
 import Axios from 'axios';
 
 import {
-  CHANGE_USER_DATA
+  CALL_EDIT_USER,
+  EDIT_USER_SUCCESS,
+  CALL_LOAD_AVATAR
 } from 'Constants/actions';
 
 import { apiUrl } from 'Constants/urls';
 
-export const editUser = ({ _id, name, dateOfBirth }) => (
-  (dispatch) => {
-    const token = localStorage.getItem('token');
-    const data = { _id };
-
-    if (name) {
-      data.name = name;
+export function callEditUser({ _id, name, dateOfBirth }) {
+  return {
+    type: CALL_EDIT_USER,
+    payload: {
+      _id,
+      name,
+      dateOfBirth
     }
-    if (dateOfBirth) {
-      data.dateOfBirth = dateOfBirth;
+  };
+}
+
+export function editUserSuccess(user) {
+  return {
+    type: EDIT_USER_SUCCESS,
+    payload: {
+      user
     }
+  };
+}
 
-    Axios.put(
-      `${apiUrl}/user_edit`,
-      data,
-      {
-        headers: {
-          authorization: token
-        }
-      }
-    )
-      .then(({ data }) => dispatch(changeUserData(data)))
-      .catch((error) => {
-        console.log(error);
-        throw (error);
-      });
-  });
-
-export const loadAvatar = ({ _id, photo }) => (
-  (dispatch) => {
-    const token = localStorage.getItem('token');
-    const data = new FormData();
-    data.append('_id', _id);
-    data.append('photo', photo);
-
-    Axios.post(
-      `${apiUrl}/user_avatar`,
-      data,
-      {
-        headers: {
-          authorization: token,
-          'Content-Type': 'multipart/form-data'
-        }
-      }
-    )
-      .then(() => console.log('success'))
-      .catch((error) => {
-        console.log(error);
-        throw (error);
-      });
-  });
+export function callLoadAvatar({ _id, photo }) {
+  return {
+    type: CALL_LOAD_AVATAR,
+    payload: {
+      _id,
+      photo
+    }
+  };
+}

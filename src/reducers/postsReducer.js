@@ -2,7 +2,6 @@ import {
   FETCH_POSTS_STATUS,
   FETCH_POSTS_SUCCESS,
   FETCH_UP_POSTS_SUCCESS,
-  CLEAR_POSTS,
   FETCH_ARTICLE_POST_SUCCESS,
   FETCH_POST_SUCCESS,
   POST_COMMENT_SUCCESS
@@ -39,14 +38,6 @@ export const postsReducer = (state = defaultPostsState, action) => {
           ...state.posts,
           ...action.data.posts
         ]
-      };
-
-    case CLEAR_POSTS:
-      return {
-        ...state,
-        posts: [],
-        postsTotalCount: 0,
-        articlePost: null
       };
 
     case FETCH_ARTICLE_POST_SUCCESS:

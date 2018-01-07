@@ -48,12 +48,6 @@ export function fetchUpActorsSuccess({ actors, likes }) {
   };
 }
 
-export function clearActors() {
-  return {
-    type: CLEAR_ACTORS
-  };
-}
-
 export function callChangeActorsQuery(query) {
   return {
     type: CALL_CHANGE_ACTORS_QUERY,

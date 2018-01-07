@@ -4,7 +4,6 @@ import {
   UNAUTH_USER,
   AUTH_STATUS,
   AUTH_ERROR,
-  CHANGE_USER_DATA,
   CALL_USER_SIGN_IN,
   CALL_USER_SIGN_OUT,
   CALL_USER_SIGN_UP
@@ -15,7 +14,9 @@ import { apiUrl } from 'Constants/urls';
 export function authTokenRequest(token) {
   return {
     type: CALL_AUTH_TOKEN,
-    token
+    payload: {
+      token
+    }
   };
 }
 export function authSuccess() {
@@ -27,38 +28,39 @@ export function authSuccess() {
 export function authStatus(status) {
   return {
     type: AUTH_STATUS,
-    status
+    payload: {
+      status
+    }
   };
 }
 
 export function authError(error) {
   return {
     type: AUTH_ERROR,
-    error
-  };
-}
-
-export function changeUserData(user) {
-  return {
-    type: CHANGE_USER_DATA,
-    user
+    payload: {
+      error
+    }
   };
 }
 
 export function callUserSignIn({ email, password, history }) {
   return {
     type: CALL_USER_SIGN_IN,
-    email,
-    password,
-    history
+    payload: {
+      email,
+      password,
+      history
+    }
   };
 }
 
 export function callUserSignUp(values, history) {
   return {
     type: CALL_USER_SIGN_UP,
-    values,
-    history
+    payload: {
+      values,
+      history
+    }
   };
 }
 

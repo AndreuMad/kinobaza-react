@@ -63,8 +63,8 @@ class PersonsPage extends Component {
     }
   };
 
-  handleQueryChange = (name, payload) => {
-    this.props.callChangeActorsQuery({ [name]: payload });
+  handleQueryChange = (name, value) => {
+    this.props.callChangeActorsQuery({ [name]: value });
   };
 
   handleActorLike = (actorId) => {
@@ -80,7 +80,8 @@ class PersonsPage extends Component {
 
   render() {
     const {
-      handleActorLike
+      handleActorLike,
+      handleQueryChange
     } = this;
 
     const {
@@ -133,7 +134,7 @@ class PersonsPage extends Component {
             </div>
             <div className="col m-4">
               <div className="col-inner">
-                <ActorsForm handleQueryChange={this.handleQueryChange} />
+                <ActorsForm handleQueryChange={handleQueryChange} />
               </div>
             </div>
           </div>

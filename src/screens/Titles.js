@@ -9,6 +9,7 @@ import TitlesForm from 'Components/titles/TitlesForm';
 
 import {
   callFetchTitles,
+  callChangeTitlesQuery,
   callSetTitleRating
 } from 'Actions/titles-actions';
 
@@ -55,22 +56,8 @@ class TitlesPage extends Component {
     }
   };
 
-  handleQueryChange = ({ name, value }) => {
-    const {
-      handleFetchTitles,
-      state: { query }
-    } = this;
-
-    const nextQuery = {
-      ...query,
-      ...{ [name]: value }
-    };
-
-    this.setState({
-      query: nextQuery
-    }, () => {
-      handleFetchTitles();
-    });
+  handleQueryChange = (name, value) => {
+    this.props.changeTitlesQuery({ [name]: value });
   };
 
   handleTitlesLoad = () => {
@@ -165,16 +152,18 @@ const mapStateToProps = ({
   fetchTitlesStatus
 });
 
-const mapDispatchToProps = dispatch => (bindActionCreators({
+const mapDispatchToProps = dispatch => bindActionCreators({
   fetchTitles: shouldAppend => callFetchTitles(shouldAppend),
   setTitleRating: ({ userId, titleId, rating }) => (
     callSetTitleRating({ userId, titleId, rating })
-  )
-}, dispatch));
+  ),
+  changeTitlesQuery: query => callChangeTitlesQuery(query)
+}, dispatch);
 
 TitlesPage.propTypes = {
   fetchTitlesStatus: bool.isRequired,
   fetchTitles: func.isRequired,
+  changeTitlesQuery: func.isRequired,
   setTitleRating: func.isRequired,
   titles: arrayOf(shape({
     _id: string,

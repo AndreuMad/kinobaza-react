@@ -1,29 +1,49 @@
-import Axios from 'axios';
-
 import {
   CALL_FETCH_TITLES,
   CALL_SET_TITLE_RATING,
+  CALL_CHANGE_TITLES_QUERY,
   FETCH_TITLES_STATUS,
   FETCH_TITLES_SUCCESS,
   FETCH_UP_TITLES_SUCCESS,
-  CLEAR_TITLES,
-  FETCH_TITLE_SUCCESS
+  FETCH_TITLE_SUCCESS,
+  CHANGE_TITLES_QUERY
 } from 'Constants/actions'
 
 import { apiUrl } from 'Constants/urls';
-
-export function fetchTitlesStatus(status) {
-  return {
-    type: FETCH_TITLES_STATUS,
-    status
-  };
-}
 
 export function callFetchTitles(shouldAppend) {
   return {
     type: CALL_FETCH_TITLES,
     payload: {
       shouldAppend
+    }
+  };
+}
+
+export function callChangeTitlesQuery(query) {
+  return {
+    type: CALL_CHANGE_TITLES_QUERY,
+    payload: {
+      query
+    }
+  };
+}
+
+export function callSetTitleRating({ titleId, rating }) {
+  return {
+    type: CALL_SET_TITLE_RATING,
+    payload: {
+      titleId,
+      rating
+    }
+  };
+}
+
+export function fetchTitlesStatus(status) {
+  return {
+    type: FETCH_TITLES_STATUS,
+    payload: {
+      status
     }
   };
 }
@@ -41,18 +61,17 @@ export function fetchTitlesSuccess({ count, titles }) {
 export function fetchUpTitlesSuccess(titles) {
   return {
     type: FETCH_UP_TITLES_SUCCESS,
-    titlesData: {
+    payload: {
       titles
     }
   };
 }
 
-export function callSetTitleRating({ titleId, rating }) {
+export function changeTitlesQuery(query) {
   return {
-    type: CALL_SET_TITLE_RATING,
+    type: CHANGE_TITLES_QUERY,
     payload: {
-      titleId,
-      rating
+      query
     }
   };
 }

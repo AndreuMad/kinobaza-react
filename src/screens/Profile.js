@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { string, number, func } from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import AuthController from 'Components/hoc/AuthController';
 import AvatarForm from 'Components/settings/AvatarForm';
 import ProfileForm from 'Components/settings/ProfileForm';
 
 import {
-  editUser,
-  loadAvatar
+  callEditUser,
+  callLoadAvatar
 } from 'Actions/user-actions'
 
 class ProfilePage extends Component {
@@ -53,13 +54,13 @@ class ProfilePage extends Component {
           <h1>Редагувати профіль</h1>
           <hr/>
           <AvatarForm
-            handleAvatarEdit={handleAvatarEdit}
+            onSubmit={handleAvatarEdit}
             avatar={avatar}
           />
           <hr/>
           <ProfileForm
             initialValues={{
-              name: name,
+              name,
               dateOfBirth,
               avatar
             }}
@@ -83,9 +84,9 @@ ProfilePage.propTypes = {
   loadAvatar: func
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  editUser: ({ _id, name, dateOfBirth }) => dispatch(editUser({ _id, name, dateOfBirth })),
-  loadAvatar: ({ _id, photo }) => dispatch(loadAvatar({ _id, photo }))
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  editUser: ({ _id, name, dateOfBirth }) => callEditUser({ _id, name, dateOfBirth }),
+  loadAvatar: ({ _id, photo }) => callLoadAvatar({ _id, photo })
+}, dispatch);
 
 export default AuthController(connect(null, mapDispatchToProps)(ProfilePage), Placeholder);

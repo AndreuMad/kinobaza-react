@@ -9,11 +9,13 @@ import {
 import {
   fetchTitlesStatus,
   fetchTitlesSuccess,
-  fetchUpTitlesSuccess
+  fetchUpTitlesSuccess,
+  changeTitlesQuery
 } from 'Actions/titles-actions'
 
 import {
   CALL_FETCH_TITLES,
+  CALL_CHANGE_TITLES_QUERY,
   CALL_SET_TITLE_RATING
 } from 'Constants/actions';
 
@@ -46,13 +48,23 @@ function* fetchTitles(action) {
   }
 }
 
+function* changeQuery(action) {
+  try {
+    const { query } = action.payload;
+    console.log(query);
+    yield put(changeTitlesQuery(query));
+    yield fetchTitles({ payload: { shouldAppend: false } });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function* setTitleRating(action) {
   try {
     const { titleId, rating } = action.payload;
     const userId = yield select(({ auth: { user: { _id: userId } } }) => userId);
 
     const response = yield call(apiSetTitleRating, { userId, titleId, rating });
-    console.log(response);
   } catch (error) {
     console.log(error);
   }
@@ -61,6 +73,7 @@ function* setTitleRating(action) {
 function* saga() {
   yield takeLatest(CALL_FETCH_TITLES, fetchTitles);
   yield takeLatest(CALL_SET_TITLE_RATING, setTitleRating);
+  yield takeLatest(CALL_CHANGE_TITLES_QUERY, changeQuery);
 }
 
 export default saga;

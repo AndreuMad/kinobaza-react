@@ -50,13 +50,6 @@ export const actorsReducer = (state = defaultActorsState, action) => {
         ]
       };
 
-    case CLEAR_ACTORS:
-      return {
-        ...state,
-        actors: [],
-        actorsTotalCount: 0
-      };
-
     case CHANGE_ACTORS_QUERY:
       return {
         ...state,
