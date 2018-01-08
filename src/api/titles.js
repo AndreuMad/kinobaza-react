@@ -1,9 +1,9 @@
 import Axios from 'axios';
 import { apiUrl } from 'Constants/urls';
 
-export function apiFetchTitles(query) {
+export function apiFetchTitles(params) {
   return Axios.get(`${apiUrl}/titles`, {
-    query
+    params
   })
     .then(({ data }) => data)
     .catch((error) => {

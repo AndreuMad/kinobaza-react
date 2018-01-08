@@ -6,41 +6,23 @@ import AuthController from 'Components/hoc/AuthController';
 
 import { textareaComponent } from 'Components/formComponents/reduxForm/textareaComponent';
 
-import { postComment } from 'Actions/comments-actions';
-
-class PostCommentForm extends Component {
-  handleSubmit = ({ comment: text }) => {
-    const {
-      postId,
-      userId,
-      postComment
-    } = this.props;
-
-    postComment({ userId, postId, text });
-  }
-
-  render() {
-    const { handleSubmit } = this.props;
-
-    return (
-      <form onSubmit={handleSubmit(this.handleSubmit)}>
-        <Field
-          name="comment"
-          component={textareaComponent}
-          placeholder="Залиште свій коментар"
-        />
-        <div className="btn-group">
-          <button>Коментувати</button>
-        </div>
-      </form>
-    );
-  }
-}
+const PostCommentForm = ({ handleSubmit }) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <Field
+        name="comment"
+        component={textareaComponent}
+        placeholder="Залиште свій коментар"
+      />
+      <div className="btn-group">
+        <button>Коментувати</button>
+      </div>
+    </form>
+  );
+};
 
 PostCommentForm.propTypes = {
-  postId: string,
-  userId: string,
-  handleSubmit: func
+  handleSubmit: func.isRequired
 };
 
 const Placeholder = () => (
@@ -49,11 +31,9 @@ const Placeholder = () => (
 
 const validate = ({ comment }) => {
   const errors = {};
-
   if (!comment) {
     errors.comment = 'Будь-ласка, введіть не менше 2 символів';
   }
-
   return errors;
 };
 

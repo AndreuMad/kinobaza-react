@@ -4,7 +4,8 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   apiFetchPosts,
   apiFetchArticlePost,
-  apiFetchPost
+  apiFetchPost,
+  apiCreateComment
 } from 'Api/posts';
 
 import {
@@ -12,12 +13,14 @@ import {
   fetchPostsSuccess,
   fetchUpPostsSuccess,
   fetchArticlePostSuccess,
-  fetchPostSuccess
+  fetchPostSuccess,
+  createCommentSuccess
 } from 'Actions/posts-actions';
 
 import {
   CALL_FETCH_POSTS,
-  CALL_FETCH_POST
+  CALL_FETCH_POST,
+  CALL_CREATE_COMMENT
 } from 'Constants/actions';
 
 function* fetchPosts(action) {
@@ -65,9 +68,23 @@ function* fetchPost(action) {
   }
 }
 
-function* watchPosts() {
-  yield takeLatest(CALL_FETCH_POSTS, fetchPosts);
-  yield takeLatest(CALL_FETCH_POST, fetchPost);
+function* createComment(action) {
+  try {
+    const { postId, comment } = action.payload;
+    const userId = yield select(({
+      auth: { user: { _id } }
+    }) => _id);
+    const response = yield call(apiCreateComment, { userId, postId, comment });
+    yield put(createCommentSuccess(response));
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-export default watchPosts;
+function* saga() {
+  yield takeLatest(CALL_FETCH_POSTS, fetchPosts);
+  yield takeLatest(CALL_FETCH_POST, fetchPost);
+  yield takeLatest(CALL_CREATE_COMMENT, createComment);
+}
+
+export default saga;

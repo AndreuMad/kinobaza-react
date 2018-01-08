@@ -51,7 +51,6 @@ function* fetchTitles(action) {
 function* changeQuery(action) {
   try {
     const { query } = action.payload;
-    console.log(query);
     yield put(changeTitlesQuery(query));
     yield fetchTitles({ payload: { shouldAppend: false } });
   } catch (error) {

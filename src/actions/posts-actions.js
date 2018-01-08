@@ -1,12 +1,16 @@
 import {
+  // Posts
   CALL_FETCH_POSTS,
   FETCH_POSTS_STATUS,
   FETCH_POSTS_SUCCESS,
   FETCH_UP_POSTS_SUCCESS,
   FETCH_ARTICLE_POST_SUCCESS,
-  CLEAR_POSTS,
+  // Post
   CALL_FETCH_POST,
-  FETCH_POST_SUCCESS
+  FETCH_POST_SUCCESS,
+  // Comment
+  CALL_CREATE_COMMENT,
+  CREATE_COMMENT_SUCCESS
 } from 'Constants/actions';
 
 export function callFetchPosts(params, shouldAppend, shouldFetchArticle) {
@@ -72,6 +76,25 @@ export function fetchPostSuccess({ post, comments }) {
     payload: {
       post,
       comments
+    }
+  };
+}
+
+export function callCreateComment({ postId, comment }) {
+  return {
+    type: CALL_CREATE_COMMENT,
+    payload: {
+      postId,
+      comment
+    }
+  };
+}
+
+export function createCommentSuccess(comment) {
+  return {
+    type: CREATE_COMMENT_SUCCESS,
+    payload: {
+      comment
     }
   };
 }

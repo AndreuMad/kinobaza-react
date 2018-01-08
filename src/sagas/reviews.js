@@ -45,7 +45,7 @@ function* fetchReviews(action) {
 }
 
 function* saga() {
-  yield takeLatest(fetchReviews);
+  yield takeLatest(CALL_FETCH_REVIEWS, fetchReviews);
 }
 
 export default saga;

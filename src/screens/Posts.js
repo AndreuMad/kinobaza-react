@@ -31,8 +31,6 @@ class PostsPage extends Component {
     const postsCurrentCount = nextPosts.length + 1;
     const shouldLoad = postsCurrentCount < postsTotalCount;
 
-    console.log(shouldLoad, postsCurrentCount, postsTotalCount);
-
     if (!shouldLoad) {
       this.setState({
         allPostsLoaded: true,

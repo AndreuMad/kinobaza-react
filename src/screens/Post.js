@@ -1,31 +1,53 @@
 import React, { Component } from 'react';
 import { string, number, bool, func, shape } from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import { callFetchPost } from 'Actions/posts-actions';
-import { postComment } from 'Actions/comments-actions';
+import {
+  callFetchPost,
+  callCreateComment
+} from 'Actions/posts-actions';
 
 import PostComments from 'Components/posts/PostComments';
 
 class Post extends Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    const {
+      fetchPost,
+      match: {
+        params: {
+          id: postId
+        }
+      }
+    } = this.props;
+
+    fetchPost(postId);
   }
 
-  componentDidMount() {
-    this.props.callFetchPost(this.props.match.params.id);
-  }
+  handleCommentCreate = (comment) => {
+    const {
+      match: {
+        params: {
+          id: postId
+        }
+      },
+      createComment
+    } = this.props;
+
+    createComment({ postId, ...comment });
+  };
 
   render() {
     const {
-      post,
-      comments,
-      userId,
-      postComment
-    } = this.props;
+      props: {
+        post,
+        comments
+      },
+      handleCommentCreate
+    } = this;
 
     return (
-      post ?
+      post && (
         <article className="post-page">
           <section
             className="introduction"
@@ -39,8 +61,7 @@ class Post extends Component {
                       style={{
                         backgroundImage: `url('${post.image.url}'`
                       }}
-                    >
-                    </figure>
+                    />
                     <h1 className="introduction-title">{post.title}</h1>
                     <p className="introduction-date">{post.date}</p>
                     <div className="introduction-info">
@@ -67,8 +88,10 @@ class Post extends Component {
                     <div className="row">
                       <div className="col s-10 m-11">
                         <div className="col-inner">
-                          <p className="post-body-text"
-                             dangerouslySetInnerHTML={{ __html: post.textArticle }}/>
+                          <p
+                            className="post-body-text"
+                            dangerouslySetInnerHTML={{ __html: post.textArticle }}
+                          />
                         </div>
                       </div>
                       <div className="col m-1">
@@ -91,14 +114,10 @@ class Post extends Component {
             </div>
           </section>
           <PostComments
-            postId={post._id}
-            userId={userId}
             comments={comments}
-            postComment={postComment}
+            createComment={handleCommentCreate}
           />
-        </article> : null
-
-    )
+        </article>));
   }
 }
 
@@ -115,22 +134,20 @@ Post.propTypes = {
     title: string
   }),
   userId: string,
-  callFetchPost: func.isRequired,
-  postComment: func
+  fetchPost: func.isRequired,
+  createComment: func
 };
 
 const mapStateToProps = ({
-                           posts: { post, comments },
-                           auth: { user: { _id: userId } }
-                         }) => ({
+  posts: { post, comments }
+}) => ({
   post,
-  comments,
-  userId
+  comments
 });
 
-const mapDispatchToProps = dispatch => ({
-  callFetchPost: id => dispatch(callFetchPost(id)),
-  postComment: params => dispatch(postComment(params))
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fetchPost: id => callFetchPost(id),
+  createComment: comment => callCreateComment(comment)
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

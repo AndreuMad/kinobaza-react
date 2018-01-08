@@ -28,3 +28,20 @@ export function apiFetchPost(id) {
       throw (error);
     });
 }
+
+export function apiCreateComment({ userId, postId, comment }) {
+  const token = localStorage.getItem('token');
+  return Axios.post(
+    `${apiUrl}/comments`,
+    { userId, postId, comment },
+    {
+      headers: {
+        authorization: token
+      }
+    }
+  )
+    .then(({ data }) => data)
+    .catch((error) => {
+      throw (error);
+    });
+}

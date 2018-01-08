@@ -4,7 +4,7 @@ import {
   FETCH_UP_POSTS_SUCCESS,
   FETCH_ARTICLE_POST_SUCCESS,
   FETCH_POST_SUCCESS,
-  POST_COMMENT_SUCCESS
+  CREATE_COMMENT_SUCCESS
 } from 'Constants/actions';
 
 const defaultPostsState = {
@@ -53,12 +53,12 @@ export const postsReducer = (state = defaultPostsState, action) => {
         post: payload.post,
         comments: payload.comments
       };
-    case POST_COMMENT_SUCCESS:
+    case CREATE_COMMENT_SUCCESS:
       return {
         ...state,
         comments: [
-          ...state.comments,
-          payload.comment
+          payload.comment,
+          ...state.comments
         ]
       };
 
