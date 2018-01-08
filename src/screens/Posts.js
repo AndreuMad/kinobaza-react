@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 
 import {
@@ -23,7 +24,7 @@ class PostsPage extends Component {
   }
 
   componentDidMount() {
-    this.props.callFetchPosts({ skip: 0, limit: 8 }, false, true);
+    this.props.fetchPosts({ skip: 0, limit: 8 }, false, true);
   }
 
   componentWillReceiveProps({ posts: nextPosts }) {
@@ -58,7 +59,7 @@ class PostsPage extends Component {
     const {
       props: {
         fetchPostsStatus,
-        callFetchPosts
+        fetchPosts
       },
       state: {
         shouldLoadPosts
@@ -68,7 +69,7 @@ class PostsPage extends Component {
 
     if (shouldLoadPosts && fetchPostsStatus) {
       if (pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
-        callFetchPosts({ limit: 3 }, true);
+        fetchPosts({ limit: 3 }, true);
       }
     }
   };
@@ -95,7 +96,7 @@ class PostsPage extends Component {
           <h1 className="section-heading">Публікації</h1>
           <div className="row">
             {
-              articlePost ?
+              articlePost && (
                 <div className="col m-8">
                   <div className="col-inner">
                     <CardArticle
@@ -107,11 +108,20 @@ class PostsPage extends Component {
                       date={articlePost.date}
                     />
                   </div>
-                </div> : null
+                </div>
+              )
             }
             {
-              posts.length ?
-                posts.map(({ _id, image, title, date }, index) => (
+              posts.length &&
+                (posts.map((
+                    {
+                      _id,
+                      image,
+                      title,
+                      date
+                    },
+                    index
+                  ) => (
                     <div key={`post_${_id}`} className="col m-4">
                       <div className="col-inner">
                         <CardRegular
@@ -122,20 +132,20 @@ class PostsPage extends Component {
                         />
                       </div>
                     </div>
-                  )
-                ) : null
+                  )))
             }
           </div>
           <div className="load-more-section">
             <div className="btn-group align-center">
               {
-                !shouldLoadPosts && !allPostsLoaded ?
+                !shouldLoadPosts && !allPostsLoaded && (
                   <button
                     className="btn gradient-purple"
                     onClick={handleLoadButton}
                   >
                     Load more
-                  </button> : null
+                  </button>
+                )
               }
             </div>
           </div>
@@ -150,7 +160,7 @@ PostsPage.propTypes = {
   postsTotalCount: PropTypes.number,
   articlePost: PropTypes.object,
   fetchPostsStatus: PropTypes.bool.isRequired,
-  callFetchPosts: PropTypes.func.isRequired,
+  fetchPosts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ posts }) => ({
@@ -160,8 +170,10 @@ const mapStateToProps = ({ posts }) => ({
   fetchPostsStatus: posts.fetchPostsStatus
 });
 
-const mapDispatchToProps = dispatch => ({
-  callFetchPosts: (props, shouldAppend, shouldFetchArticle) => dispatch(callFetchPosts(props, shouldAppend, shouldFetchArticle)),
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fetchPosts: (props, shouldAppend, shouldFetchArticle) => (
+    callFetchPosts(props, shouldAppend, shouldFetchArticle)
+  )
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsPage);

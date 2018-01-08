@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { string, bool, func, arrayOf, number, shape } from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 
 import AuthController from 'Components/hoc/AuthController';
@@ -27,7 +28,7 @@ class PersonsPage extends Component {
   }
 
   componentDidMount() {
-    this.props.callFetchActors();
+    this.props.fetchActors();
     window.addEventListener('scroll', this.handleActorsLoad);
   }
 
@@ -48,7 +49,7 @@ class PersonsPage extends Component {
     const {
       props: {
         fetchActorsStatus,
-        callFetchActors
+        fetchActors
       },
       state: {
         shouldLoadActors
@@ -58,23 +59,23 @@ class PersonsPage extends Component {
 
     if (shouldLoadActors && fetchActorsStatus) {
       if (pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
-        callFetchActors(true);
+        fetchActors(true);
       }
     }
   };
 
   handleQueryChange = (name, value) => {
-    this.props.callChangeActorsQuery({ [name]: value });
+    this.props.changeActorsQuery({ [name]: value });
   };
 
   handleActorLike = (actorId) => {
     const {
       likeActorStatus,
-      callLikeActor
+      likeActor
     } = this.props;
 
     if (likeActorStatus) {
-      callLikeActor({ actorId });
+      likeActor({ actorId });
     }
   };
 
@@ -178,9 +179,9 @@ PersonsPage.propTypes = {
   })),
   actorsTotalCount: number.isRequired,
   fetchActorsStatus: bool.isRequired,
-  callFetchActors: func.isRequired,
-  callChangeActorsQuery: func.isRequired,
-  callLikeActor: func.isRequired,
+  fetchActors: func.isRequired,
+  changeActorsQuery: func.isRequired,
+  likeActor: func.isRequired,
   likeActorStatus: bool.isRequired
 };
 
@@ -200,10 +201,10 @@ const mapStateToProps = ({
   likeActorStatus
 });
 
-const mapDispatchToProps = dispatch => ({
-  callFetchActors: shouldAppend => dispatch(callFetchActors(shouldAppend)),
-  callChangeActorsQuery: params => dispatch(callChangeActorsQuery(params)),
-  callLikeActor: ({ userId, actorId }) => dispatch(callLikeActor({ userId, actorId }))
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fetchActors: shouldAppend => callFetchActors(shouldAppend),
+  changeActorsQuery: params => callChangeActorsQuery(params),
+  likeActor: ({ userId, actorId }) => callLikeActor({ userId, actorId })
+}, dispatch);
 
 export default AuthController(connect(mapStateToProps, mapDispatchToProps)(PersonsPage), Loader);
