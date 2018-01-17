@@ -4,7 +4,7 @@ import InputField from 'Components/formComponents/reduxForm/InputField';
 import { string, func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { callUserSignUp } from 'Actions/auth-actions';
+import { callUserSignUp } from 'Ducks/auth';
 
 import { emailPattern } from 'Constants/validatePatterns';
 

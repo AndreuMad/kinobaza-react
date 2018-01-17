@@ -7,7 +7,7 @@ import ReviewItem from 'Components/Reviews/ReviewItem';
 
 import {
   callFetchReviews
-} from 'Actions/reviews-actions'
+} from 'Ducks/reviews'
 
 class ReviewsPage extends Component {
   componentDidMount() {

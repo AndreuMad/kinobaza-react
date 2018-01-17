@@ -15,13 +15,13 @@ import {
   likeActorStatus,
   saveActorLike,
   removeActorLike
-} from 'Actions/actors-actions';
+} from 'Ducks/actors';
 
 import {
   CALL_FETCH_ACTORS,
   CALL_ACTOR_LIKE,
   CALL_CHANGE_ACTORS_QUERY
-} from 'Constants/actions';
+} from 'Ducks/actors';
 
 function* fetchActors(action) {
   try {

@@ -9,11 +9,11 @@ import {
   fetchReviewsStatus,
   fetchReviewsSuccess,
   fetchUpReviewsSuccess
-} from 'Actions/reviews-actions';
+} from 'Ducks/reviews';
 
 import {
   CALL_FETCH_REVIEWS
-} from 'Constants/actions';
+} from 'Ducks/reviews';
 
 function* fetchReviews(action) {
   try {

@@ -14,13 +14,11 @@ import {
   authSuccess,
   authError,
   userSignOut
-} from 'Actions/auth-actions';
+} from 'Ducks/auth';
 
 import {
-  callEditUser,
-  callLoadAvatar,
   editUserSuccess
-} from 'Actions/user-actions';
+} from 'Ducks/auth';
 
 import {
   CALL_AUTH_TOKEN,
@@ -29,7 +27,7 @@ import {
   CALL_USER_SIGN_UP,
   CALL_EDIT_USER,
   CALL_LOAD_AVATAR
-} from 'Constants/actions';
+} from 'Ducks/auth';
 
 function* signWithToken(action) {
   try {

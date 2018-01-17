@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import {
   callFetchPost,
   callCreateComment
-} from 'Actions/posts-actions';
+} from 'Ducks/posts';
 
 import PostComments from 'Components/posts/PostComments';
 

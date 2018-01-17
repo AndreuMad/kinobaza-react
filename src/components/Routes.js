@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { dispatch } from 'redux';
 
 import Header from 'Components/header/Header';
@@ -12,21 +12,21 @@ import ReviewsPage from 'Screens/Reviews';
 import ProfilePage from 'Screens/Profile';
 
 const Routes = () => (
-    <div>
-        <Header />
-        <main className="main-content">
-            <Switch>
-                <Redirect exact from="/" to="/posts"/>
-                <Route path='/login' component={LoginPage}/>
-                <Route path='/posts/:id' component={PostPage}/>
-                <Route path='/posts' component={PostsPage}/>
-                <Route path='/titles' component={TitlesPage}/>
-                <Route path='/persons' component={PersonsPage}/>
-                <Route path='/reviews' component={ReviewsPage}/>
-                <Route path='/profile' component={ProfilePage}/>
-            </Switch>
-        </main>
-    </div>
+  <div>
+    <Header />
+    <main className="main-content">
+      <Switch>
+        <Redirect exact from="/" to="/posts" />
+        <Route path='/login' component={LoginPage} />
+        <Route path='/posts/:id' component={PostPage} />
+        <Route path='/posts' component={PostsPage} />
+        <Route path='/titles' component={TitlesPage} />
+        <Route path='/persons' component={PersonsPage} />
+        <Route path='/reviews' component={ReviewsPage} />
+        <Route path='/profile' component={ProfilePage} />
+      </Switch>
+    </main>
+  </div>
 );
 
 export default Routes;

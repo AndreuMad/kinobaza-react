@@ -14,7 +14,7 @@ import {
   callLikeActor,
   callChangeActorsQuery,
   clearActors
-} from 'Actions/actors-actions';
+} from 'Ducks/actors';
 
 class PersonsPage extends Component {
   constructor(props) {

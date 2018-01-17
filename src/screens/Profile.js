@@ -10,7 +10,7 @@ import ProfileForm from 'Components/settings/ProfileForm';
 import {
   callEditUser,
   callLoadAvatar
-} from 'Actions/user-actions'
+} from 'Ducks/auth'
 
 class ProfilePage extends Component {
   handleAvatarEdit = ({ photo }) => {

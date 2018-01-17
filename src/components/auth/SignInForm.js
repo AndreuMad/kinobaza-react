@@ -5,7 +5,7 @@ import { string, func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 
-import { callUserSignIn } from 'Actions/auth-actions'
+import { callUserSignIn } from 'Ducks/auth';
 
 import { emailPattern } from 'Constants/validatePatterns';
 

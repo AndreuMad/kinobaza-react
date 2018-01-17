@@ -15,13 +15,13 @@ import {
   fetchArticlePostSuccess,
   fetchPostSuccess,
   createCommentSuccess
-} from 'Actions/posts-actions';
+} from 'Ducks/posts';
 
 import {
   CALL_FETCH_POSTS,
   CALL_FETCH_POST,
   CALL_CREATE_COMMENT
-} from 'Constants/actions';
+} from 'Ducks/posts';
 
 function* fetchPosts(action) {
   try {

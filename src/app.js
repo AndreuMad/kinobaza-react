@@ -5,10 +5,10 @@ import createSagaMiddleware from 'redux-saga';
 import { BrowserRouter } from 'react-router-dom';
 
 import Routes from 'Components/Routes';
-import rootReducer from 'Reducers';
+import rootReducer from './reducers';
 import rootSaga from 'Sagas';
 
-import { authTokenRequest } from 'Actions/auth-actions';
+import { authTokenRequest } from 'Ducks/auth';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));

@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import {
   callFetchPosts
-} from 'Actions/posts-actions';
+} from 'Ducks/posts';
 
 import CardRegular from 'Components/posts/CardRegular';
 import CardArticle from 'Components/posts/CardArticle';

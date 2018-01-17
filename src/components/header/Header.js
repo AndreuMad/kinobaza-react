@@ -7,7 +7,7 @@ import classNames from 'classnames';
 
 import HeaderUserBlock from './headerUserBlock';
 
-import { callUserSignOut } from 'Actions/auth-actions';
+import { callUserSignOut } from 'Ducks/auth';
 
 import logoImage from 'Images/icons/logo-film.png';
 

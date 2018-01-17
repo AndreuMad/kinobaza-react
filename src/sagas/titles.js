@@ -11,13 +11,13 @@ import {
   fetchTitlesSuccess,
   fetchUpTitlesSuccess,
   changeTitlesQuery
-} from 'Actions/titles-actions'
+} from 'Ducks/titles'
 
 import {
   CALL_FETCH_TITLES,
   CALL_CHANGE_TITLES_QUERY,
   CALL_SET_TITLE_RATING
-} from 'Constants/actions';
+} from 'Ducks/titles';
 
 function* fetchTitles(action) {
   try {

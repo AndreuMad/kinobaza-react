@@ -11,7 +11,7 @@ import {
   callFetchTitles,
   callChangeTitlesQuery,
   callSetTitleRating
-} from 'Actions/titles-actions';
+} from 'Ducks/titles';
 
 class TitlesPage extends Component {
   constructor(props) {
