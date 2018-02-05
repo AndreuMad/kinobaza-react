@@ -5,7 +5,7 @@ import { NavLink, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import classNames from 'classnames';
 
-import HeaderUserBlock from './headerUserBlock';
+import HeaderUserBlock from 'Components/header/HeaderUserBlock';
 
 import { callUserSignOut } from 'Ducks/auth';
 

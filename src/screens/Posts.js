@@ -28,17 +28,18 @@ class PostsPage extends Component {
   }
 
   componentWillReceiveProps({ posts: nextPosts }) {
-    const { postsTotalCount } = this.props;
-    const postsCurrentCount = nextPosts.length + 1;
-    const shouldLoad = postsCurrentCount < postsTotalCount;
+    const {
+      props: {
+        posts,
+        postsTotalCount
+      }
+    } = this;
 
-    if (!shouldLoad) {
-      this.setState({
-        allPostsLoaded: true,
-        shouldLoadPosts: false
-      });
-
-      window.removeEventListener('scroll', this.handlePostsLoad);
+    if (posts.length !== nextPosts.length) {
+      if (postsTotalCount === nextPosts.length + 1) {
+        this.setState({ allPostsLoaded: true });
+        window.removeEventListener('scroll', this.handlePostsLoad);
+      }
     }
   }
 
