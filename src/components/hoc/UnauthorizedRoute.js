@@ -3,27 +3,27 @@ import { bool, func } from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-class ProtectedRoute extends Component {
-  renderProtected = (routeProps) => {
+class UnauthorizedRoute extends Component {
+  renderRoute = (routeProps) => {
     const {
       authenticated,
-      component: ProtectedComponent,
+      component: UnauthorizedComponent,
       status
     } = this.props;
 
-    return status && (authenticated ? <ProtectedComponent {...routeProps} /> : <Redirect to="login/sign-in" />);
+    return status && (!authenticated ? <UnauthorizedComponent {...routeProps} /> : <Redirect to="/profile" />);
   };
 
   render() {
     const { component, ...rest } = this.props;
 
     return (
-      <Route {...rest} render={this.renderProtected} />
+      <Route {...rest} render={this.renderRoute} />
     );
   }
 }
 
-ProtectedRoute.propTypes = {
+UnauthorizedRoute.propTypes = {
   authenticated: bool.isRequired,
   component: func.isRequired,
   status: bool.isRequired
@@ -32,4 +32,4 @@ ProtectedRoute.propTypes = {
 export default connect(state => ({
   authenticated: !!state.auth.authenticated,
   status: state.auth.status
-}), null, null, { pure: false })(ProtectedRoute);
+}), null, null, { pure: false })(UnauthorizedRoute);

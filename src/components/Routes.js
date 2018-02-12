@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { dispatch } from 'redux';
 
 import ProtectedRoute from 'Components/hoc/ProtectedRoute';
+import UnauthorizedRoute from 'Components/hoc/UnauthorizedRoute';
 
 import Header from 'Components/header/Header';
 import LoginPage from 'Screens/Login';
@@ -19,12 +20,12 @@ const Routes = () => (
     <main className="main-content">
       <Switch>
         <Redirect exact from="/" to="/posts" />
-        <Route path="/login" component={LoginPage} />
         <Route path="/posts/:id" component={PostPage} />
         <Route path="/posts" component={PostsPage} />
         <Route path="/titles" component={TitlesPage} />
         <Route path="/persons" component={PersonsPage} />
         <Route path="/reviews" component={ReviewsPage} />
+        <UnauthorizedRoute path="/login" component={LoginPage} />
         <ProtectedRoute path="/profile" component={ProfilePage} />
       </Switch>
     </main>

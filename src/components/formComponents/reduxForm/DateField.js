@@ -41,7 +41,7 @@ const DateField = ({
     <DatePicker
       customInput={<CustomInput />}
       onChange={({ _d }) => onChange(_d.getTime())}
-      selected={moment(value)}
+      selected={moment(+value || Date.now())}
     />
   </label>
 );
@@ -49,7 +49,7 @@ const DateField = ({
 DateField.propTypes = {
   input: shape({
     onChange: func.isRequired,
-    value: number
+    value: string
   }),
   className: string,
   labelClassName: string,

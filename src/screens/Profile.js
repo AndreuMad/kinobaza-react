@@ -52,12 +52,12 @@ class ProfilePage extends Component {
       <section className="settings-page">
         <div className="container">
           <h1>Редагувати профіль</h1>
-          <hr/>
+          <hr />
           <AvatarForm
             onSubmit={handleAvatarEdit}
             avatar={avatar}
           />
-          <hr/>
+          <hr />
           <ProfileForm
             initialValues={{
               name,
