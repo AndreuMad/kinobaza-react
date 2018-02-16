@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import InputField from 'Components/formComponents/reduxForm/InputField';
-
 import { string, func, object } from 'prop-types';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 
 import { callUserSignIn } from 'Ducks/auth';
 
+import InputField from 'Components/formComponents/reduxForm/InputField';
 import { emailPattern } from 'Constants/validatePatterns';
 
 class SignIn extends Component {
@@ -94,8 +94,8 @@ const mapStateToProps = ({ auth: { error } }) => ({
   errorMessage: error
 });
 
-const mapDispatchToProps = dispatch => ({
-  callUserSignIn: ({ email, password, history }) => dispatch(callUserSignIn({ email, password, history }))
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  callUserSignIn: ({ email, password, history }) => callUserSignIn({ email, password, history })
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({ form: 'signIn', validate })(SignIn));

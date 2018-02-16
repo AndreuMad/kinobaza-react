@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
+import { routerReducer as router } from 'react-router-redux';
 
 import { reducer as actors } from 'Ducks/actors';
 import { reducer as auth } from 'Ducks/auth';
@@ -13,5 +14,6 @@ export default combineReducers({
   posts,
   titles,
   form,
-  reviews
+  reviews,
+  router
 });

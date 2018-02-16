@@ -11,6 +11,57 @@ import { callUserSignOut } from 'Ducks/auth';
 
 import logoImage from 'Images/icons/logo-film.png';
 
+const headerLinks = [
+  {
+    key: 'headerLinkToPosts',
+    to: 'posts',
+    title: 'публікації',
+    shouldRender: true
+  },
+  {
+    key: 'headerLinkToTitles',
+    to: 'titles',
+    title: 'стрічки',
+    shouldRender: true
+  },
+  {
+    key: 'headerLinkToTrailers',
+    to: 'trailers',
+    title: 'трейлери',
+    shouldRender: false
+  },
+  {
+    key: 'headerLinkToReviews',
+    to: 'reviews',
+    title: 'рецензії',
+    shouldRender: true
+  },
+  {
+    key: 'headerLinkToPersons',
+    to: 'persons',
+    title: 'персони',
+    shouldRender: true
+  },
+  {
+    key: 'headerLinkToLists',
+    to: 'lists',
+    title: 'списки',
+    shouldRender: false
+  },
+  {
+    key: 'headerLinkToBlogs',
+    to: 'blogs',
+    title: 'блоги',
+    shouldRender: false
+  },
+  {
+    key: 'headerLinkToForum',
+    to: 'forum',
+    title: 'форум',
+    shouldRender: false
+  }
+];
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +98,7 @@ class Header extends Component {
   };
 
   render() {
-    const { callUserSignOut } = this.props;
+    const { callUserSignOut, routePush } = this.props;
 
     const {
       sticky
@@ -73,7 +124,7 @@ class Header extends Component {
               <div className="col m-4">
                 <div className="col-inner header-control-item center-xs">
                   <NavLink to="/" className="header-logo">
-                    <img src={logoImage} alt="Kinobaza"/>
+                    <img src={logoImage} alt="Kinobaza" />
                     <span
                       key="headerLogo"
                       className="header-logo-text"
@@ -87,10 +138,11 @@ class Header extends Component {
                 <div className="col-inner header-control-item end-xs">
                   <form className="header-search">
                     <label className="header-search-field">
-                      <input type="text" className="header-search-input"/>
+                      <input type="text" className="header-search-input" />
                       <span
                         key="headerSearchIndicator"
-                        className="header-search-indicator"/>
+                        className="header-search-indicator"
+                      />
                     </label>
                   </form>
                 </div>
@@ -98,70 +150,25 @@ class Header extends Component {
             </div>
           </div>
           <nav className="header-navigation">
-            <NavLink
-              key="headerLinkToPosts"
-              to="/posts"
-              className="header-navigation-link"
-              activeClassName="current"
-            >
-              публікації
-            </NavLink>
-            <NavLink
-              key="headerLinkToTitles"
-              to="/titles"
-              className="header-navigation-link"
-              activeClassName="current"
-            >
-              стрічки
-            </NavLink>
-            <NavLink
-              key="headerLinkToTrailers"
-              to="/trailers"
-              className="header-navigation-link"
-              activeClassName="current"
-            >
-              трейлери
-            </NavLink>
-            <NavLink
-              key="headerLinkToReviews"
-              to="/reviews"
-              className="header-navigation-link"
-              activeClassName="current"
-            >
-              рецензії
-            </NavLink>
-            <NavLink
-              key="headerLinkToPersons"
-              to="/persons"
-              className="header-navigation-link"
-              activeClassName="current"
-            >
-              персони
-            </NavLink>
-            <NavLink
-              key="headerLinkToLists"
-              to="/lists"
-              className="header-navigation-link"
-              activeClassName="current"
-            >
-              списки
-            </NavLink>
-            <NavLink
-              key="headerLinkToBlogs"
-              to="/blogs"
-              className="header-navigation-link"
-              activeClassName="current"
-            >
-              блоги
-            </NavLink>
-            <NavLink
-              key="headerLinkToForum"
-              to="/forum"
-              className="header-navigation-link"
-              activeClassName="current"
-            >
-              форум
-            </NavLink>
+            {
+              headerLinks.map(({
+                key,
+                to,
+                title,
+                shouldRender
+              }) => (
+                shouldRender && (
+                  <NavLink
+                    key={key}
+                    to={`/${to}`}
+                    className="header-navigation-link"
+                    activeClassName="current"
+                  >
+                    {title}
+                  </NavLink>
+                )
+              ))
+            }
           </nav>
         </div>
       </header>
@@ -179,4 +186,4 @@ const mapDispatchToProps = dispatch => ({
   callUserSignOut: () => dispatch(callUserSignOut())
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(Header));
+export default connect(null, mapDispatchToProps, null, { pure: false })(Header);

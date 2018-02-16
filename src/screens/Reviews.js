@@ -15,14 +15,15 @@ class ReviewsPage extends Component {
   }
 
   render() {
-    const {
-      reviews
-    } = this.props;
+    const { reviews } = this.props;
+    console.log(reviews);
 
     return (
       <article
         className="reviews-page"
-        ref={node => this.pageNode = node}
+        ref={(node) => {
+          this.pageNode = node;
+        }}
       >
         <div className="container">
           <h1 className="section-heading">Рецензії</h1>
