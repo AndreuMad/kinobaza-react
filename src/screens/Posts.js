@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { number, bool, func, array } from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
@@ -24,7 +24,7 @@ class PostsPage extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchPosts({ skip: 0, limit: 8 }, false, true);
+    this.props.fetchPostsDispatch({ skip: 0, limit: 8 });
   }
 
   componentWillReceiveProps({ posts: nextPosts }) {
@@ -60,7 +60,7 @@ class PostsPage extends Component {
     const {
       props: {
         fetchPostsStatus,
-        fetchPosts
+        fetchPostsDispatch
       },
       state: {
         shouldLoadPosts
@@ -70,7 +70,7 @@ class PostsPage extends Component {
 
     if (shouldLoadPosts && fetchPostsStatus) {
       if (pageNode.getBoundingClientRect().bottom - window.innerHeight < 100) {
-        fetchPosts({ limit: 3 }, true);
+        fetchPostsDispatch({ limit: 3 }, true);
       }
     }
   };
@@ -78,8 +78,7 @@ class PostsPage extends Component {
   render() {
     const {
       props: {
-        posts,
-        articlePost
+        posts
       },
       state: {
         allPostsLoaded,
@@ -91,49 +90,47 @@ class PostsPage extends Component {
     return (
       <article
         className="posts-page"
-        ref={node => this.pageNode = node}
+        ref={(node) => {
+          this.pageNode = node;
+        }}
       >
         <div className="container">
           <h1 className="section-heading">Публікації</h1>
           <div className="row">
             {
-              articlePost && (
-                <div className="col m-8">
-                  <div className="col-inner">
-                    <CardArticle
-                      key={`articlePost${articlePost._id}`}
-                      id={articlePost._id}
-                      image={articlePost.image}
-                      title={articlePost.title}
-                      text={articlePost.text}
-                      date={articlePost.date}
-                    />
-                  </div>
-                </div>
-              )
-            }
-            {
               posts.length &&
-                (posts.map((
-                    {
-                      _id,
-                      image,
-                      title,
-                      date
-                    },
-                    index
-                  ) => (
-                    <div key={`post_${_id}`} className="col m-4">
-                      <div className="col-inner">
-                        <CardRegular
-                          id={_id}
-                          image={image}
-                          title={title}
-                          date={date}
-                        />
-                      </div>
+              (posts.map(({
+                  _id,
+                  image,
+                  title,
+                  date,
+                  text,
+                  articlePost
+                }) => (
+                articlePost ? (
+                  <div key={`articlePost${_id}`} className="col m-8 first-xs">
+                    <div className="col-inner">
+                      <CardArticle
+                        id={_id}
+                        image={image}
+                        title={title}
+                        text={text}
+                        date={date}
+                      />
                     </div>
-                  )))
+                  </div>
+                ) : (
+                  <div key={`post_${_id}`} className="col m-4">
+                    <div className="col-inner">
+                      <CardRegular
+                        id={_id}
+                        image={image}
+                        title={title}
+                        date={date}
+                      />
+                    </div>
+                  </div>
+                ))))
             }
           </div>
           <div className="load-more-section">
@@ -157,24 +154,20 @@ class PostsPage extends Component {
 }
 
 PostsPage.propTypes = {
-  posts: PropTypes.array,
-  postsTotalCount: PropTypes.number,
-  articlePost: PropTypes.object,
-  fetchPostsStatus: PropTypes.bool.isRequired,
-  fetchPosts: PropTypes.func.isRequired,
+  posts: array.isRequired,
+  postsTotalCount: number.isRequired,
+  fetchPostsStatus: bool.isRequired,
+  fetchPostsDispatch: func.isRequired
 };
 
 const mapStateToProps = ({ posts }) => ({
   posts: posts.posts,
   postsTotalCount: posts.postsTotalCount,
-  articlePost: posts.articlePost,
   fetchPostsStatus: posts.fetchPostsStatus
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchPosts: (props, shouldAppend, shouldFetchArticle) => (
-    callFetchPosts(props, shouldAppend, shouldFetchArticle)
-  )
+  fetchPostsDispatch: callFetchPosts
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsPage);

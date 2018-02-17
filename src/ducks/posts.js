@@ -6,27 +6,24 @@ export const CALL_CREATE_COMMENT = 'CALL_CREATE_COMMENT';
 const FETCH_POSTS_STATUS = 'FETCH_POSTS_STATUS';
 const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS';
 const FETCH_UP_POSTS_SUCCESS = 'FETCH_UP_POSTS_SUCCESS';
-const FETCH_ARTICLE_POST_SUCCESS = 'FETCH_ARTICLE_POST_SUCCESS';
 const FETCH_POST_SUCCESS = 'FETCH_POST_SUCCESS';
 const CREATE_COMMENT_SUCCESS = 'CREATE_COMMENT_SUCCESS';
 
 const defaultPostsState = {
   posts: [],
   postsTotalCount: 0,
-  articlePost: null,
   fetchPostsStatus: true,
   post: null,
   comments: []
 };
 
 // Actions
-export function callFetchPosts(params, shouldAppend, shouldFetchArticle) {
+export function callFetchPosts(params, shouldAppend) {
   return {
     type: CALL_FETCH_POSTS,
     payload: {
       params,
-      shouldAppend,
-      shouldFetchArticle
+      shouldAppend
     }
   };
 }
@@ -55,15 +52,6 @@ export function fetchUpPostsSuccess({ posts }) {
     type: FETCH_UP_POSTS_SUCCESS,
     payload: {
       posts
-    }
-  };
-}
-
-export function fetchArticlePostSuccess(articlePost) {
-  return {
-    type: FETCH_ARTICLE_POST_SUCCESS,
-    payload: {
-      articlePost
     }
   };
 }
@@ -131,18 +119,13 @@ export const reducer = (state = defaultPostsState, action) => {
         ]
       };
 
-    case FETCH_ARTICLE_POST_SUCCESS:
-      return {
-        ...state,
-        articlePost: payload.articlePost
-      };
-
     case FETCH_POST_SUCCESS:
       return {
         ...state,
         post: payload.post,
         comments: payload.comments
       };
+
     case CREATE_COMMENT_SUCCESS:
       return {
         ...state,

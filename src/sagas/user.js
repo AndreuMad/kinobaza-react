@@ -1,5 +1,6 @@
 import 'regenerator-runtime/runtime';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, all, takeEvery } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
 
 import {
   apiSignToken,
@@ -45,14 +46,14 @@ function* signWithToken(action) {
 
 function* userSignIn(action) {
   try {
-    const { email, password, history } = action.payload;
+    const { email, password } = action.payload;
     yield put(authStatus(false));
     const { user, token } = yield call(apiSignIn, { email, password });
     yield put(authSuccess());
     yield put(editUserSuccess(user));
     yield put(authStatus(true));
-    localStorage.setItem('token', token);
-    history.push('/feature');
+    yield localStorage.setItem('token', token);
+    yield put(push('/posts'));
   } catch (error) {
     yield put(authError('Bad Login Info'));
     yield put(authStatus(true));
@@ -61,14 +62,14 @@ function* userSignIn(action) {
 
 function* userSignUp(action) {
   try {
-    const { values: { email, name, password }, history } = action.payload;
+    const { values: { email, name, password } } = action.payload;
     yield put(authStatus(false));
     const { user, token } = yield call(apiSignUp, { email, name, password });
     yield put(authSuccess());
     yield put(editUserSuccess(user));
     yield put(authStatus(true));
-    localStorage.setItem('token', token);
-    history.push('/feature');
+    yield localStorage.setItem('token', token);
+    yield put(push('/posts'));
   } catch (error) {
     yield put(authError(error));
     yield put(authStatus(true));
@@ -101,12 +102,14 @@ function* loadAvatar(action) {
 }
 
 function* watchUser() {
-  yield takeLatest(CALL_AUTH_TOKEN, signWithToken);
-  yield takeLatest(CALL_USER_SIGN_OUT, handleUserSignOut);
-  yield takeLatest(CALL_USER_SIGN_IN, userSignIn);
-  yield takeLatest(CALL_USER_SIGN_UP, userSignUp);
-  yield takeLatest(CALL_EDIT_USER, userEdit);
-  yield takeLatest(CALL_LOAD_AVATAR, loadAvatar);
+  yield all([
+    takeEvery(CALL_AUTH_TOKEN, signWithToken),
+    takeEvery(CALL_USER_SIGN_OUT, handleUserSignOut),
+    takeEvery(CALL_USER_SIGN_IN, userSignIn),
+    takeEvery(CALL_USER_SIGN_UP, userSignUp),
+    takeEvery(CALL_EDIT_USER, userEdit),
+    takeEvery(CALL_LOAD_AVATAR, loadAvatar)
+  ]);
 }
 
 export default watchUser;

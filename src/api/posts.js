@@ -3,19 +3,9 @@ import { apiUrl } from 'Constants/urls';
 
 export function apiFetchPosts(params) {
   return Axios.get(`${apiUrl}/posts`, {
-    params: {
-      ...params
-    }
+    params
   })
     .then(({ data }) => data)
-    .catch((error) => {
-      throw (error);
-    });
-}
-
-export function apiFetchArticlePost(id) {
-  return Axios.get(`${apiUrl}/posts/${id}`)
-    .then(({ data: { post } }) => post)
     .catch((error) => {
       throw (error);
     });

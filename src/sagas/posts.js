@@ -3,7 +3,6 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 
 import {
   apiFetchPosts,
-  apiFetchArticlePost,
   apiFetchPost,
   apiCreateComment
 } from 'Api/posts';
@@ -12,7 +11,6 @@ import {
   fetchPostsStatus,
   fetchPostsSuccess,
   fetchUpPostsSuccess,
-  fetchArticlePostSuccess,
   fetchPostSuccess,
   createCommentSuccess
 } from 'Ducks/posts';
@@ -25,26 +23,17 @@ import {
 
 function* fetchPosts(action) {
   try {
-    const { params, shouldAppend, shouldFetchArticle } = action.payload;
+    const { params, shouldAppend } = action.payload;
     const query = yield select(({
       posts: { posts }
     }) => ({
       ...params,
-      skip: shouldAppend ? posts.length + 1 : 0
+      skip: shouldAppend ? posts.length : 0,
+      shouldLoadArticle: !shouldAppend
     }));
 
     yield put(fetchPostsStatus(false));
-    let { posts, count } = yield call(apiFetchPosts, query);
-    let articlePost;
-
-    if (shouldFetchArticle) {
-      const articleItem = posts.filter(item => item.important);
-      const articlePostId = articleItem.length ? articleItem[0]._id : posts[0]._id;
-      articlePost = yield call(apiFetchArticlePost, articlePostId);
-      posts = posts.filter(item => item._id !== articlePostId);
-
-      yield put(fetchArticlePostSuccess(articlePost));
-    }
+    const { posts, count } = yield call(apiFetchPosts, query);
 
     if (!shouldAppend) {
       yield put(fetchPostsSuccess({ posts, count }));

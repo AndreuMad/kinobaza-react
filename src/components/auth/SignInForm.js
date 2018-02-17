@@ -1,67 +1,52 @@
 import React, { Component } from 'react';
 import { string, func, object } from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-
-import { callUserSignIn } from 'Ducks/auth';
 
 import InputField from 'Components/formComponents/reduxForm/InputField';
 import { emailPattern } from 'Constants/validatePatterns';
 
-class SignIn extends Component {
-  handleFormSubmit = ({ email, password }) => {
-    const {
-      callUserSignIn,
-      history
-    } = this.props;
+const SignIn = (props) => {
+  const {
+    errorMessage,
+    handleSubmit
+  } = props;
 
-    callUserSignIn({ email, password, history });
-  }
-
-  render() {
-    const {
-      handleFormSubmit,
-      props: {
-        errorMessage,
-        handleSubmit
-      }
-    } = this;
-
-    return (
-      <form
-        className="login-form"
-        onSubmit={handleSubmit(handleFormSubmit)}
-      >
-        <Field
-          component={InputField}
-          name="email"
-          className="auth-body-input"
-          errorClassName="field-error"
-          labelClassName="auth-body-field"
-          placeholder="Логін"
-          type="email"
-        />
-        <Field
-          component={InputField}
-          name="password"
-          className="auth-body-input"
-          errorClassName="field-error"
-          labelClassName="auth-body-field"
-          placeholder="Пароль"
-          type="password"
-        />
-        {errorMessage ?
+  return (
+    <form
+      className="login-form"
+      onSubmit={handleSubmit}
+    >
+      <Field
+        component={InputField}
+        name="email"
+        className="auth-body-input"
+        errorClassName="field-error"
+        labelClassName="auth-body-field"
+        placeholder="Логін"
+        type="email"
+      />
+      <Field
+        component={InputField}
+        name="password"
+        className="auth-body-input"
+        errorClassName="field-error"
+        labelClassName="auth-body-field"
+        placeholder="Пароль"
+        type="password"
+      />
+      {
+        errorMessage && (
           <div className="alert alert-danger">
             <strong>Oops! </strong>{errorMessage}
-          </div> : null}
-        <div className="btn-group auth-body-control">
-          <button className="btn auth-body-button">Sign in</button>
-        </div>
-      </form>
-    );
-  }
-}
+          </div>
+        )
+      }
+      <div className="btn-group auth-body-control">
+        <button className="btn auth-body-button">Sign in</button>
+      </div>
+    </form>
+  );
+};
 
 const validate = ({ email, password }) => {
   const errors = {};
@@ -81,21 +66,11 @@ const validate = ({ email, password }) => {
 
 SignIn.propTypes = {
   handleSubmit: func.isRequired,
-  errorMessage: string,
-  callUserSignIn: func.isRequired,
-  history: object.isRequired
+  errorMessage: string
 };
 
 SignIn.defaultProps = {
   errorMessage: ''
 };
 
-const mapStateToProps = ({ auth: { error } }) => ({
-  errorMessage: error
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  callUserSignIn: ({ email, password, history }) => callUserSignIn({ email, password, history })
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({ form: 'signIn', validate })(SignIn));
+export default reduxForm({ form: 'signIn', validate })(SignIn);
