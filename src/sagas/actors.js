@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, all, takeEvery } from 'redux-saga/effects';
 
 import {
   apiFetchActors,
@@ -10,7 +10,6 @@ import {
   fetchActorsStatus,
   fetchActorsSuccess,
   fetchUpActorsSuccess,
-  clearActors,
   changeActorsQuery,
   likeActorStatus,
   saveActorLike,
@@ -84,9 +83,11 @@ function* changeQuery(action) {
 }
 
 function* watchActors() {
-  yield takeLatest(CALL_FETCH_ACTORS, fetchActors);
-  yield takeLatest(CALL_ACTOR_LIKE, likeActor);
-  yield takeLatest(CALL_CHANGE_ACTORS_QUERY, changeQuery);
+  yield all([
+    takeEvery(CALL_FETCH_ACTORS, fetchActors),
+    takeEvery(CALL_ACTOR_LIKE, likeActor),
+    takeEvery(CALL_CHANGE_ACTORS_QUERY, changeQuery)
+  ]);
 }
 
 export default watchActors;

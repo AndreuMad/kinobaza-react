@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, all, takeEvery } from 'redux-saga/effects';
 
 import {
   apiFetchTitles,
@@ -70,9 +70,11 @@ function* setTitleRating(action) {
 }
 
 function* saga() {
-  yield takeLatest(CALL_FETCH_TITLES, fetchTitles);
-  yield takeLatest(CALL_SET_TITLE_RATING, setTitleRating);
-  yield takeLatest(CALL_CHANGE_TITLES_QUERY, changeQuery);
+  yield all([
+    takeEvery(CALL_FETCH_TITLES, fetchTitles),
+    takeEvery(CALL_SET_TITLE_RATING, setTitleRating),
+    takeEvery(CALL_CHANGE_TITLES_QUERY, changeQuery)
+  ]);
 }
 
 export default saga;

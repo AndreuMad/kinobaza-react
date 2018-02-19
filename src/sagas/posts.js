@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, all, takeEvery } from 'redux-saga/effects';
 
 import {
   apiFetchPosts,
@@ -21,7 +21,7 @@ import {
   CALL_CREATE_COMMENT
 } from 'Ducks/posts';
 
-function* fetchPosts(action) {
+export function* fetchPosts(action) {
   try {
     const { params, shouldAppend } = action.payload;
     const query = yield select(({
@@ -47,7 +47,7 @@ function* fetchPosts(action) {
   }
 }
 
-function* fetchPost(action) {
+export function* fetchPost(action) {
   try {
     const { id } = action.payload;
     const { post, comments } = yield call(apiFetchPost, id);
@@ -57,7 +57,7 @@ function* fetchPost(action) {
   }
 }
 
-function* createComment(action) {
+export function* createComment(action) {
   try {
     const { postId, comment } = action.payload;
     const userId = yield select(({
@@ -71,9 +71,11 @@ function* createComment(action) {
 }
 
 function* saga() {
-  yield takeLatest(CALL_FETCH_POSTS, fetchPosts);
-  yield takeLatest(CALL_FETCH_POST, fetchPost);
-  yield takeLatest(CALL_CREATE_COMMENT, createComment);
+  yield all([
+    takeEvery(CALL_FETCH_POSTS, fetchPosts),
+    takeEvery(CALL_FETCH_POST, fetchPost),
+    takeEvery(CALL_CREATE_COMMENT, createComment)
+  ]);
 }
 
 export default saga;

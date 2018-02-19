@@ -22,23 +22,14 @@ const config = {
       // js
       {
         test: /\.js$/,
-        include: srcPath,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              'react',
-              ['es2015', { modules: false }],
-              'stage-0',
-            ]
-          }
-        }]
+        loader: 'babel-loader',
+        include: srcPath
       },
       // scss
       {
         test: /\.scss$/,
-        exclude: /node_modules/,
-        loader: ['style-loader', 'css-loader', 'sass-loader']
+        loader: ['style-loader', 'css-loader', 'sass-loader'],
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,
@@ -69,19 +60,19 @@ const config = {
       }
     ]
   },
-  resolve: {
-    alias: {
-      Api: path.resolve(srcPath, 'api'),
-      Screens: path.resolve(srcPath, 'screens'),
-      Components: path.resolve(srcPath, 'components'),
-      Constants: path.resolve(srcPath, 'constants'),
-      Ducks: path.resolve(srcPath, 'ducks'),
-      Images: path.resolve(srcPath, 'public/img'),
-      Sagas: path.resolve(srcPath, 'sagas'),
-      Utilities: path.resolve(srcPath, 'utilities'),
-      NodeModules: path.resolve(__dirname, 'node_modules')
-    }
-  },
+  // resolve: {
+  //   alias: {
+  //     Api: path.resolve(srcPath, 'api'),
+  //     Screens: path.resolve(srcPath, 'screens'),
+  //     Components: path.resolve(srcPath, 'components'),
+  //     Constants: path.resolve(srcPath, 'constants'),
+  //     Ducks: path.resolve(srcPath, 'ducks'),
+  //     Images: path.resolve(srcPath, 'public/img'),
+  //     Sagas: path.resolve(srcPath, 'sagas'),
+  //     Utilities: path.resolve(srcPath, 'utilities'),
+  //     NodeModules: path.resolve(__dirname, 'node_modules')
+  //   }
+  // },
   devServer: {
     historyApiFallback: true,
   },

@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, all, takeEvery } from 'redux-saga/effects';
 
 import {
   apiFetchReviews
@@ -45,7 +45,9 @@ function* fetchReviews(action) {
 }
 
 function* saga() {
-  yield takeLatest(CALL_FETCH_REVIEWS, fetchReviews);
+  yield all([
+    takeEvery(CALL_FETCH_REVIEWS, fetchReviews)
+  ]);
 }
 
 export default saga;
