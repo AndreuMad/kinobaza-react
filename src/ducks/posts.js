@@ -11,9 +11,9 @@ const CREATE_COMMENT_SUCCESS = 'CREATE_COMMENT_SUCCESS';
 
 const defaultPostsState = {
   posts: [],
+  post: null,
   postsTotalCount: 0,
   fetchPostsStatus: true,
-  post: null,
   comments: []
 };
 

@@ -1,4 +1,4 @@
-import { select, call } from 'redux-saga/effects';
+import { select, call, put } from 'redux-saga/effects';
 import { fetchPosts } from 'Sagas/posts';
 import { apiFetchPosts } from 'Api/posts';
 
@@ -7,6 +7,7 @@ import {
   CALL_FETCH_POST,
   CALL_CREATE_COMMENT
 } from 'Ducks/posts';
+import { fetchPostsStatus } from "./posts";
 
 const initialParams = {
   skip: 0,
@@ -21,11 +22,8 @@ it('should dispatch', () => {
     }
   });
 
-  expect(saga.next().value).toEqual(select(({
-    posts: { posts }
-  }) => ({
-    ...initialParams,
-    skip: 0,
-    shouldLoadArticle: true
-  })));
+  saga.next();
+
+  expect(saga.next().value).toEqual(put(fetchPostsStatus(false)));
+  console.log(saga.next().value);
 });
