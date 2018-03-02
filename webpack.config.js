@@ -19,7 +19,7 @@ const config = {
   },
   module: {
     rules: [
-      // js11
+      // js
       {
         test: /\.js$/,
         loader: 'babel-loader',
