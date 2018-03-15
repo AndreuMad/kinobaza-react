@@ -9,6 +9,7 @@ import 'NodeModules/moment/locale/uk';
 
 import { defaultTheme } from 'Constants/styled/styledThemes';
 
+import { Row, Col } from 'Components/layout';
 import PostCard from 'Components/posts/__styled__/CardCommon';
 
 const CardRegularStyled = PostCard.extend`
@@ -54,22 +55,20 @@ const CardRegularStyled = PostCard.extend`
 const CardRegular = ({ id, image: { url: imageUrl }, title, date }) => (
   <ThemeProvider theme={defaultTheme}>
     <CardRegularStyled>
-      <div className="flex-row">
-        <div className="col xs-1 share">
-          <div className="col-inner flex-column">
-            <a href="#" className="share-block">
-              <p className="share-number facebook">500</p>
-            </a>
-            <a href="#" className="share-block">
-              <p className="share-number twitter">234</p>
-            </a>
-            <a href="#" className="share-block">
-              <p className="share-number youtube">120</p>
-            </a>
-          </div>
-        </div>
-        <div className="col xs-11">
-          <div className="col-inner content">
+      <Row>
+        <Col xs="1" flex="column" className="share">
+          <a href="#" className="share-block">
+            <p className="share-number facebook">500</p>
+          </a>
+          <a href="#" className="share-block">
+            <p className="share-number twitter">234</p>
+          </a>
+          <a href="#" className="share-block">
+            <p className="share-number youtube">120</p>
+          </a>
+        </Col>
+        <Col xs="11">
+          <div className="content">
             <Link
               className="link"
               to={`/posts/${id}`}
@@ -87,8 +86,8 @@ const CardRegular = ({ id, image: { url: imageUrl }, title, date }) => (
               <h3 className="title">{title}</h3>
             </Link>
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
     </CardRegularStyled>
   </ThemeProvider>
 );

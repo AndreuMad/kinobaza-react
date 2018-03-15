@@ -5,6 +5,7 @@ import { NavLink, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import classNames from 'classnames';
 
+import { Container, Row, Col } from 'Components/layout';
 import HeaderUserBlock from 'Components/header/HeaderUserBlock';
 
 import { callUserSignOut } from 'Ducks/auth';
@@ -111,17 +112,17 @@ class Header extends Component {
           { sticky },
         )}
       >
-        <div className="container-full">
+        <Container fluid>
           <div className="header-control">
-            <div className="row">
-              <div className="col m-4">
+            <Row>
+              <Col xs={12} md={4}>
                 <div className="col-inner header-control-item">
                   <HeaderUserBlock
                     callUserSignOut={callUserSignOut}
                   />
                 </div>
-              </div>
-              <div className="col m-4">
+              </Col>
+              <Col xs={12} md={4}>
                 <div className="col-inner header-control-item center-xs">
                   <NavLink to="/" className="header-logo">
                     <img src={logoImage} alt="Kinobaza" />
@@ -133,8 +134,8 @@ class Header extends Component {
                     </span>
                   </NavLink>
                 </div>
-              </div>
-              <div className="col m-4">
+              </Col>
+              <Col xs={12} md={4}>
                 <div className="col-inner header-control-item end-xs">
                   <form className="header-search">
                     <label className="header-search-field">
@@ -146,8 +147,8 @@ class Header extends Component {
                     </label>
                   </form>
                 </div>
-              </div>
-            </div>
+              </Col>
+            </Row>
           </div>
           <nav className="header-navigation">
             {
@@ -170,7 +171,7 @@ class Header extends Component {
               ))
             }
           </nav>
-        </div>
+        </Container>
       </header>
     );
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { string, arrayOf, number, shape, func } from 'prop-types';
 
+import Row from 'Components/layout/Row';
 import PostCommentsForm from 'Components/posts/PostCommentsForm';
 import PostCommentItem from 'Components/posts/PostCommentItem';
 
@@ -10,7 +11,7 @@ const PostComments = ({
 }) => (
   <section className="post-comments">
     <div className="container">
-      <div className="row">
+      <Row>
         <div className="col m-10 m-offset-1">
           <div className="col-inner">
             <h3 className="post-comments-title">Коментарі</h3>
@@ -39,7 +40,7 @@ const PostComments = ({
             </div>
           </div>
         </div>
-      </div>
+      </Row>
     </div>
   </section>
 );

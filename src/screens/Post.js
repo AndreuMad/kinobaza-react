@@ -8,6 +8,7 @@ import {
   callCreateComment
 } from 'Ducks/posts';
 
+import { Container, Row, Col } from 'Components/layout';
 import PostComments from 'Components/posts/PostComments';
 
 class Post extends Component {
@@ -52,66 +53,58 @@ class Post extends Component {
           <section
             className="introduction"
           >
-            <div className="container">
-              <div className="row">
-                <div className="col m-10 m-offset-1">
-                  <div className="col-inner">
-                    <figure
-                      className="introduction-illustration"
-                      style={{
-                        backgroundImage: `url('${post.image.url}'`
-                      }}
-                    />
-                    <h1 className="introduction-title">{post.title}</h1>
-                    <p className="introduction-date">{post.date}</p>
-                    <div className="introduction-info">
-                      <div className="info-block views">
-                        <p className="info-block-number">500</p>
-                      </div>
-                      <div className="info-block likes">
-                        <p className="info-block-number">234</p>
-                      </div>
-                      <div className="info-block comments">
-                        <p className="info-block-number">120</p>
-                      </div>
+            <Container>
+              <Row>
+                <Col xs={12} md={{ size: 10, offset: 1 }}>
+                  <figure
+                    className="introduction-illustration"
+                    style={{
+                      backgroundImage: `url('${post.image.url}'`
+                    }}
+                  />
+                  <h1 className="introduction-title">{post.title}</h1>
+                  <p className="introduction-date">{post.date}</p>
+                  <div className="introduction-info">
+                    <div className="info-block views">
+                      <p className="info-block-number">500</p>
+                    </div>
+                    <div className="info-block likes">
+                      <p className="info-block-number">234</p>
+                    </div>
+                    <div className="info-block comments">
+                      <p className="info-block-number">120</p>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
+                </Col>
+              </Row>
+            </Container>
           </section>
           <section className="post-body">
-            <div className="container">
-              <div className="row">
-                <div className="col m-10 m-offset-1">
-                  <div className="col-inner">
-                    <div className="row">
-                      <div className="col s-10 m-11">
-                        <div className="col-inner">
-                          <p
-                            className="post-body-text"
-                            dangerouslySetInnerHTML={{ __html: post.textArticle }}
-                          />
-                        </div>
-                      </div>
-                      <div className="col m-1">
-                        <div className="col-inner flex-column">
-                          <a href="#" className="share-block l">
-                            <p className="share-number facebook">500</p>
-                          </a>
-                          <a href="#" className="share-block l">
-                            <p className="share-number twitter">234</p>
-                          </a>
-                          <a href="#" className="share-block l">
-                            <p className="share-number youtube">120</p>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Container>
+              <Row>
+                <Col xs={12} m={{ size: 10, offset: 1 }}>
+                  <Row>
+                    <Col xs={12} s={10} m={11}>
+                      <p
+                        className="post-body-text"
+                        dangerouslySetInnerHTML={{ __html: post.textArticle }}
+                      />
+                    </Col>
+                    <Col xs={12} m={1} flex="column">
+                      <a href="#" className="share-block l">
+                        <p className="share-number facebook">500</p>
+                      </a>
+                      <a href="#" className="share-block l">
+                        <p className="share-number twitter">234</p>
+                      </a>
+                      <a href="#" className="share-block l">
+                        <p className="share-number youtube">120</p>
+                      </a>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Container>
           </section>
           <PostComments
             comments={comments}

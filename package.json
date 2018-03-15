@@ -31,7 +31,6 @@
     "babel-register": "6.26.0",
     "chai": "4.1.2",
     "cheerio": "1.0.0-rc.2",
-    "classnames": "2.2.5",
     "css-loader": "0.28.5",
     "enzyme": "3.3.0",
     "eslint": "4.12.1",
@@ -48,8 +47,6 @@
     "node-sass": "4.5.3",
     "postcss-loader": "2.0.6",
     "react-addons-test-utils": "15.6.2",
-    "react-input-range": "1.2.1",
-    "redux-form": "7.0.3",
     "regenerator-runtime": "0.11.1",
     "sass-loader": "6.0.6",
     "style-loader": "0.18.2",
@@ -61,6 +58,7 @@
     "axios": "0.16.2",
     "babel-eslint": "8.0.3",
     "babel-preset-stage-0": "6.24.1",
+    "classnames": "2.2.5",
     "global": "4.3.2",
     "history": "4.7.2",
     "moment": "2.19.1",
@@ -78,10 +76,12 @@
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
     "react-router-redux": "5.0.0-alpha.9",
+    "react-input-range": "1.2.1",
+    "redux-form": "7.0.3",
     "react-select": "1.0.0-rc.10",
     "redux": "3.7.2",
     "redux-logger": "3.0.6",
     "redux-saga": "0.16.0",
-    "styled-components": "3.2.1"
+    "styled-components": "^3.2.1"
   }
 }

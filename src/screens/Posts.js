@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 
-import {
-  callFetchPosts
-} from 'Ducks/posts';
-
+import { Container, Row, Col } from 'Components/layout';
 import CardRegular from 'Components/posts/CardRegular';
 import CardArticle from 'Components/posts/CardArticle';
+
+import { callFetchPosts } from 'Ducks/posts';
 
 class PostsPage extends Component {
   constructor(props) {
@@ -94,9 +93,9 @@ class PostsPage extends Component {
           this.pageNode = node;
         }}
       >
-        <div className="container">
+        <Container>
           <h1 className="section-heading">Публікації</h1>
-          <div className="row">
+          <Row>
             {
               posts.length &&
               (posts.map(({
@@ -108,7 +107,11 @@ class PostsPage extends Component {
                   articlePost
                 }) => (
                 articlePost ? (
-                  <div key={`articlePost${_id}`} className="col m-8 first-xs">
+                  <Col
+                    key={`articlePost${_id}`}
+                    xs={{ size: 12, order: 'first' }}
+                    md={8}
+                  >
                     <div className="col-inner">
                       <CardArticle
                         id={_id}
@@ -118,9 +121,14 @@ class PostsPage extends Component {
                         date={date}
                       />
                     </div>
-                  </div>
+                  </Col>
                 ) : (
-                  <div key={`post_${_id}`} className="col m-4">
+                  <Col
+                    key={`post_${_id}`}
+                    xs={12}
+                    sm={6}
+                    md={4}
+                  >
                     <div className="col-inner">
                       <CardRegular
                         id={_id}
@@ -129,10 +137,10 @@ class PostsPage extends Component {
                         date={date}
                       />
                     </div>
-                  </div>
+                  </Col>
                 ))))
             }
-          </div>
+          </Row>
           <div className="load-more-section">
             <div className="btn-group align-center">
               {
@@ -147,7 +155,7 @@ class PostsPage extends Component {
               }
             </div>
           </div>
-        </div>
+        </Container>
       </article>
     );
   }

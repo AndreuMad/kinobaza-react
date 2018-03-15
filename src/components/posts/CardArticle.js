@@ -7,6 +7,8 @@ import { rgba } from 'polished';
 import moment from 'moment';
 import 'NodeModules/moment/locale/uk';
 
+import Row from 'Components/layout/Row';
+import Col from 'Components/layout/Col';
 import PostCard from 'Components/posts/__styled__/CardCommon';
 import { defaultTheme } from 'Constants/styled/styledThemes';
 import sliceString from 'Utilities/sliceString';
@@ -15,6 +17,10 @@ const CardArticleStyled = PostCard.extend`
   padding: 3.2rem;
   background: linear-gradient(90deg, transparent 20%, rgba(${props => props.theme.white}, .25) 0);
   border-radius: .4rem;
+  
+  .illustration {
+    padding-top: 80%;
+  }
   
   .title {
     margin: 0 0 1.8rem;
@@ -49,21 +55,19 @@ const CardArticleStyled = PostCard.extend`
 const CardArticle = ({ id, image: { url: imageUrl }, title, text, date }) => (
   <ThemeProvider theme={defaultTheme}>
     <CardArticleStyled>
-      <div className="row">
-        <div className="col xs-1">
-          <div className="col-inner flex-column end-xs">
-            <a href="#" className="share-block">
-              <p className="share-number facebook">500</p>
-            </a>
-            <a href="#" className="share-block">
-              <p className="share-number twitter">234</p>
-            </a>
-            <a href="#" className="share-block">
-              <p className="share-number youtube">120</p>
-            </a>
-          </div>
-        </div>
-        <div className="col xs-5">
+      <Row>
+        <Col xs="1" flex={{ direction: 'column', justifyContent: 'center', md: { justifyContent: 'start' } }}>
+          <a href="#" className="share-block">
+            <p className="share-number facebook">500</p>
+          </a>
+          <a href="#" className="share-block">
+            <p className="share-number twitter">234</p>
+          </a>
+          <a href="#" className="share-block">
+            <p className="share-number youtube">120</p>
+          </a>
+        </Col>
+        <Col xs="5">
           <figure
             className="illustration"
             style={{
@@ -71,8 +75,8 @@ const CardArticle = ({ id, image: { url: imageUrl }, title, text, date }) => (
             }}
           >
           </figure>
-        </div>
-        <div className="col xs-6">
+        </Col>
+        <Col xs="6">
           <div className="col-inner">
             <Link to={`/posts/${id}`}>
               <h2 className="title">{title}</h2>
@@ -83,8 +87,8 @@ const CardArticle = ({ id, image: { url: imageUrl }, title, text, date }) => (
               <Link to={`/posts/${id}`} className="btn link">Читати</Link>
             </div>
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
     </CardArticleStyled>
   </ThemeProvider>
 );
