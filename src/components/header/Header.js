@@ -60,6 +60,12 @@ const headerLinks = [
     to: 'forum',
     title: 'форум',
     shouldRender: false
+  },
+  {
+    key: 'headerLinkToGrid',
+    to: 'grid',
+    title: 'grid',
+    shouldRender: true
   }
 ];
 
