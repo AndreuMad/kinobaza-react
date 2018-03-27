@@ -10,7 +10,7 @@ import { Container } from 'Components/layout';
 export default class GridPage extends Component {
   getLayoutsConfig = () => ({
     xxs: [
-      { i: 'a', x: 0, y: 0, w: 8, h: 4 },
+      { i: 'a', x: 0, y: 0, w: 8, h: 8 },
       { i: 'b', x: 7, y: 0, w: 4, h: 2 },
       { i: 'c', x: 7, y: 3, w: 4, h: 2 }
     ],
@@ -20,15 +20,10 @@ export default class GridPage extends Component {
       { i: 'c', x: 7, y: 3, w: 4, h: 2 }
     ],
     md: [
-      { i: 'a', x: 0, y: 0, w: 8, h: 4 },
+      { i: 'a', x: 0, y: 0, w: 8, h: 8 },
       { i: 'b', x: 9, y: 0, w: 4, h: 2 },
       { i: 'c', x: 9, y: 3, w: 4, h: 2 }
     ],
-    lg: [
-      { i: 'a', x: 0, y: 0, w: 8, h: 4 },
-      { i: 'b', x: 7, y: 0, w: 4, h: 2 },
-      { i: 'c', x: 7, y: 3, w: 4, h: 2 }
-    ]
   });
 
   render() {
@@ -45,7 +40,7 @@ export default class GridPage extends Component {
               md: 12,
               lg: 12
             }}
-            rowHeight={50}
+            rowHeight={10}
           >
             <GridItem key="a">
               <InfoItem />
